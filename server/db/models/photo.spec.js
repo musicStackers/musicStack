@@ -2,8 +2,7 @@
 
 const { expect } = require('chai');
 const db = require('../index');
-
-const Photo = db.model('photo');
+const Photo = require('./photo');
 
 describe('Photo model', () => {
   beforeEach(() => db.sync({ force: true }));
@@ -32,8 +31,7 @@ describe('Photo model', () => {
       },
       (result) => {
         expect(result).to.be.an.instanceOf(Error);
-        expect(result.message).to.contain('Validation error');
+        expect(result.message).to.contain('notNull Violation');
       });
   });
 });
-

@@ -22,6 +22,7 @@ const Product = db.define('product', {
   },
   isAvailable: {
     type: Sequelize.BOOLEAN,
+    defaultValue: true,
   },
 });
 

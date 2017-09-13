@@ -8,9 +8,40 @@ const User = db.model('user');
 describe('User model', () => {
   beforeEach(() => db.sync({ force: true }));
 
+  describe('model definition', () => {
+    let testUser;
+
+    beforeEach(() =>
+      User.create({
+        email: 'test@test.test',
+        password: 'test',
+      })
+        .then((user) => {
+          testUser = user;
+        }),
+    );
+
+    it('includes a correct email', () => {
+      expect(testUser.email).to.be.equal('test@test.test');
+    });
+
+    it('requires an email', () => {
+      testUser.email = null;
+
+      return testUser.validate()
+        .then(() => {
+          throw new Error('validation should fail when email is empty');
+        },
+        (result) => {
+          expect(result).to.be.an.instanceOf(Error);
+          expect(result.message).to.contain('notNull Violation');
+        });
+    });
+  });
+
   describe('instanceMethods', () => {
     describe('correctPassword', () => {
-      let cody;
+      let cody = {};
 
       beforeEach(() =>
         User.create({
@@ -29,6 +60,6 @@ describe('User model', () => {
       it('returns false if the password is incorrect', () => {
         expect(cody.correctPassword('bonez')).to.be.equal(false);
       });
-    }); // end describe('correctPassword')
-  }); // end describe('instanceMethods')
-}); // end describe('User model')
+    });
+  });
+});

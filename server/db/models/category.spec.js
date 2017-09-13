@@ -34,5 +34,4 @@ describe('Category model', () => {
         expect(result.message).to.contain('notNull Violation');
       });
   });
-},
-);
+});

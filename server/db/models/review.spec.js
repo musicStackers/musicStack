@@ -62,5 +62,4 @@ describe('Review model', () => {
         expect(result.message).to.contain('Validation min on star failed');
       });
   });
-},
-);
+});

@@ -69,5 +69,4 @@ describe('Order model', () => {
         expect(result.message).to.contain('notNull Violation');
       });
   });
-},
-);
+});

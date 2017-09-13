@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
   Product.findAll({
     include: [Category],
   })
-    .then(users => res.json(users))
+    .then(products => res.json(products))
     .catch(next);
 });
 
@@ -38,7 +38,7 @@ router.get('/:productId', (req, res) => {
 // PUT to edit Product
 router.put('/:productId', (req, res, next) => {
   req.product.update(req.body)
-    .then(updatedUser => res.status(200).send(updatedUser))
+    .then(updatedProduct => res.status(200).send(updatedProduct))
     .catch(next);
 });
 

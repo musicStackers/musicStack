@@ -44,13 +44,13 @@ router.put('/', (req, res) => {
 router.delete('/', (req, res) => {
   const productId = req.body.productId;
   if (!req.cart) {
-    res.status(200).send('Cart already does not exist');
+    res.status(404).send('Cart already does not exist');
   }
   // Cart is an array of objects with format { productId, quantity }
   // Find index of desired cart entry, then assign req.cart to a new array without product entry
   const productEntryIndex = req.cart.findIndex(entry => +entry.productId === +productId);
   if (!productEntryIndex) {
-    res.status(200).send('Product already has been removed from the cart');
+    res.status(404).send('Product already has been removed from the cart');
   } else {
     req.cart = req.cart.slice(0, productEntryIndex).concat(req.cart.slice(productEntryIndex + 1));
     res.status(200).send('Successfully removed from cart');

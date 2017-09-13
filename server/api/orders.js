@@ -22,7 +22,7 @@ router.get('/:userId', (req, res, next) => {
 });
 
 // PUT to edit a status of order
-router.get('/:orderId', (req, res, next) => {
+router.put('/:orderId', (req, res, next) => {
   Order.findById(req.params.orderId)
     .then(order => order.update(req.body))
     .catch(next);

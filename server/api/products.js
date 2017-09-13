@@ -31,9 +31,8 @@ router.param('productId', (req, res, next, id) => {
 });
 
 // GET for specific Product
-router.get('/:productId', (req, res, next) => {
-  res.status(200).json(req.product)
-    .catch(next);
+router.get('/:productId', (req, res) => {
+  res.status(200).send(req.product);
 });
 
 // PUT to edit Product
@@ -46,15 +45,20 @@ router.put('/:productId', (req, res, next) => {
 // DELETE to delete a Product
 router.delete('/:productId', (req, res, next) => {
   req.product.destroy()
-    .then(res.sendStatus(200))
+    .then(() => res.sendStatus(200))
     .catch(next);
 });
 
 // POST to add Review to Product
 router.post('/:productId/reviews', (req, res, next) => {
-  Review.create(req.body)
+  Review.create({
+    description: req.body.description,
+    star: req.body.star,
+    userId: req.user.id,
+    productId: req.body.id,
+  })
     .then(review => req.product.addReview(review))
-    .then(res.sendStatus(200))
+    .then(() => res.sendStatus(200))
     .catch(next);
 });
 
@@ -62,7 +66,7 @@ router.post('/:productId/reviews', (req, res, next) => {
 router.post('/:productId/categories', (req, res, next) => {
   Category.findById(req.body.id)
     .then(category => req.product.addCategory(category))
-    .then(res.sendStatus(200))
+    .then(() => res.sendStatus(200))
     .catch(next);
 });
 
@@ -70,6 +74,6 @@ router.post('/:productId/categories', (req, res, next) => {
 router.put('/:productId/categories', (req, res, next) => {
   Category.findById(req.body.id)
     .then(category => req.product.removeCategory(category))
-    .then(res.sendStatus(200))
+    .then(() => res.sendStatus(200))
     .catch(next);
 });

@@ -21,7 +21,7 @@ const strategy = new GoogleStrategy(googleConfig, (token, refreshToken, profile,
       user
         ? done(null, user)
         : User.create({ name, email, googleId })
-          .then(createdUser => done(null, createdUser)),
+          .then(createdUser => done(null, createdUser))
     )
     .catch(done);
 });

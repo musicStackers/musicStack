@@ -5,9 +5,7 @@ module.exports = router;
 
 // GET for all Products
 router.get('/', (req, res, next) => {
-  Product.findAll({
-    include: [Category],
-  })
+  Product.findAll()
     .then(products => res.json(products))
     .catch(next);
 });
@@ -15,7 +13,7 @@ router.get('/', (req, res, next) => {
 // POST to create new Product
 router.post('/', (req, res, next) => {
   Product.create(req.body)
-    .then(newProduct => res.status(201).send(newProduct))
+    .then(newProduct => res.status(201).json(newProduct))
     .catch(next);
 });
 
@@ -32,13 +30,13 @@ router.param('productId', (req, res, next, id) => {
 
 // GET for specific Product
 router.get('/:productId', (req, res) => {
-  res.status(200).send(req.product);
+  res.status(200).json(req.product);
 });
 
 // PUT to edit Product
 router.put('/:productId', (req, res, next) => {
   req.product.update(req.body)
-    .then(updatedProduct => res.status(200).send(updatedProduct))
+    .then(updatedProduct => res.status(200).json(updatedProduct))
     .catch(next);
 });
 

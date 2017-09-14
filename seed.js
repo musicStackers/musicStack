@@ -2,7 +2,7 @@ const chance = require('chance')(123);
 const faker = require('faker');
 
 const db = require('./server/db');
-const { User, Product, Photo, Category, CategoryProduct} = require('./server/db/models/');
+const { User, Product, Photo, Category } = require('./server/db/models/');
 
 /* -----------  Set up User data ----------- */
 
@@ -157,7 +157,12 @@ const createProducts = (category) => {
   return Promise.all(promiseArr);
 };
 
+/* -----------  Set up Order data ----------- */
+
+/* -----------  Set up Review data ----------- */
+
 /* -----------  Syncing database ----------- */
+
 const seed = (() => (
   createCategories()
     .then((cats) => {

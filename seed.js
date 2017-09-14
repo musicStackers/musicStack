@@ -3,7 +3,8 @@ const faker = require('faker');
 const Promise = require('bluebird');
 
 const db = require('./server/db');
-const { User, Product, Photo, Category, Order, Review } = require('./server/db/models/');
+const { User, Product, Photo, Category,
+  Order, Review } = require('./server/db/models/');
 
 /* -----------  Set up User data ----------- */
 
@@ -161,25 +162,27 @@ const createProductsForCat = (category) => {
 
 /* -----------  Set up Order data ----------- */
 
-const numOrders = 5; // 5 orders per user
-
 const randomOrder = ((user, products) => (
   Order.create({
     email: user.email,
     address: user.address,
   })
-    .then((order) => {
-      // console.log('order id', order.id)
-      // products.forEach(product => console.log(product.id))
-      // console.log('order products', products.length)
-      return Promise.all([order, user.addOrder(order)]);
-    })
-    .spread(order => Promise.all(products.map(product => order.addProduct(product))))
+    .then(order => (
+      Promise.all([order, user.addOrder(order)])
+    ))
+    .spread(order =>
+      Promise.all(products.map((product) => {
+        const quantity = Math.ceil(Math.random() * 5);
+        return order.addProduct(product, { through:
+          { price: product.price, quantity } });
+      })),
+    )
     .catch(err => console.error(err))
 ));
 
-const createOrdersForUser = (user, products) => {
+const createOrders = (user, products) => {
   const promiseArr = [];
+  const numOrders = Math.ceil(Math.random() * 5);
   for (let i = 0; i < numOrders; i += 1) {
     promiseArr.push(randomOrder(user, products));
   }
@@ -187,6 +190,27 @@ const createOrdersForUser = (user, products) => {
 };
 
 /* -----------  Set up Review data ----------- */
+
+const randomReview = ((user, product) => (
+  Review.create({
+    description: faker.lorem.paragraph(),
+    star: Math.floor(Math.random() * 6),
+  })
+    .then(review => (
+      Promise.all([review, user.addReview(review)])
+    ))
+    .spread(review => product.addReview(review))
+    .catch(err => console.error(err))
+));
+
+const createReviews = (user, product) => {
+  const promiseArr = [];
+  const numReviews = Math.floor(Math.random() * 4);
+  for (let i = 0; i < numReviews; i += 1) {
+    promiseArr.push(randomReview(user, product));
+  }
+  return Promise.all(promiseArr);
+};
 
 /* -----------  Syncing database ----------- */
 
@@ -221,14 +245,24 @@ const seed = (() => (
       const orderPromArr = [];
       users.forEach((user) => {
         // pick random set of products
-        numOrderProducts = chance.natural({
-          min: 1,
-          max: 5,
-        });
+        numOrderProducts = Math.ceil(Math.random() * 3);
         orderProducts = chance.pickset(products, numOrderProducts);
-        orderPromArr.push(createOrdersForUser(user, orderProducts));
+        orderPromArr.push(createOrders(user, orderProducts));
       });
-      return Promise.all(orderPromArr);
+      return Promise.all([users, products, Promise.all(orderPromArr)]);
+    })
+    .spread((users, products) => {
+      let randomUserIndex;
+      let randomReviewUser;
+      const reviewPromArr = [];
+      products.forEach((product) => {
+        // pick random user
+        randomUserIndex = Math.floor(Math.random() * users.length);
+        randomReviewUser = users[randomUserIndex];
+
+        reviewPromArr.push(createReviews(randomReviewUser, product));
+      });
+      return Promise.all(reviewPromArr);
     })
     .catch(err => console.log(err))
 ));

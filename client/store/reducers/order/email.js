@@ -9,7 +9,7 @@ export const setAddress = email => ({
 
 // REDUCER
 export default function reducer(email = '', action) {
-  switch (action) {
+  switch (action.type) {
     case SET_EMAIL:
       return action.email;
     default:

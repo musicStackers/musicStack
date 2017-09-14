@@ -17,6 +17,7 @@ export const createOrder = userId => (dispatch) => {
       This may need to be rewritten (along with the corresponding API route) to deal with the
       order_product join table information
     */
+    .then(res => res.data)
     .then(newOrder => dispatch(addOrder(newOrder)))
     .catch(console.error);
 };

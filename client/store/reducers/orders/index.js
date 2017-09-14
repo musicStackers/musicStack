@@ -30,12 +30,14 @@ export default function reducer(orders = [], action) {
 // THUNK CREATORS
 export const fetchOrders = () => (dispatch) => {
   axios.get('/api/orders')
+    .then(res => res.data)
     .then(orders => dispatch(setOrders(orders)))
     .catch(console.error);
 };
 
 export const fetchOrdersByUserId = userId => (dispatch) => {
   axios.get(`/api/orders/${userId}`)
+    .then(res => res.data)
     .then(orders => dispatch(setOrders(orders)))
     .catch(console.error);
 };

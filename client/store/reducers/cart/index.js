@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // ACTION TYPES
 const SET_CART = 'SET_CART';
-const ADD_ENTRY_TO_CART = 'ADD_ENTRY_TO_CART';
+const ADD_OR_UPDATE_CART_ENTRY = 'ADD_OR_UPDATE_CART_ENTRY';
 
 // ACTION CREATORS
 export const setCart = cart => ({
@@ -10,17 +10,22 @@ export const setCart = cart => ({
   cart,
 });
 
-export const addEntryToCart = entry => ({
-  type: ADD_ENTRY_TO_CART,
+export const addOrUpdateCartEntry = entry => ({
+  type: ADD_OR_UPDATE_CART_ENTRY,
   entry,
 });
 
 // REDUCER
 export default function (cart = [], action) {
+  let existingEntryIndex;
   switch (action.type) {
     case SET_CART:
       return action.cart;
-    case ADD_ENTRY_TO_CART:
+    case ADD_OR_UPDATE_CART_ENTRY:
+      existingEntryIndex = cart.findIndex(entry => entry.productId === action.entry.productId);
+      if (existingEntryIndex !== -1) {
+        return [...cart.slice(0, existingEntryIndex), action.entry, ...cart.slice(existingEntryIndex + 1)];
+      }
       return cart.concat(action.entry);
     default:
       return cart;
@@ -36,5 +41,15 @@ export const fetchCart = () => (dispatch) => {
 };
 
 export const addProductToCart = (productId, quantity) => (dispatch) => {
-  axios.post('/cart')
+  axios.post('/cart', { productId, quantity })
+    .then(res => res.data)
+    .then(entry => dispatch(addOrUpdateCartEntry(entry)))
+    .catch(console.error);
+};
+
+export const updateCartEntry = (productId, quantity) => (dispatch) => {
+  axios.put('/cart', { productId, quantity })
+    .then(res => res.data)
+    .then(entry => dispatch(addOrUpdateCartEntry(entry)))
+    .catch(console.error);
 };

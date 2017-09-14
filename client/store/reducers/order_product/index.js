@@ -22,6 +22,7 @@ export default function reducer(state = [], action) {
 // THUNK CREATORS
 export const fetchOrderProduct = () => (dispatch) => {
   axios.get('/api/order_product')
+    .then(res => res.data)
     .then(orderProduct => dispatch(setOrderProduct(orderProduct)))
     .catch(console.error);
 };

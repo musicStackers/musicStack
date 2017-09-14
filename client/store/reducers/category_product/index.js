@@ -22,6 +22,7 @@ export default function reducer(state = [], action) {
 // THUNK CREATORS
 export const fetchCategoryProduct = () => (dispatch) => {
   axios.get('/api/category_product')
+    .then(res => res.data)
     .then(categoryProduct => dispatch(setCategoryProduct(categoryProduct)))
     .catch(console.error);
 };

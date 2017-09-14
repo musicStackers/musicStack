@@ -30,6 +30,7 @@ export default function (categories = [], action) {
 // THUNK CREATORS
 export const fetchCategories = () => (dispatch) => {
   axios.get('/api/categories')
+    .then(res => res.data)
     .then(categories => dispatch(setCategories(categories)))
     .catch(console.error);
 };

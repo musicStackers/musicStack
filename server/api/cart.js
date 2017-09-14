@@ -2,6 +2,15 @@ const router = require('express').Router();
 
 module.exports = router;
 
+// GET to retrieve the current session's cart
+router.get('/', (req, res) => {
+  if (!req.cart) {
+    res.json([]);
+  } else {
+    res.json(req.cart);
+  }
+});
+
 // POST to add an item to the cart,
 // or add new quantity to existing quantity if product already is in cart
 router.post('/', (req, res) => {
@@ -17,8 +26,9 @@ router.post('/', (req, res) => {
     productEntry.quantity += quantity;
     res.status(200).send('Product quantity updated');
   } else {
-    req.cart.push({ productId, quantity });
-    res.status(200).send('Product added to cart');
+    const cartEntry = { productId, quantity };
+    req.cart.push(cartEntry);
+    res.json(cartEntry);
   }
 });
 

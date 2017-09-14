@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import CartIcon from 'material-ui/svg-icons/action/shopping-cart';
 import { blue500 } from 'material-ui/styles/colors';
+import styled from 'styled-components';
 
 // Styles
 const styles = {
@@ -23,15 +24,35 @@ const styles = {
   },
 };
 
+const Logo = styled.h1`
+  padding: 10px;
+  color: #1e88e5;
+  font-size: 2.5em;
+  text-align: center;
+`;
+
+const NavWrapper = styled.div`
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+`;
+
+const NavDivWrapper = styled.div`
+  margin: 10px;
+  padding: 10px;
+  vertical-align: middle;
+`;
+
 // Component
 const Nav = () => {
   return (
     <MuiThemeProvider>
-      <div className="nav">
-        <div className="logo">
-          <h1>FORTE</h1>
-        </div>
-        <div className="search">
+      <NavWrapper>
+        <Logo>FORTE</Logo>
+        <NavDivWrapper>
           <TextField
             hintText="Search"
             style={styles.input}
@@ -42,8 +63,8 @@ const Nav = () => {
           >
             <SearchIcon hoverColor={blue500} />
           </IconButton>
-        </div>
-        <div className="user-actions">
+        </NavDivWrapper>
+        <NavDivWrapper>
           <IconButton
             iconStyle={styles.icon}
             style={styles.button}
@@ -52,8 +73,8 @@ const Nav = () => {
           </IconButton>
           <FlatButton label="Sign Up" />
           <FlatButton label="Log In" />
-        </div>
-      </div>
+        </NavDivWrapper>
+      </NavWrapper>
     </MuiThemeProvider>
   );
 };

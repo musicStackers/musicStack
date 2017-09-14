@@ -2,6 +2,15 @@ const router = require('express').Router();
 
 module.exports = router;
 
+// GET to retrieve the current session's cart
+router.get('/', (req, res) => {
+  if (!req.cart) {
+    res.json([]);
+  } else {
+    res.json(req.cart);
+  }
+});
+
 // POST to add an item to the cart,
 // or add new quantity to existing quantity if product already is in cart
 router.post('/', (req, res) => {
@@ -12,13 +21,14 @@ router.post('/', (req, res) => {
   }
   // Cart is an array of objects with format { productId, quantity }
   // Increase quantity of product entry if found, otherwise push a new cart entry
-  const productEntry = req.cart.find(entry => +entry.productId === +productId);
-  if (productEntry) {
-    productEntry.quantity += quantity;
-    res.status(200).send('Product quantity updated');
+  const cartEntry = req.cart.find(entry => +entry.productId === +productId);
+  if (cartEntry) {
+    cartEntry.quantity += quantity;
+    res.json(cartEntry);
   } else {
-    req.cart.push({ productId, quantity });
-    res.status(200).send('Product added to cart');
+    const newCartEntry = { productId, quantity };
+    req.cart.push(newCartEntry);
+    res.json(newCartEntry);
   }
 });
 
@@ -31,12 +41,12 @@ router.put('/', (req, res) => {
   }
   // Cart is an array of objects with format { productId, quantity }
   // Replace existing quantity with new user-specified quantity
-  const productEntry = req.cart.find(entry => +entry.productId === +productId);
-  if (!productEntry) {
+  const cartEntry = req.cart.find(entry => +entry.productId === +productId);
+  if (!cartEntry) {
     res.status(404).send('Product does not exist in cart');
   } else {
-    productEntry.quantity = quantity;
-    res.status(200).send('Product quantity updated');
+    cartEntry.quantity = quantity;
+    res.json(cartEntry);
   }
 });
 

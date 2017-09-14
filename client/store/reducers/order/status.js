@@ -9,7 +9,7 @@ export const setAddress = status => ({
 
 // REDUCER
 export default function reducer(status = '', action) {
-  switch (action) {
+  switch (action.type) {
     case SET_STATUS:
       return action.status;
     default:

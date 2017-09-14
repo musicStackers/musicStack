@@ -17,6 +17,10 @@ const User = db.define('user', {
   salt: {
     type: Sequelize.STRING,
   },
+  mustResetPassword: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
   googleId: {
     type: Sequelize.STRING,
   },

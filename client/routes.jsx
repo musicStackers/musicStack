@@ -6,6 +6,17 @@ import PropTypes from 'prop-types';
 import history from './history';
 import { Nav, UserHome, Landing } from './components';
 import { me } from './store/reducers/user/';
+import { fetchCategories } from './store/reducers/categories';
+import { fetchCategoryProduct } from './store/reducers/category_product';
+import { fetchOrders } from './store/reducers/orders';
+import { fetchOrderProduct } from './store/reducers/order_product';
+import { fetchCategories } from './store/reducers/categories';
+import { fetchCategories } from './store/reducers/categories';
+
+
+
+
+
 
 /**
  * COMPONENT
@@ -53,6 +64,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
       dispatch(me());
+      dispatch(fetchCategories());
     },
   };
 };

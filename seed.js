@@ -1,8 +1,9 @@
 const chance = require('chance')(123);
 const faker = require('faker');
+const Promise = require('bluebird');
 
 const db = require('./server/db');
-const { User, Product, Photo, Category } = require('./server/db/models/');
+const { User, Product, Photo, Category, Order, Review } = require('./server/db/models/');
 
 /* -----------  Set up User data ----------- */
 
@@ -130,7 +131,7 @@ const randomProduct = (category) => {
     price: faker.commerce.price(),
   })
     .then(product => (
-      [product, category.addProduct(product)]
+      Promise.all([product, category.addProduct(product)])
     ))
     .spread((product) => {
       const photoIndex = chance.natural({
@@ -141,15 +142,16 @@ const randomProduct = (category) => {
       const photosPromArr = photoDataArr.map(photoData => (
         Photo.create(photoData)
       ));
-      return [product, Promise.all(photosPromArr)];
+      return Promise.all([product, Promise.all(photosPromArr)]);
     })
     .spread((product, photos) => {
-      photos.forEach(photo => product.addPhoto(photo));
+      const addPhotoPromArr = photos.map(photo => product.addPhoto(photo));
+      return Promise.all(addPhotoPromArr);
     })
     .catch(err => console.error(err));
 };
 
-const createProducts = (category) => {
+const createProductsForCat = (category) => {
   const promiseArr = [];
   for (let i = 0; i < numProducts; i += 1) {
     promiseArr.push(randomProduct(category));
@@ -159,6 +161,31 @@ const createProducts = (category) => {
 
 /* -----------  Set up Order data ----------- */
 
+const numOrders = 5; // 5 orders per user
+
+const randomOrder = ((user, products) => (
+  Order.create({
+    email: user.email,
+    address: user.address,
+  })
+    .then((order) => {
+      // console.log('order id', order.id)
+      // products.forEach(product => console.log(product.id))
+      // console.log('order products', products.length)
+      return Promise.all([order, user.addOrder(order)]);
+    })
+    .spread(order => Promise.all(products.map(product => order.addProduct(product))))
+    .catch(err => console.error(err))
+));
+
+const createOrdersForUser = (user, products) => {
+  const promiseArr = [];
+  for (let i = 0; i < numOrders; i += 1) {
+    promiseArr.push(randomOrder(user, products));
+  }
+  return Promise.all(promiseArr);
+};
+
 /* -----------  Set up Review data ----------- */
 
 /* -----------  Syncing database ----------- */
@@ -167,11 +194,42 @@ const seed = (() => (
   createCategories()
     .then((cats) => {
       const productPromiseArr = cats.map(category => (
-        createProducts(category)
+        createProductsForCat(category)
       ));
       return Promise.all(productPromiseArr);
     })
-    .then(() => createUsers())
+    .then((...products) => {
+      // products format (need to flatten couple times):
+      // [
+      //   [cat1 products...
+      //     [ prod, prod, ... ] -> assigned to photo 1 of cat 1
+      //     [ prod, ... ]
+      //   ],
+      //   [cat2 products...
+      //     ...
+      //   ],
+      //   ...
+      // ]
+      let flatProducts = [].concat(...products);
+      flatProducts = [].concat(...flatProducts);
+      flatProducts = [].concat(...flatProducts);
+      return Promise.all([createUsers(), flatProducts]);
+    })
+    .spread((users, products) => {
+      let numOrderProducts;
+      let orderProducts;
+      const orderPromArr = [];
+      users.forEach((user) => {
+        // pick random set of products
+        numOrderProducts = chance.natural({
+          min: 1,
+          max: 5,
+        });
+        orderProducts = chance.pickset(products, numOrderProducts);
+        orderPromArr.push(createOrdersForUser(user, orderProducts));
+      });
+      return Promise.all(orderPromArr);
+    })
     .catch(err => console.log(err))
 ));
 
@@ -182,11 +240,13 @@ db.sync({ force: true })
     console.log('Seeding database campusmanager ...');
     return seed();
   })
+  .then(() => {
+    console.log('Seeding successful!');
+  })
   .catch((err) => {
     console.log('Error from seeding!', err);
   })
   .then(() => {
-    console.log('Seeding successful!');
     db.close();
     return null;
   });

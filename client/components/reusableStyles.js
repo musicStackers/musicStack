@@ -24,7 +24,7 @@ const PhotoDivider = styled.div`
   width: 100%;
   height: 120px;
   vertical-align: middle;
-`;
+`;   
 
 const SideBar = styled.div`
   border-right: 2px solid black;

@@ -46,28 +46,28 @@ export default function (cart = [], action) {
 
 // THUNK CREATORS
 export const fetchCart = () => (dispatch) => {
-  axios.get('api/cart')
+  axios.get('/api/cart')
     .then(res => res.data)
     .then(cart => dispatch(setCart(cart)))
     .catch(console.error);
 };
 
 export const addProductToCart = (productId, quantity) => (dispatch) => {
-  axios.post('api/cart', { productId, quantity })
+  axios.post('/api/cart', { productId, quantity })
     .then(res => res.data)
     .then(entry => dispatch(addOrUpdateCartEntry(entry)))
     .catch(console.error);
 };
 
 export const updateCartEntry = (productId, quantity) => (dispatch) => {
-  axios.put('api/cart', { productId, quantity })
+  axios.put('/api/cart', { productId, quantity })
     .then(res => res.data)
     .then(entry => dispatch(addOrUpdateCartEntry(entry)))
     .catch(console.error);
 };
 
 export const deleteCartEntry = productId => (dispatch) => {
-  axios.delete('api/cart', { productId })
+  axios.delete('/api/cart', { productId })
     .then((res) => {
       if (res.status === 200) {
         dispatch(removeCartEntryByProductId(productId));

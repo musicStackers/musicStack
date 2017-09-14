@@ -11,7 +11,7 @@ const PhotoDivider = styled.div`
   width: 100%;
   height: 120px;
   vertical-align: middle;
-`;
+`;   
 
 module.exports = {
   H1,

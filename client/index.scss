@@ -1,6 +1,10 @@
 body {
   font-family: sans-serif;
 
+  * {
+    box-sizing: border-box;
+  }
+
   a {
     text-decoration: none;
   }
@@ -18,4 +22,7 @@ body {
     margin: 1em;
     display: inline-block;
   }
+
 }
+
+

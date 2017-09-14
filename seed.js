@@ -103,11 +103,13 @@ const bassoonPhotos = [
   ],
 ];
 
-const createPhotos = (() => (
-  Promise.all(photos.map(category => (
-    Category.create(category)
-  )))
-));
+const allPhotos = {
+  Guitar: guitarPhotos,
+  Keyboard: keyboardPhotos,
+  Drum: drumPhotos,
+  Bass: bassPhotos,
+  Bassoon: bassoonPhotos,
+};
 
 /* -----------  Set up Product data ----------- */
 
@@ -127,7 +129,23 @@ const randomProduct = (category) => {
     description: faker.lorem.paragraph(),
     price: faker.commerce.price(),
   })
-    .then(product => category.addProduct(product))
+    .then(product => (
+      [product, category.addProduct(product)]
+    ))
+    .spread((product) => {
+      const photoIndex = chance.natural({
+        min: 0,
+        max: allPhotos[category.title].length - 1,
+      });
+      const photoDataArr = allPhotos[category.title][photoIndex];
+      const photosPromArr = photoDataArr.map(photoData => (
+        Photo.create(photoData)
+      ));
+      return [product, Promise.all(photosPromArr)];
+    })
+    .spread((product, photos) => {
+      photos.forEach(photo => product.addPhoto(photo));
+    })
     .catch(err => console.error(err));
 };
 
@@ -143,8 +161,10 @@ const createProducts = (category) => {
 const seed = (() => (
   createCategories()
     .then((cats) => {
-      const promiseArr = cats.map(category => createProducts(category));
-      return Promise.all(promiseArr);
+      const productPromiseArr = cats.map(category => (
+        createProducts(category)
+      ));
+      return Promise.all(productPromiseArr);
     })
     .then(() => createUsers())
     .catch(err => console.log(err))

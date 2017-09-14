@@ -175,7 +175,7 @@ const randomOrder = ((user, products) => (
         const quantity = Math.ceil(Math.random() * 5);
         return order.addProduct(product, { through:
           { price: product.price, quantity } });
-      })),
+      }))
     )
     .catch(err => console.error(err))
 ));

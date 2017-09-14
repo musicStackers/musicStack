@@ -6,6 +6,7 @@ import SearchIcon from 'material-ui/svg-icons/action/search';
 import CartIcon from 'material-ui/svg-icons/action/shopping-cart';
 import { blue500 } from 'material-ui/styles/colors';
 import styled from 'styled-components';
+import { H1 } from './reusableStyles';
 
 // Styles
 const styles = {
@@ -23,13 +24,6 @@ const styles = {
     width: 500,
   },
 };
-
-const Logo = styled.h1`
-  padding: 10px;
-  color: #1e88e5;
-  font-size: 2.5em;
-  text-align: center;
-`;
 
 const NavWrapper = styled.div`
   width: 100%;
@@ -51,7 +45,7 @@ const Nav = () => {
   return (
     <MuiThemeProvider>
       <NavWrapper>
-        <Logo>FORTE</Logo>
+        <H1>FORTE</H1>
         <NavDivWrapper>
           <TextField
             hintText="Search"

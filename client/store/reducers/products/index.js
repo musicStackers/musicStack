@@ -27,7 +27,7 @@ export default function (products = [], action) {
 
 // THUNK CREATORS
 export const fetchProducts = () => (dispatch) => {
-  axios.get('/products')
+  axios.get('api/products')
     .then(res => res.data)
     .then(products => dispatch(setProducts(products)))
     .catch(console.error);

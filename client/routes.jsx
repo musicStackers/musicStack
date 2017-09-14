@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
 import { Nav, UserHome, Landing } from './components';
-import { me } from './store';
+import { me } from './store/reducers/user/';
 
 /**
  * COMPONENT

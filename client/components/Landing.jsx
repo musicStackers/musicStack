@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { GridList, GridTile } from 'material-ui/GridList';
-import { H1 } from './reusableStyles';
+import { H1, PhotoDivider } from './reusableStyles';
 
 // Component
 function Landing() {
@@ -37,11 +37,8 @@ function Landing() {
     vertical-align: 'middle';
   `;
 
-  const OurPicksDivider = styled.div`
-    width: 100%;
-    height: 120px;
+  const OurPicksDivider = PhotoDivider.extend`
     background-image: url('http://via.placeholder.com/350x150');
-    vertical-align: middle;
   `;
 
   const categories = [// bring in categories from mapState as Props

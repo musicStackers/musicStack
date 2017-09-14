@@ -7,6 +7,13 @@ const H1 = styled.h1`
   text-align: center;
 `;
 
+const PhotoDivider = styled.div`
+  width: 100%;
+  height: 120px;
+  vertical-align: middle;
+`;
+
 module.exports = {
   H1,
+  PhotoDivider,
 };

@@ -41,7 +41,7 @@ function Landing() {
     background-image: url('http://via.placeholder.com/350x150');
   `;
 
-  const categories = [// bring in categories from mapState as Props
+  const categories = [ // bring in categories from mapState as Props
     { id: 1, title: 'guitars', img: 'http://via.placeholder.com/350x150' },
     { id: 2, title: 'drums', img: 'http://via.placeholder.com/350x150' },
     { id: 3, title: 'saxophones', img: 'http://via.placeholder.com/350x150' },
@@ -51,10 +51,10 @@ function Landing() {
     { id: 7, title: 'electronics', img: 'http://via.placeholder.com/350x150' },
   ];
 
-  const picks = [// bring in 3 products from mapState as Props
-    { id: 1, title: 'best guitar' },
-    { id: 2, title: 'best drums' },
-    { id: 3, title: 'best flutes' },
+  const picks = [ // bring in 3 products from mapState as Props
+    { id: 1, title: 'best guitar', img: 'http://via.placeholder.com/350x150' },
+    { id: 2, title: 'best drums', img: 'http://via.placeholder.com/350x150' },
+    { id: 3, title: 'best flutes', img: 'http://via.placeholder.com/350x150' },
   ];
 
   // Styled Components
@@ -85,17 +85,20 @@ function Landing() {
           <H1>Our Picks</H1>
         </OurPicksDivider>
         <div className="our-picks">
-          {
-            picks.map((pick) => {
-              return (
-                <Link to={`/categories/${pick.id}`} key={pick.id}>
-                  <div className="pick-box">
-                    <p>{pick.title}</p>
-                  </div>
-                </Link>
-              );
-            })
-          }
+          <CarouselWrapper>
+            <GridList style={styles.gridList}>
+              {
+                picks.map((pick) => {
+                  return (
+                    <Link to={`/categories/${pick.id}`} key={pick.id}>
+                      <p>{pick.title}</p>
+                      <img src={pick.img} alt={pick.title} height="200" width="300" />
+                    </Link>
+                  );
+                })
+              }
+            </GridList>
+          </CarouselWrapper>
         </div>
       </div>
     </MuiThemeProvider>

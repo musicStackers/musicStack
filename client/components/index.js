@@ -6,5 +6,11 @@
 export { default as Main } from './main';
 export { default as Nav } from './Nav.jsx';
 export { default as Landing } from './Landing.jsx';
+export { default as Cart } from './Cart.jsx';
+export { default as Dashboard } from './Dashboard.jsx';
+export { default as AllProducts } from './AllProducts.jsx';
+export { default as Product } from './Product.jsx';
+export { default as Auth } from './Auth.jsx';
 export { default as UserHome } from './user-home';
 export { Login, Signup } from './auth-form';
+

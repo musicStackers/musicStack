@@ -70,8 +70,8 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchProducts());
       dispatch(fetchOrders());
       dispatch(fetchReviews());
-      dispatch(fetchCategoryProduct);
-      dispatch(fetchOrderProduct);
+      dispatch(fetchCategoryProduct());
+      dispatch(fetchOrderProduct());
     },
   };
 };

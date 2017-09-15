@@ -1,13 +1,11 @@
 const router = require('express').Router();
-const { Product, Category, Review, Photo } = require('../db/models');
+const { Product, Category, Review } = require('../db/models');
 
 module.exports = router;
 
 // GET for all Products
 router.get('/', (req, res, next) => {
-  Product.findAll({
-    include: [Photo],
-  })
+  Product.findAll()
     .then(products => res.json(products))
     .catch(next);
 });

@@ -9,7 +9,7 @@ import { H1, PhotoDivider } from './reusableStyles';
 
 
 // Component
-function Landing(props) {
+function Landing({ categories, picksProducts, picksPhotos }) {
   const styles = {
     gridList: {
       display: 'flex',
@@ -42,24 +42,7 @@ function Landing(props) {
   const OurPicksDivider = PhotoDivider.extend`
     background-image: url("https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg");
   `;
-
-  // Hard coded data for categories and picks
-  // const categories = [ // bring in categories from mapState as Props
-  //   { id: 1, title: 'guitars', img: 'http://via.placeholder.com/350x150' },
-  //   { id: 2, title: 'drums', img: 'http://via.placeholder.com/350x150' },
-  //   { id: 3, title: 'saxophones', img: 'http://via.placeholder.com/350x150' },
-  //   { id: 4, title: 'strings', img: 'http://via.placeholder.com/350x150' },
-  //   { id: 5, title: 'synths', img: 'http://via.placeholder.com/350x150' },
-  //   { id: 6, title: 'pianos', img: 'http://via.placeholder.com/350x150' },
-  //   { id: 7, title: 'electronics', img: 'http://via.placeholder.com/350x150' },
-  // ];
-
-  // const picks = [ // bring in 3 products from mapState as Props
-  //   { id: 1, title: 'best guitar', img: 'http://via.placeholder.com/350x150' },
-  //   { id: 2, title: 'best drums', img: 'http://via.placeholder.com/350x150' },
-  //   { id: 3, title: 'best flutes', img: 'http://via.placeholder.com/350x150' },
-  // ];
-
+  console.log("PICK", picksProducts);
   // Styled Components
   return (
     <MuiThemeProvider>
@@ -67,7 +50,7 @@ function Landing(props) {
         <CarouselWrapper>
           <GridList style={styles.gridList} cols={5}>
             {
-              props.categories.map((category) => {
+              categories.map((category) => {
                 return (
                   <GridTile
                     key={category.id}
@@ -87,18 +70,18 @@ function Landing(props) {
         <OurPicksDivider>
           <H1>Our Picks</H1>
         </OurPicksDivider>
+        {console.log("PRODUCTS", picksProducts)}
         <div className="our-picks">
-          <CarouselWrapper>
-            <GridList style={styles.gridList}>
-              {
-                props.picksProducts.map((pick) => {
-                  return (
-                    <p>{pick.title}</p>
-                  );
-                })
-              }
-            </GridList>
-          </CarouselWrapper>
+          {
+            picksProducts.map((pick) => {
+              return (
+                <Link to={`/categories/${pick.id}`} key={pick.id}>
+                  <p>{pick.title}</p>
+                  <img src={pick.photos[0].photoURL} alt={pick.title} height="200" width="300" />
+                </Link>
+              );
+            })
+          }
         </div>
       </div>
     </MuiThemeProvider>
@@ -106,10 +89,15 @@ function Landing(props) {
 }
 
 // Container
-const mapState = (state => ({
-  categories: state.categories,
-  picksProducts: state.products.slice(0, 3),
-}));
+const mapState = (state, ownProps) => {
+  const picksProducts = state.products.slice(0, 3);
+  const picksPhotos = picksProducts.map(thisProduct => state.photos.find(photo => +photo.productId === +thisProduct.id));
+  return {
+    categories: state.categories,
+    picksProducts,
+    picksPhotos,
+  };
+};
 
 const mapDispatch = null;
 

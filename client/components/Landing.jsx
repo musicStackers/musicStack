@@ -41,14 +41,6 @@ function Landing() {
     background-image: url('http://via.placeholder.com/350x150');
   `;
 
-  const IndvPicksDivier = PhotoDivider.extend`
-    display: 'inline-block';
-    margin: 5em;
-    padding: 5em;
-    height: '50px';
-    width: '50px';
-  `;
-
   const categories = [ // bring in categories from mapState as Props
     { id: 1, title: 'guitars', img: 'http://via.placeholder.com/350x150' },
     { id: 2, title: 'drums', img: 'http://via.placeholder.com/350x150' },
@@ -94,16 +86,18 @@ function Landing() {
         </OurPicksDivider>
         <div className="our-picks">
           <CarouselWrapper>
-            {
-              picks.map((pick) => {
-                return (
-                  <Link to={`/categories/${pick.id}`} key={pick.id}>>
-                    <p>{pick.title}</p>
-                    <img src={pick.img} alt={pick.title} height="200" width="300" />
-                  </Link>
-                );
-              })
-            }
+            <GridList style={styles.gridList}>
+              {
+                picks.map((pick) => {
+                  return (
+                    <Link to={`/categories/${pick.id}`} key={pick.id}>
+                      <p>{pick.title}</p>
+                      <img src={pick.img} alt={pick.title} height="200" width="300" />
+                    </Link>
+                  );
+                })
+              }
+            </GridList>
           </CarouselWrapper>
         </div>
       </div>

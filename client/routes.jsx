@@ -75,11 +75,8 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchReviews());
       dispatch(fetchCategoryProduct());
       dispatch(fetchOrderProduct());
-<<<<<<< HEAD
       dispatch(fetchPhotos());
       dispatch(fetchUsers());
-=======
->>>>>>> master
     },
   };
 };

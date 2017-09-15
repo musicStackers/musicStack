@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { TextField } from 'material-ui';
 import styled from 'styled-components';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -9,7 +10,8 @@ import { H1, H2, H3, PhotoDivider, SideBar } from './reusableStyles';
 import ProductSnapshot from './ProductSnapshot.jsx';
 
 // Component
-function AllProducts() {
+function AllProducts(props) {
+
   const styles = {
     block: {
       maxWidth: 250,
@@ -32,21 +34,15 @@ function AllProducts() {
     border-left: 2px solid #69b6ff;
   `;
 
-  const categories = [ // bring in categories from mapState as Props
-    { id: 1, title: 'guitars', img: 'http://via.placeholder.com/350x150' },
-    { id: 2, title: 'drums', img: 'http://via.placeholder.com/350x150' },
-    { id: 3, title: 'saxophones', img: 'http://via.placeholder.com/350x150' },
-    { id: 4, title: 'strings', img: 'http://via.placeholder.com/350x150' },
-    { id: 5, title: 'synths', img: 'http://via.placeholder.com/350x150' },
-    { id: 6, title: 'pianos', img: 'http://via.placeholder.com/350x150' },
-    { id: 7, title: 'electronics', img: 'http://via.placeholder.com/350x150' },
-  ];
+  const filterReviews = (productId) => {
+    const reviews = props.reviews;
 
-  const products = [ // bring in 3 products from mapState as Props
-    { id: 1, title: 'best guitar', img: 'http://via.placeholder.com/350x150', price: 4, stars: 3, review: 'This guitar set is so awesome!!! It has everything for you to play immediately. ' },
-    { id: 2, title: 'best drums', img: 'http://via.placeholder.com/350x150', price: 4, stars: 3, review: 'This guitar set is so awesome!!! It has everything for you to play immediately. ' },
-    { id: 3, title: 'best flutes', img: 'http://via.placeholder.com/350x150', price: 4, stars: 3, review: 'This guitar set is so awesome!!! It has everything for you to play immediately. ' },
-  ];
+    reviews.filter((review) => {
+      return review.productId === productId;
+    });
+
+    return reviews;
+  };
 
   // Styled Components
   return (
@@ -60,7 +56,7 @@ function AllProducts() {
           <div>
             <H3>Categories</H3>
             {
-              categories.map((category) => {
+              props.categories.map((category) => {
                 return (
                   <Checkbox
                     label={category.title}
@@ -94,7 +90,7 @@ function AllProducts() {
         </SideBar>
         <ProductsWrapper>
           {
-            products.map((product) => {
+            props.products.map((product) => {
               return (
                 <ProductSnapshot
                   key={product.id}
@@ -102,8 +98,7 @@ function AllProducts() {
                   title={product.title}
                   img={product.img}
                   price={product.price}
-                  stars={product.stars}
-                  review={product.review}
+                  reviews={filterReviews(product.id)}
                 />
               );
             })
@@ -115,16 +110,23 @@ function AllProducts() {
 }
 
 // Container
-// const mapState = (state, ownProps) => ({
-//   categories: state.categories,
-//   products: state.products,
-// });
+const mapState = (state, ownProps) => ({
+  categories: state.categories,
+  products: state.products,
+  reviews: state.reviews,
+  photos: state.photos,
+});
 
 // const mapDispatch = (dispatch) => {
 //   return {
 //   };
 // };
-const mapState = null;
+// const mapState = null;
 const mapDispatch = null;
 
 export default connect(mapState, mapDispatch)(AllProducts);
+
+// AllProducts.propTypes = {
+//   categories: PropTypes.array.isRequired,
+//   products: PropTypes.array.isRequired,
+// };

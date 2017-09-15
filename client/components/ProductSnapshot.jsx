@@ -10,6 +10,7 @@ import { H2, H3 } from './reusableStyles';
 export default function ProductSnapshot(props) {
   const { id, title, img, price, stars, review } = props;
 
+
   const ProductWrapper = styled.div`
     margin: 50px;
     height:100%;
@@ -37,7 +38,7 @@ export default function ProductSnapshot(props) {
           <H3>{`$ ${price}`}</H3>
         </ProductInfo>
         <ProductInfo>
-          <div>STARS-{stars}</div>
+          <div>STARS-{review.star}</div>
           <H3>Product Review</H3>
           <p>{review}</p>
         </ProductInfo>
@@ -52,5 +53,5 @@ ProductSnapshot.propTypes = {
   img: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   stars: PropTypes.number.isRequired,
-  review: PropTypes.string.isRequired,
+  reviews: PropTypes.string.isRequired,
 };

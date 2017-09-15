@@ -18,6 +18,8 @@ export const addProduct = product => ({
 // REDUCER
 export default function (products = [], action) {
   switch (action.type) {
+    case SET_PRODUCTS:
+      return action.products;
     case ADD_PRODUCT:
       return products.concat(action.product);
     default:

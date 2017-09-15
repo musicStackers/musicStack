@@ -19,8 +19,8 @@ const styles = {
     overflow: 'hidden',
   },
   divider: {
-    'margin-left': '40px',
-    'margin-right': '40px',
+    marginLeft: '40px',
+    marginRight: '40px',
   },
   raisedButton: {
     width: 180,

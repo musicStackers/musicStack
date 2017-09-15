@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { TextField, IconButton, FlatButton } from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SearchIcon from 'material-ui/svg-icons/action/search';
@@ -7,6 +8,7 @@ import CartIcon from 'material-ui/svg-icons/action/shopping-cart';
 import { blue500 } from 'material-ui/styles/colors';
 import styled from 'styled-components';
 import { H1 } from './reusableStyles';
+import { logout } from '../store/reducers/user';
 
 // Styles
 const styles = {
@@ -41,41 +43,79 @@ const NavDivWrapper = styled.div`
 `;
 
 // Component
-const Nav = () => {
-  return (
-    <MuiThemeProvider>
-      <NavWrapper>
-        <H1>FORTE</H1>
-        <NavDivWrapper>
-          <TextField
-            hintText="Search"
-            style={styles.input}
-          />
-          <IconButton
-            iconStyle={styles.icon}
-            style={styles.button}
-          >
-            <SearchIcon hoverColor={blue500} />
-          </IconButton>
-        </NavDivWrapper>
-        <NavDivWrapper>
-          <IconButton
-            iconStyle={styles.icon}
-            style={styles.button}
-          >
-            <CartIcon hoverColor={blue500} />
-          </IconButton>
-          <FlatButton label="Sign Up" />
-          <FlatButton label="Log In" />
-        </NavDivWrapper>
-      </NavWrapper>
-    </MuiThemeProvider>
-  );
-};
+class Nav extends React.Component {
+  constructor(props) {
+    super(props);
+    this.renderLogout = this.renderLogout.bind(this);
+  }
+
+
+  renderLogout() {
+    return (
+      <FlatButton
+        label="Log Out"
+        onClick={this.props.logout}
+      />
+    );
+  }
+
+  render() {
+    const { user } = this.props;
+    const authButton = user.id ?
+      this.renderLogout() :
+      (<div>
+        <FlatButton
+          href="/signup"
+          label="Sign Up"
+        />
+        <FlatButton
+          href="/login"
+          label="Log In"
+        />
+      </div>);
+
+    return (
+      <MuiThemeProvider>
+        <NavWrapper>
+          <a href="/">
+            <h1>FORTE</h1>
+          </a>
+          <NavDivWrapper>
+            <TextField
+              hintText="Search"
+              style={styles.input}
+            />
+            <IconButton
+              iconStyle={styles.icon}
+              style={styles.button}
+            >
+              <SearchIcon hoverColor={blue500} />
+            </IconButton>
+          </NavDivWrapper>
+          <NavDivWrapper>
+            <IconButton
+              iconStyle={styles.icon}
+              style={styles.button}
+            >
+              <CartIcon hoverColor={blue500} />
+            </IconButton>
+            {authButton}
+          </NavDivWrapper>
+        </NavWrapper>
+      </MuiThemeProvider>
+    );
+  }
+}
 
 // Container
-const mapState = null;
+const mapState = (state => ({
+  user: state.user,
+}));
 
-const mapDispatch = null;
+const mapDispatch = (dispatch => ({
+  logout: () => {
+    dispatch(logout());
+  },
+}));
 
 export default connect(mapState, mapDispatch)(Nav);

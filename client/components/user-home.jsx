@@ -12,8 +12,8 @@ export const UserHome = (props) => {
     <div>
       <h3>Welcome, {email}</h3>
     </div>
-  ),
-}
+  );
+};
 
 /**
  * CONTAINER
@@ -21,8 +21,8 @@ export const UserHome = (props) => {
 const mapState = (state) => {
   return {
     email: state.user.email,
-  }
-}
+  };
+};
 
 export default connect(mapState)(UserHome);
 
@@ -32,3 +32,4 @@ export default connect(mapState)(UserHome);
 UserHome.propTypes = {
   email: PropTypes.string,
 };
+

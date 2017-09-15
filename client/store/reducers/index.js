@@ -11,6 +11,8 @@ import products from './products';
 import reviews from './reviews';
 import review from './review';
 import user from './user';
+import users from './users';
+import photos from './photos';
 
 
 export default combineReducers({
@@ -26,4 +28,6 @@ export default combineReducers({
   reviews,
   review,
   user,
+  users,
+  photos,
 });

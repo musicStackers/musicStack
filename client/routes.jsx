@@ -12,6 +12,9 @@ import { fetchOrders } from './store/reducers/orders';
 import { fetchOrderProduct } from './store/reducers/order_product';
 import { fetchReviews } from './store/reducers/reviews';
 import { fetchProducts } from './store/reducers/products';
+import { fetchPhotos } from './store/reducers/photos';
+import { fetchUsers } from './store/reducers/users';
+
 
 /**
  * COMPONENT
@@ -70,8 +73,10 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchProducts());
       dispatch(fetchOrders());
       dispatch(fetchReviews());
-      dispatch(fetchCategoryProduct);
-      dispatch(fetchOrderProduct);
+      dispatch(fetchCategoryProduct());
+      dispatch(fetchOrderProduct());
+      dispatch(fetchPhotos());
+      dispatch(fetchUsers());
     },
   };
 };

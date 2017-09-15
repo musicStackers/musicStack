@@ -11,5 +11,7 @@ export { default as Dashboard } from './Dashboard.jsx';
 export { default as AllProducts } from './AllProducts.jsx';
 export { default as Product } from './Product.jsx';
 export { default as UserHome } from './user-home.jsx';
+export { default as ReviewList } from './ReviewList.jsx';
+export { default as Review } from './Review.jsx';
 export { Login, Signup } from './Auth-form.jsx';
 

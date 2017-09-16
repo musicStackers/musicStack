@@ -22,7 +22,7 @@ import { H1, H2, H3, ImagesWrapper } from './reusableStyles';
 //   { title: 'Piano' },
 // ]
 
-export const UserHome = ({ email, address, orders }) => {
+export const UserHome = ({ email, address, orders, user, }) => {
   return (
     <MuiThemeProvider>
       <div>
@@ -30,20 +30,22 @@ export const UserHome = ({ email, address, orders }) => {
         <ImagesWrapper>
           <div>
             <H2>Personal Detail</H2>
-            <h5>Email: {users.email}</h5>
-            <h5>Address: {fakeUser.address}</h5>
+            <h5>Email: {user.email}</h5>
+            <h5>Address: {user.address}</h5>
           </div>
           <div>
             <H2>Your Orders</H2>
-            {
-              orders.map((order) => {
-                return (
-                  <Link to={`/orders/${fakeUser.id}`} key={order.id}>
-                    <h5>{order.title}</h5>
-                  </Link>
-                );
-              })
-            }
+            {const userOrder = orders.find(order => +order.userId === +user.id)}
+              <Link to={`/order/${userOrder.id}`} key={order.id}>
+                <ImagesWrapper>
+                  <div>
+                    <h5>{userOrder.title}</h5>
+                  </div>
+                  <div>
+                    <h5>{userOrder.createdAt}</h5>
+                  </div>
+                </ImagesWrapper>
+              </Link>
           </div>
         </ImagesWrapper>
       </div>
@@ -59,6 +61,7 @@ const mapState = (state) => {
     email: state.user.email,
     address: state.user.address,
     orders: state.orders,
+    user: state.user,
   };
 };
 

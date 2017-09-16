@@ -3,7 +3,7 @@
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
-export { default as Main } from './main.jsx';
+
 export { default as Nav } from './Nav.jsx';
 export { default as Landing } from './Landing.jsx';
 export { default as Cart } from './Cart.jsx';

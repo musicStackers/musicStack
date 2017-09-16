@@ -40,6 +40,14 @@ const SideBar = styled.div`
   float: left;
 `;
 
+const ImagesWrapper = styled.div`
+display: flex;
+flexWrap: wrap;
+justify-content: space-around;
+margin: 40px 10px;
+`;
+
+
 module.exports = {
   H1,
   H2,
@@ -47,4 +55,5 @@ module.exports = {
   P,
   PhotoDivider,
   SideBar,
+  ImagesWrapper,
 };

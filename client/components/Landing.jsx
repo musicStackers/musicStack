@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { GridList, GridTile } from 'material-ui/GridList';
-import { H1, PhotoDivider } from './reusableStyles';
+import { H1, PhotoDivider, ImagesWrapper } from './reusableStyles';
 
 
 // Component
@@ -26,29 +26,32 @@ function Landing({ categories, picksProducts, picksPhotos }) {
     },
   };
 
-  const CarouselWrapper = styled.div`
-    display: 'flex';
-    flexWrap: 'wrap';
-    justifyContent: 'space-around';
-    margin: 40px 10px;
-  `;
-
   const TempPhoto = styled.div`
-    background-color: '#cfd8dc';
-    height: '200px';
-    vertical-align: 'middle';
+    background-color: #cfd8dc;
+    height: 200px;
+    vertical-align: middle;
   `;
 
   const OurPicksDivider = PhotoDivider.extend`
     background-image: url("https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg");
+
   `;
-  console.log("PICK", picksProducts);
+
   // Styled Components
   return (
     <MuiThemeProvider>
       <div>
-        <CarouselWrapper>
+        <ImagesWrapper>
           <GridList style={styles.gridList} cols={5}>
+            <GridTile
+              title="All Products"
+            >
+              <TempPhoto>
+                <Link to="/products">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" alt="All Products" height="200" width="300" />
+                </Link>
+              </TempPhoto>
+            </GridTile>
             {
               categories.map((category) => {
                 return (
@@ -66,22 +69,24 @@ function Landing({ categories, picksProducts, picksPhotos }) {
               })
             }
           </GridList>
-        </CarouselWrapper>
+        </ImagesWrapper>
         <OurPicksDivider>
           <H1>Our Picks</H1>
         </OurPicksDivider>
-        {console.log("PRODUCTS", picksProducts)}
         <div className="our-picks">
-          {
-            picksProducts.map((pick) => {
-              return (
-                <Link to={`/categories/${pick.id}`} key={pick.id}>
-                  <p>{pick.title}</p>
-                  <img src={pick.photos[0].photoURL} alt={pick.title} height="200" width="300" />
-                </Link>
-              );
-            })
-          }
+          <ImagesWrapper>
+            {
+              picksProducts.map((pick) => {
+                const photo = picksPhotos.find(p => +p.productId === +pick.id);
+                return (
+                  <Link to={`/categories/${pick.id}`} key={pick.id}>
+                    <p>{pick.title}</p>
+                    <img src={photo && photo.photoURL} alt={photo && photo.title} height="200" width="300" />
+                  </Link>
+                );
+              })
+            }
+          </ImagesWrapper>
         </div>
       </div>
     </MuiThemeProvider>
@@ -109,5 +114,6 @@ export default connect(mapState, mapDispatch)(Landing);
 Landing.propTypes = {
   categories: PropTypes.string.isRequired,
   picksProducts: PropTypes.string.isRequired,
+  picksPhotos: PropTypes.string.isRequired,
   error: PropTypes.object,
 };

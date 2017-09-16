@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Paper, TextField, RaisedButton, FlatButton } from 'material-ui';
+import { TextField, RaisedButton } from 'material-ui';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Divider from 'material-ui/Divider';
@@ -47,6 +47,8 @@ class ManageProducts extends Component {
   }
 
   render() {
+    const { products } = this.props;
+
     return (
       <MuiThemeProvider>
         <div>
@@ -93,7 +95,7 @@ class ManageProducts extends Component {
           <H2>Existing Products</H2>
           <div>
             {
-              this.props.products.map((product) => {
+              products.map((product) => {
                 return (
                   <div key={product.id}>
                     {product.title}

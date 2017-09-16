@@ -2,20 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Router, Route, Switch } from 'react-router';
 import { Link } from 'react-router-dom';
-import { TextField, RaisedButton, FlatButton } from 'material-ui';
+import { RaisedButton } from 'material-ui';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import history from '../../history';
 import ManageOrders from './ManageOrders.jsx';
 import ManageProducts from './ManageProducts.jsx';
 import ManageUsers from './ManageUsers.jsx';
-
+import { H1, H3 } from '../reusableStyles';
 // Styles
 const styles = {
   raisedButton: {
     width: 180,
     height: 60,
-    margin: '20px 100px',
+    margin: '20px 50px',
   },
 };
 
@@ -28,8 +28,8 @@ export const AdminDashboard = (props) => {
   return (
     <MuiThemeProvider>
       <div>
-        <h1>Hi Admin!</h1>
-        <h3>{`currently logged in as: ${email}`}</h3>
+        <H1>Hi Admin!</H1>
+        <H3>{`logged in as: ${email}`}</H3>
         <div>
           <RaisedButton
             label="Manage Products"

@@ -1,6 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+import Toggle from 'material-ui/Toggle';
+import { H2, H3 } from '../reusableStyles';
+
+// Styles
+const styles = {
+};
+
 /**
  * COMPONENT
  */
@@ -8,11 +24,11 @@ class ManageUsers extends Component {
 
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleToggleAdmin = this.handleToggleAdmin.bind(this);
   }
 
-  handleSubmit(evt) {
-    evt.preventDefault();
+  handleToggleAdmin(evt) {
+    // evt.preventDefault();
     // const campus = {
     //   name: evt.target.campusName.value,
     //   image: evt.target.campusImage.value,
@@ -22,10 +38,42 @@ class ManageUsers extends Component {
   }
 
   render() {
+    const { users } = this.props;
+
     return (
-      <div className="container">
-        <h1>This is Manage Users page!</h1>
-      </div>
+      <MuiThemeProvider>
+        <Table selectable={false}>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>User Email</TableHeaderColumn>
+              <TableHeaderColumn>Delete User</TableHeaderColumn>
+              <TableHeaderColumn>Admin</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {
+              users.map((user) => {
+                return (
+                  <TableRow key={user.id}>
+                    <TableRowColumn>
+                      {user.email}
+                    </TableRowColumn>
+                    <TableRowColumn>
+                      X
+                    </TableRowColumn>
+                    <TableRowColumn>
+                      <Toggle
+                        onToggle={this.handleToggleAdmin}
+                      />
+                    </TableRowColumn>
+                  </TableRow>
+                );
+              })
+            }
+          </TableBody>
+        </Table>
+      </MuiThemeProvider>
+
     );
   }
 }
@@ -33,7 +81,9 @@ class ManageUsers extends Component {
 /**
  * CONTAINER
  */
-const mapState = state => ({});
+const mapState = (state, ownProps) => ({
+  users: state.users,
+});
 
 const mapDispatch = (dispatch, ownProps) => {
   let { history } = ownProps;

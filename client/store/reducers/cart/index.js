@@ -5,6 +5,7 @@ import history from '../../../history';
 const SET_CART = 'SET_CART';
 const ADD_OR_UPDATE_CART_ENTRY = 'ADD_OR_UPDATE_CART_ENTRY';
 const REMOVE_CART_ENTRY_BY_PRODUCT_ID = 'REMOVE_CART_ENTRY_BY_PRODUCT_ID';
+const CLEAR_CART = 'CLEAR_CART';
 
 // ACTION CREATORS
 export const setCart = cart => ({
@@ -20,6 +21,11 @@ export const addOrUpdateCartEntry = entry => ({
 export const removeCartEntryByProductId = productId => ({
   type: REMOVE_CART_ENTRY_BY_PRODUCT_ID,
   productId,
+});
+
+export const clearCart = () => ({
+  type: CLEAR_CART,
+  cart: [],
 });
 
 // REDUCER
@@ -40,6 +46,8 @@ export default function (cart = [], action) {
         return [...cart.slice(0, existingEntryIndex), ...cart.slice(existingEntryIndex + 1)];
       }
       return cart;
+    case CLEAR_CART:
+      return action.cart;
     default:
       return cart;
   }

@@ -5,7 +5,7 @@ import { TextField } from 'material-ui';
 import styled from 'styled-components';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Checkbox from 'material-ui/Checkbox';
-import { H1, H2, H3, PhotoDivider, SideBar } from './reusableStyles';
+import { PhotoH1, H2, H3, PhotoDivider, SideBar } from './reusableStyles';
 import ProductSnapshot from './ProductSnapshot.jsx';
 
 // Component
@@ -20,12 +20,25 @@ class AllProducts extends Component {
     };
   }
 
-  handleCheck(category) {
+  handleCheck(categoryId) {
     this.setState(state => ({
-      selectedCategories: state.selectedCategories.includes(category)
-        ? state.selectedCategories.filter(cat => cat !== category)
-        : [...state.selectedCategories, category],
+      selectedCategories: state.selectedCategories.includes(categoryId)
+        ? state.selectedCategories.filter(catId => catId !== categoryId)
+        : [...state.selectedCategories, categoryId],
     }));
+  }
+
+  filterProductsByCategory() {
+    const products = [];
+    this.props.productCategories.forEach((el) => {
+      if (this.state.categories.includes(el.categoryId)) {
+        products.push(el.productId);
+      }
+    });
+    const filteredProducts = this.props.products.filter(product =>
+      products.includes(product.id),
+    );
+    return filteredProducts;
   }
 
   filterReviews(productId) {
@@ -41,7 +54,7 @@ class AllProducts extends Component {
     const productPhoto = photos.filter(photo =>
       photo.productId === productId,
     );
-    return productPhoto;
+    return productPhoto[0].photoURL;
   }
 
   starAverage(reviews) {
@@ -54,34 +67,42 @@ class AllProducts extends Component {
 
   // Styled Components
   render() {
-    console.log(this.state)
+    if (!this.props.productCategories.length || !this.props.categories) return <div />;
+
     const styles = {
       block: {
         maxWidth: 250,
       },
       checkbox: {
         marginBottom: 16,
+        paddingLeft: 5,
       },
       input: {
         width: 60,
+        paddingLeft: 5,
+        marginRight: 20,
       },
     };
 
     const ProductsTitlePhoto = PhotoDivider.extend`
-      background-image: url('http://via.placeholder.com/350x150');
+      height: 200px;
+      background-image: url('/assets/allproductsheader.jpg');
     `;
 
     const ProductsWrapper = styled.div`
       height:100%;
+      width: calc(100% - 250px);
       float: left;
       border-left: 2px solid #69b6ff;
     `;
+    // const renderProducts = this.filterProductsByCategory();
+    // console.log('render products', renderProducts);
 
     return (
       <MuiThemeProvider>
         <div>
           <ProductsTitlePhoto>
-            <H1>Products</H1>
+            <PhotoH1>Products</PhotoH1>
           </ProductsTitlePhoto>
           <SideBar>
             <H2>Filter Products</H2>
@@ -94,8 +115,8 @@ class AllProducts extends Component {
                       label={category.title}
                       style={styles.checkbox}
                       key={category.id}
-                      onCheck={() => this.handleCheck(category)}
-                      checked={this.state.selectedCategories.includes(category)}
+                      onCheck={() => this.handleCheck(category.id)}
+                      checked={this.state.selectedCategories.includes(category.id)}
                     />
                   );
                 })
@@ -103,20 +124,16 @@ class AllProducts extends Component {
             </div>
             <div>
               <H3>Price</H3>
-              <div>
-                <H3>Min</H3>
-                <TextField
-                  name="minprice"
-                  style={styles.input}
-                />
-              </div>
-              <div>
-                <H3>Min</H3>
-                <TextField
-                  name="maxprice"
-                  style={styles.input}
-                />
-              </div>
+              <TextField
+                name="minprice"
+                floatingLabelText="Min"
+                style={styles.input}
+              />
+              <TextField
+                name="maxprice"
+                floatingLabelText="Max"
+                style={styles.input}
+              />
             </div>
             <div>
               <H3>Stars</H3>
@@ -130,9 +147,9 @@ class AllProducts extends Component {
                     key={product.id}
                     id={product.id}
                     title={product.title}
-                    img={this.filterPhotos(product.id)[0].photoURL}
+                    img={this.filterPhotos(product.id)}
                     price={product.price}
-                    review={this.filterReviews(product.id)[0].description}
+                    description={product.description}
                     stars={this.starAverage(this.filterReviews(product.id))}
                   />
                 );
@@ -151,6 +168,7 @@ const mapState = (state, ownProps) => ({
   products: state.products,
   reviews: state.reviews,
   photos: state.photos,
+  productCategories: state.categoryProduct,
 });
 
 // const mapDispatch = (dispatch) => {
@@ -167,4 +185,5 @@ AllProducts.propTypes = {
   products: PropTypes.array.isRequired,
   reviews: PropTypes.array.isRequired,
   photos: PropTypes.array.isRequired,
+  productCategories: PropTypes.array.isRequired,
 };

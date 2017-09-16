@@ -23,6 +23,7 @@ import { H1, H2, H3, ImagesWrapper } from './reusableStyles';
 // ]
 
 export const UserHome = ({ email, address, orders, user, }) => {
+  const userOrders = orders.filter(order => +order.userId === user.id);
   return (
     <MuiThemeProvider>
       <div>
@@ -35,17 +36,19 @@ export const UserHome = ({ email, address, orders, user, }) => {
           </div>
           <div>
             <H2>Your Orders</H2>
-            {const userOrder = orders.find(order => +order.userId === +user.id)}
-              <Link to={`/order/${userOrder.id}`} key={order.id}>
-                <ImagesWrapper>
-                  <div>
-                    <h5>{userOrder.title}</h5>
-                  </div>
-                  <div>
-                    <h5>{userOrder.createdAt}</h5>
-                  </div>
-                </ImagesWrapper>
-              </Link>
+            {
+              userOrders.map((order) => {
+                return (
+                  <Link to={`/order/${order.id}`}>
+                    <div>
+                      {
+                        order.createdAt
+                        }
+                    </div>
+                  </Link>
+                );
+              })
+            }
           </div>
         </ImagesWrapper>
       </div>

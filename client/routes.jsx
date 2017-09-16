@@ -4,7 +4,7 @@ import { Router } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
-import { Nav, Landing, AllProducts, Dashboard, Product, Cart, Login, Signup } from './components';
+import { Nav, Landing, AllProducts, Dashboard, Product, Cart, Login, Signup, Checkout } from './components';
 import { me } from './store/reducers/user/';
 import { fetchCategories } from './store/reducers/categories';
 import { fetchCategoryProduct } from './store/reducers/category_product';
@@ -14,6 +14,7 @@ import { fetchReviews } from './store/reducers/reviews';
 import { fetchProducts } from './store/reducers/products';
 import { fetchPhotos } from './store/reducers/photos';
 import { fetchUsers } from './store/reducers/users';
+import { fetchCart } from './store/reducers/cart';
 
 
 /**
@@ -46,6 +47,7 @@ class Routes extends Component {
             <Route exact path="/signup/" component={Signup} />
             <Route exact path="/login/" component={Login} />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="/cart/checkout" component={Checkout} />
             <Route component={Landing} />
           </Switch>
         </div>
@@ -77,6 +79,7 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchOrderProduct());
       dispatch(fetchPhotos());
       dispatch(fetchUsers());
+      dispatch(fetchCart());
     },
   };
 };

@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 
 function Review(props) {
   return (
-    <div>{props.review.description}</div>
+    <div>
+      <div>
+        <div>{props.user && props.user.email}</div>
+        <div>{props.review.description}</div>
+      </div>
+    </div>
   );
 }
 

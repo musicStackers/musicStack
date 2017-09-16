@@ -4,7 +4,7 @@ import { Router } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
-import { Nav, Landing, AllProducts, Dashboard, Product, Cart, Login, Signup, Checkout } from './components';
+import { Nav, Landing, AllProducts, Dashboard, Product, Cart, Login, Signup, Checkout, UserHome } from './components';
 import { me } from './store/reducers/user/';
 import { fetchCategories } from './store/reducers/categories';
 import { fetchCategoryProduct } from './store/reducers/category_product';
@@ -48,6 +48,7 @@ class Routes extends Component {
             <Route exact path="/login/" component={Login} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/cart/checkout" component={Checkout} />
+            <Route exact path="/home" component={UserHome} />
             <Route component={Landing} />
           </Switch>
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { TextField, IconButton, FlatButton } from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SearchIcon from 'material-ui/svg-icons/action/search';
@@ -65,11 +65,11 @@ class Nav extends React.Component {
       this.renderLogout() :
       (<div>
         <FlatButton
-          href="/signup"
+          containerElement={<Link to="/signup" />}
           label="Sign Up"
         />
         <FlatButton
-          href="/login"
+          containerElement={<Link to="/login" />}
           label="Log In"
         />
       </div>);
@@ -77,9 +77,9 @@ class Nav extends React.Component {
     return (
       <MuiThemeProvider>
         <NavWrapper>
-          <a href="/">
-            <h1>FORTE</h1>
-          </a>
+          <Link to="/" >
+            <H1>FORTE</H1>
+          </Link>
           <NavDivWrapper>
             <TextField
               hintText="Search"

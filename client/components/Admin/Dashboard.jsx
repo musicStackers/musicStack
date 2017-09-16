@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Router, Route, Switch } from 'react-router';
+import { Link } from 'react-router-dom';
 import { TextField, RaisedButton, FlatButton } from 'material-ui';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import history from '../../history';
 import ManageOrders from './ManageOrders.jsx';
 import ManageProducts from './ManageProducts.jsx';
 import ManageUsers from './ManageUsers.jsx';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 
 // Styles
 const styles = {
@@ -34,17 +34,17 @@ export const AdminDashboard = (props) => {
           <RaisedButton
             label="Manage Products"
             style={styles.raisedButton}
-            href="/admin"
+            containerElement={<Link to="/admin/products" />}
           />
           <RaisedButton
             label="Manage Users"
             style={styles.raisedButton}
-            href="/admin/users"
+            containerElement={<Link to="/admin/users" />}
           />
           <RaisedButton
             label="Manage Orders"
             style={styles.raisedButton}
-            href="/admin/orders"
+            containerElement={<Link to="/admin/orders" />}
           />
         </div>
         <Router history={history}>

@@ -4,7 +4,7 @@ import { Router } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
-import { Nav, Landing, AllProducts, AdminDashboard, Product, Cart, Login, Signup, Checkout, AdminManageOrders, AdminManageProducts, AdminManageUsers } from './components';
+import { Nav, Landing, AllProducts, AdminDashboard, Product, Cart, Login, Signup, Checkout } from './components';
 import { me } from './store/reducers/user/';
 import { fetchCategories } from './store/reducers/categories';
 import { fetchCategoryProduct } from './store/reducers/category_product';
@@ -43,10 +43,7 @@ class Routes extends Component {
             <Route path="/products/:category/" component={AllProducts} />
             <Route exact path="/products" component={AllProducts} />
             <Route exact path="/product/:productId" component={Product} />
-            <Route exact path="/admin" component={AdminDashboard} />
-            <Route exact path="/admin/orders" component={AdminManageOrders} />
-            <Route exact path="/admin/products" component={AdminManageProducts} />
-            <Route exact path="/admin/users" component={AdminManageUsers} />
+            <Route path="/admin" component={AdminDashboard} />
             <Route exact path="/signup/" component={Signup} />
             <Route exact path="/login/" component={Login} />
             <Route exact path="/cart" component={Cart} />

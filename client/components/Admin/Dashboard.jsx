@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Router, Route } from 'react-router';
+import { Router, Route, Switch } from 'react-router';
 import { TextField, RaisedButton, FlatButton } from 'material-ui';
 
+import history from '../../history';
 import ManageOrders from './ManageOrders.jsx';
-import ManageProdcuts from './ManageProducts.jsx';
+import ManageProducts from './ManageProducts.jsx';
 import ManageUsers from './ManageUsers.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -29,18 +30,31 @@ export const AdminDashboard = (props) => {
       <div>
         <h1>Hi Admin!</h1>
         <h3>{`currently logged in as: ${email}`}</h3>
-        <RaisedButton
-          label="Manage Products"
-          style={styles.raisedButton}
-        />
-        <RaisedButton
-          label="Manage Users"
-          style={styles.raisedButton}
-        />
-        <RaisedButton
-          label="Manage Orders"
-          style={styles.raisedButton}
-        />
+        <div>
+          <RaisedButton
+            label="Manage Products"
+            style={styles.raisedButton}
+            href="/admin"
+          />
+          <RaisedButton
+            label="Manage Users"
+            style={styles.raisedButton}
+            href="/admin/users"
+          />
+          <RaisedButton
+            label="Manage Orders"
+            style={styles.raisedButton}
+            href="/admin/orders"
+          />
+        </div>
+        <Router history={history}>
+          <Switch>
+            <Route exact path="/admin" component={ManageProducts} />
+            <Route path="/admin/products" component={ManageProducts} />
+            <Route path="/admin/users" component={ManageUsers} />
+            <Route path="/admin/orders" component={ManageOrders} />
+          </Switch>
+        </Router>
       </div>
     </MuiThemeProvider>
   );

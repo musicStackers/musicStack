@@ -2,17 +2,24 @@ import styled from 'styled-components';
 
 const H1 = styled.h1`
   font-family: 'Pacifico', cursive;
+  height: 100%;
   padding: 10px;
   color: #1e88e5;
-  font-size: 2.5em;
+  font-size: 3em;
   text-align: center;
+  line-height: 4em;
 `;
 
 const H2 = styled.h2`
   padding: 10px;
   color: #1e88e5;
   font-size: 1.5em;
-  text-align: center;
+  text-align: left;
+`;
+
+const PhotoH1 = H1.extend`
+  color: #ffffff;
+  padding: 0;
 `;
 
 const H3 = styled.h3`
@@ -30,11 +37,11 @@ const P = styled.p`
 const PhotoDivider = styled.div`
   width: 100%;
   height: 120px;
-  vertical-align: middle;
+  margin-top: 20px;
 `;
 
 const SideBar = styled.div`
-  padding: 0 30px;
+  padding: 30px;
   width: 250px;
   height: 100vh;
   float: left;
@@ -45,6 +52,7 @@ module.exports = {
   H2,
   H3,
   P,
+  PhotoH1,
   PhotoDivider,
   SideBar,
 };

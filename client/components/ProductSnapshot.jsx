@@ -4,47 +4,47 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { H2, H3, P } from './reusableStyles';
+import Stars from './Stars.jsx';
 
 
 // Component
 export default function ProductSnapshot(props) {
-  const { id, title, img, price, stars, review } = props;
-  // console.log('stars', stars);
-  // console.log('review', review)
+  const { id, title, img, price, stars, description } = props;
 
   const ProductWrapper = styled.div`
-    margin: 50px;
+    margin-left: 20px;
+    padding: 20px;
     height:100%;
     display: flex;
-    border-bottom: 2px solid #69b6ff;
+    border-bottom: 1px solid #bdbdbd;
+    align-items: flex-start;
+    align-content: center;
 
   `;
   const ProductInfo = styled.div`
     flex-wrap: wrap;
-    margin: 10px;
+    padding: 20px;
     text-align: left;
-    vertical-align: middle;
-    width: 200px;
+    width: 350px;
   `;
-  const ProductPhoto = styled.div`
-    width: 150px;
+  const ProductPhoto = ProductInfo.extend`
     height: 200px;
     background-image: url(${img});
     background-size: contain;
     background-repeat: no-repeat;
+    margin: 10px auto;
   `;
   const PaddingH2 = H2.extend`
     padding: 5px;
     text-align: left;
   `;
+  const truncatedDesc = desc => `${desc.slice(0, 50)}...`;
 
   // Styled Components
   return (
     <MuiThemeProvider>
       <ProductWrapper>
-        <ProductInfo>
-          <ProductPhoto />
-        </ProductInfo>
+        <ProductPhoto />
         <ProductInfo>
           <Link to={`/products/${id}`}>
             <PaddingH2>{title}</PaddingH2>
@@ -52,9 +52,11 @@ export default function ProductSnapshot(props) {
           <H3>{`$ ${price}.00`}</H3>
         </ProductInfo>
         <ProductInfo>
-          <P>STARS-{stars}</P>
-          <H3>Product Review</H3>
-          <P>{review}</P>
+          <Stars
+            starRating={stars}
+          />
+          <H3>Product Description</H3>
+          <P>{truncatedDesc(description)}</P>
         </ProductInfo>
       </ProductWrapper>
     </MuiThemeProvider>
@@ -67,5 +69,5 @@ ProductSnapshot.propTypes = {
   img: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   stars: PropTypes.number.isRequired,
-  review: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
 };

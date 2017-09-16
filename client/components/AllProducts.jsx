@@ -54,6 +54,7 @@ class AllProducts extends Component {
 
   // Styled Components
   render() {
+    console.log(this.state)
     const styles = {
       block: {
         maxWidth: 250,

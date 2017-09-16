@@ -1,4 +1,5 @@
 import axios from 'axios';
+import history from '../../../history';
 
 // ACTION TYPES
 const SET_CART = 'SET_CART';
@@ -56,18 +57,19 @@ export const addProductToCart = (productId, quantity) => (dispatch) => {
   axios.post('/api/cart', { productId, quantity })
     .then(res => res.data)
     .then(entry => dispatch(addOrUpdateCartEntry(entry)))
-    .catch(console.error);
+    .then(() => history.push('/cart'))
+    .catch(alert);
 };
 
 export const updateCartEntry = (productId, quantity) => (dispatch) => {
   axios.put('/api/cart', { productId, quantity })
     .then(res => res.data)
     .then(entry => dispatch(addOrUpdateCartEntry(entry)))
-    .catch(console.error);
+    .catch(alert);
 };
 
 export const deleteCartEntry = productId => (dispatch) => {
-  axios.delete('/api/cart', { productId })
+  axios.delete('/api/cart', { params: { productId } })
     .then((res) => {
       if (res.status === 200) {
         dispatch(removeCartEntryByProductId(productId));

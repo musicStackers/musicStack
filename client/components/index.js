@@ -7,6 +7,8 @@ export { default as Main } from './main.jsx';
 export { default as Nav } from './Nav.jsx';
 export { default as Landing } from './Landing.jsx';
 export { default as Cart } from './Cart.jsx';
+export { default as CartEntry } from './CartEntry.jsx';
+export { default as Checkout } from './Checkout.jsx';
 export { default as Dashboard } from './Dashboard.jsx';
 export { default as AllProducts } from './AllProducts.jsx';
 export { default as Product } from './Product.jsx';

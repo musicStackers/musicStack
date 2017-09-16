@@ -1,27 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { CartEntry } from './index';
 import { NavLink } from 'react-router-dom';
+import { CartList } from './index';
 
-function Cart({ entries }) {
-  console.log('products are', entries);
+function Cart() {
   return (
     <div>
-      {
-        entries.map(entry => <CartEntry key={`product-${entry.product.id}`} {...entry} />)
-      }
+      <CartList />
       <div><NavLink to="/cart/checkout">Check Out</NavLink></div>
     </div>
   );
 }
 
-const mapState = (state, ownProps) => {
-  const cart = state.cart;
-  const entries = cart.map(entry => ({ product: state.products.find(product => +product.id === +entry.productId), quantity: entry.quantity }));
-  return {
-    entries,
-  };
-};
+const mapState = (state, ownProps) => ({});
 
 const mapDispatch = dispatch => ({});
 

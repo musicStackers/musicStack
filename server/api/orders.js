@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Order } = require('../db/models');
+const { Order, Product, OrderProduct } = require('../db/models');
 
 module.exports = router;
 
@@ -28,14 +28,38 @@ router.put('/:orderId', (req, res, next) => {
     .catch(next);
 });
 
-// POST to create a new order for a specifc user 
-router.post('/:userId', (req, res, next) => {
+// POST to create a new order for a specifc user
+router.post('/', (req, res, next) => {
+  console.log('order received');
+  const cart = req.body.cart;
+  let userId;
+  if (req.user) {
+    userId = req.user.id;
+  } else {
+    userId = null;
+  }
   Order.create({
     address: req.body.address,
     status: req.body.status,
     email: req.body.email,
-    userId: req.params.userId,
+    userId,
   })
-    .then(newOrder => res.status(201).send(newOrder))
+    .then(newOrder => [Promise.all(req.body.cart.map(entry =>
+      Product.findById(entry.productId)
+    )), newOrder])
+    .spread((products, newOrder) =>
+      [Promise.all(products.map((product, index) =>
+        OrderProduct.create({
+          orderId: newOrder.id,
+          productId: product.id,
+          price: product.price,
+          quantity: cart[index].quantity,
+        })
+      )), newOrder])
+    .spread((orderproducts, newOrder) => {
+      req.session.cart = [];
+      return [orderproducts, newOrder];
+    })
+    .spread((orderproducts, newOrder) => res.status(201).send({ orderproducts, newOrder }))
     .catch(next);
 });

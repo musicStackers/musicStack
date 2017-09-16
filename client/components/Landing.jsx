@@ -76,14 +76,16 @@ function Landing({ categories, picksProducts, picksPhotos }) {
         <div className="our-picks">
           <ImagesWrapper>
             {
-              picksProducts.map((pick) => {
-                const photo = picksPhotos.find(p => +p.productId === +pick.id);
-                return (
-                  <Link to={`/categories/${pick.id}`} key={pick.id}>
-                    <p>{pick.title}</p>
-                    <img src={photo && photo.photoURL} alt={photo && photo.title} height="200" width="300" />
-                  </Link>
-                );
+              picksProducts.map((pick, index) => {
+                if (index < 3) {
+                  const photo = picksPhotos.find(p => +p.productId === +pick.id);
+                  return (
+                    <Link to={`/categories/${pick.id}`} key={pick.id}>
+                      <p>{pick.title}</p>
+                      <img src={photo && photo.photoURL} alt={photo && photo.title} height="200" width="300" />
+                    </Link>
+                  );
+                }
               })
             }
           </ImagesWrapper>
@@ -95,8 +97,8 @@ function Landing({ categories, picksProducts, picksPhotos }) {
 
 // Container
 const mapState = (state, ownProps) => {
-  const picksProducts = state.products.slice(0, 3);
-  const picksPhotos = picksProducts.map(thisProduct => state.photos.find(photo => +photo.productId === +thisProduct.id));
+  const picksProducts = state.products;
+  const picksPhotos = state.photos;
   return {
     categories: state.categories,
     picksProducts,

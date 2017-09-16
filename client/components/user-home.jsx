@@ -9,19 +9,6 @@ import { H1, H2, H3, ImagesWrapper } from './reusableStyles';
 /**
  * COMPONENT
  */
-
-// const fakeUser = {
-//   id: 1,
-//   Email: 'janinegarcia@gmail.com',
-//   Address: 'Chicago, IL',
-// }
-
-// const orders = [
-//   { title: 'Bass' },
-//   { title: 'Guitar' },
-//   { title: 'Piano' },
-// ]
-
 export const UserHome = ({ email, address, orders, user, }) => {
   const userOrders = orders.filter(order => +order.userId === user.id);
   return (
@@ -31,20 +18,18 @@ export const UserHome = ({ email, address, orders, user, }) => {
         <ImagesWrapper>
           <div>
             <H2>Personal Detail</H2>
-            <h5>Email: {user.email}</h5>
-            <h5>Address: {user.address}</h5>
+            <h5>Email: {email}</h5>
+            <h5>Address: {address}</h5>
           </div>
           <div>
             <H2>Your Orders</H2>
             {
               userOrders.map((order) => {
                 return (
-                  <Link to={`/order/${order.id}`}>
-                    <div>
-                      {
-                        order.createdAt
-                        }
-                    </div>
+                  <Link to={`/order/${order.id}`} key={order.id}>
+                    {
+                      <h5>{order.createdAt.split("T")[0]}</h5>
+                    }
                   </Link>
                 );
               })

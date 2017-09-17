@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { H1, H2, H3, ImagesWrapper } from './reusableStyles';
 import EditIcon from 'material-ui/svg-icons/content/create';
 import { blue500 } from 'material-ui/styles/colors';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { H1, H2, H3, ImagesWrapper } from './reusableStyles';
 
 
 /**
@@ -15,8 +15,18 @@ class UserHome extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      viewOrEdit: '',
-    }
+      edit: false,
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const credentials = {
+      email: e.target.email.value,
+      password: e.target.password.value
+    };
+    alert('Changes have been saved!', credentials.email, credentials.password);
   }
 
   render() {
@@ -36,6 +46,15 @@ class UserHome extends Component {
               </div>
               <h5>Email: {email}</h5>
               <h5>Address: {address}</h5>
+              <div>
+                <form onSubmit={this.handleSubmit} >
+                  <label htmlFor="email">Email: </label>
+                  <input name="email" type="text" value={email} onChange={e => setEmail(e.target.value)} />
+                  <label htmlFor="address">Address:</label>
+                  <input name="address" type="text" value={address} onChange={e => setAddress(e.target.value)} />
+                  <input type="submit" value="Confirm Edit" />
+                </form>
+              </div>
             </div>
             <div>
               <H2>Your Orders</H2>
@@ -70,7 +89,9 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState)(UserHome);
+const mapDispatch = {};
+
+export default connect(mapState, mapDispatch)(UserHome);
 
 /**
  * PROP TYPES

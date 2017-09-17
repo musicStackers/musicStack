@@ -67,3 +67,4 @@ router.put('/:userId/reset', (req, res, next) => {
     .then(user => user.update({ mustResetPassword: true }))
     .catch(next);
 });
+

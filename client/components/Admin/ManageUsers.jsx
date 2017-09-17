@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { IconButton } from 'material-ui';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {
@@ -11,7 +12,7 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import Toggle from 'material-ui/Toggle';
-import { H2, H3 } from '../reusableStyles';
+import RemoveIcon from 'material-ui/svg-icons/content/clear';
 
 // Styles
 const styles = {
@@ -24,17 +25,14 @@ class ManageUsers extends Component {
 
   constructor(props) {
     super(props);
+    this.handleRemove = this.handleRemove.bind(this);
     this.handleToggleAdmin = this.handleToggleAdmin.bind(this);
   }
 
+  handleRemove(evt) {
+  }
+
   handleToggleAdmin(evt) {
-    // evt.preventDefault();
-    // const campus = {
-    //   name: evt.target.campusName.value,
-    //   image: evt.target.campusImage.value,
-    //   description: evt.target.campusDescription.value
-    // };
-    // this.props.addCampus(campus);
   }
 
   render() {
@@ -42,15 +40,20 @@ class ManageUsers extends Component {
 
     return (
       <MuiThemeProvider>
-        <Table selectable={false}>
-          <TableHeader>
+        <Table>
+          <TableHeader
+            displaySelectAll={false}
+            adjustForCheckboe={false}
+          >
             <TableRow>
               <TableHeaderColumn>User Email</TableHeaderColumn>
               <TableHeaderColumn>Delete User</TableHeaderColumn>
               <TableHeaderColumn>Admin</TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody
+            displayRowCheckbox={false}
+          >
             {
               users.map((user) => {
                 return (
@@ -59,7 +62,9 @@ class ManageUsers extends Component {
                       {user.email}
                     </TableRowColumn>
                     <TableRowColumn>
-                      X
+                      <IconButton>
+                        <RemoveIcon />
+                      </IconButton>
                     </TableRowColumn>
                     <TableRowColumn>
                       <Toggle

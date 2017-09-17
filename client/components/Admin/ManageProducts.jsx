@@ -38,12 +38,6 @@ class ManageProducts extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault();
-    // const campus = {
-    //   name: evt.target.campusName.value,
-    //   image: evt.target.campusImage.value,
-    //   description: evt.target.campusDescription.value
-    // };
-    // this.props.addCampus(campus);
   }
 
   render() {

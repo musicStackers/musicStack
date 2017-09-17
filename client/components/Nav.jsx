@@ -25,6 +25,13 @@ const styles = {
   input: {
     width: 500,
   },
+  flatButton: {
+    float: 'left',
+  },
+  buttonWrapper: {
+    overflow: 'hidden',
+    marginTop: '17px',
+  },
 };
 
 const NavWrapper = styled.div`
@@ -46,33 +53,56 @@ const NavDivWrapper = styled.div`
 class Nav extends React.Component {
   constructor(props) {
     super(props);
-    this.renderLogout = this.renderLogout.bind(this);
+    this.renderDashLogout = this.renderDashLogout.bind(this);
   }
 
 
-  renderLogout() {
+  renderDashLogout() {
+    const { user } = this.props;
     return (
-      <FlatButton
-        label="Log Out"
-        onClick={this.props.logout}
-      />
+      <div style={styles.buttonWrapper}>
+        {
+          user.isAdmin ?
+            <FlatButton
+              containerElement={<Link to="/admin" />}
+              label="Admin"
+              style={styles.flatButton}
+            /> :
+            <FlatButton
+              containerElement={<Link to="/home" />}
+              label="User"
+              style={styles.flatButton}
+            />
+        }
+        <FlatButton
+          label="Log Out"
+          onClick={this.props.logout}
+          style={styles.flatButton}
+        />
+      </div>
     );
   }
 
   render() {
-    const { user } = this.props;
-    const authButton = user.id ?
-      this.renderLogout() :
-      (<div>
+    const renderSignupLogin = () => (
+      <div style={styles.buttonWrapper}>
         <FlatButton
           containerElement={<Link to="/signup" />}
           label="Sign Up"
+          style={styles.flatButton}
         />
         <FlatButton
           containerElement={<Link to="/login" />}
           label="Log In"
+          style={styles.flatButton}
         />
-      </div>);
+      </div>
+    );
+
+    const { user } = this.props;
+    const authButton = user.id ?
+      this.renderDashLogout() :
+      renderSignupLogin();
 
     return (
       <MuiThemeProvider>

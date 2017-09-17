@@ -28,7 +28,7 @@ router.delete('/:userId', (req, res, next) => {
 });
 
 // PUT promote a user to admin status
-router.put(':/userId', (req, res, next) => {
+router.put('/:userId', (req, res, next) => {
   User.findById(req.params.userId)
     .then(user => user.update({ isAdmin: true }))
     .catch(next);

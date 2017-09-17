@@ -35,7 +35,6 @@ export const UserHome = ({ email, address, orders, user, }) => {
           </div>
           <div>
             <H2>Your Orders</H2>
-            {const userOrder = orders.find(order => +order.userId === +user.id)}
               <Link to={`/order/${userOrder.id}`} key={order.id}>
                 <ImagesWrapper>
                   <div>

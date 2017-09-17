@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Router } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import history from './history';
 import { Nav, Landing, AllProducts, Dashboard, Product, Cart, Login, Signup, Checkout, UserHome, ReviewForm } from './components';
 import { me } from './store/reducers/user/';
@@ -91,7 +91,7 @@ export default connect(mapState, mapDispatch)(Routes);
 /**
  * PROP TYPES
  */
-Routes.propTypes = {
-  loadInitialData: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-};
+// Routes.propTypes = {
+//   loadInitialData: PropTypes.func.isRequired,
+//   isLoggedIn: PropTypes.bool.isRequired,
+// };

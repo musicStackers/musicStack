@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Router } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import history from './history';
-import { Nav, Landing, AllProducts, AdminDashboard, Product, Cart, Login, Signup, Checkout } from './components';
+import { Nav, Landing, AllProducts, AdminDashboard, Product, Cart, Login, Signup, Checkout, UserHome, ReviewForm } from './components';
 import { me } from './store/reducers/user/';
 import { fetchCategories } from './store/reducers/categories';
 import { fetchCategoryProduct } from './store/reducers/category_product';
-import { fetchOrders } from './store/reducers/orders';
 import { fetchOrderProduct } from './store/reducers/order_product';
 import { fetchReviews } from './store/reducers/reviews';
 import { fetchProducts } from './store/reducers/products';
@@ -44,10 +43,12 @@ class Routes extends Component {
             <Route exact path="/products" component={AllProducts} />
             <Route exact path="/product/:productId" component={Product} />
             <Route path="/admin" component={AdminDashboard} />
+            <Route exact path="/product/:productId/review-form" component={ReviewForm} />
             <Route exact path="/signup/" component={Signup} />
             <Route exact path="/login/" component={Login} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/cart/checkout" component={Checkout} />
+            <Route exact path="/home" component={UserHome} />
             <Route component={Landing} />
           </Switch>
         </div>
@@ -73,7 +74,6 @@ const mapDispatch = (dispatch) => {
       dispatch(me());
       dispatch(fetchCategories());
       dispatch(fetchProducts());
-      dispatch(fetchOrders());
       dispatch(fetchReviews());
       dispatch(fetchCategoryProduct());
       dispatch(fetchOrderProduct());
@@ -89,7 +89,7 @@ export default connect(mapState, mapDispatch)(Routes);
 /**
  * PROP TYPES
  */
-Routes.propTypes = {
-  loadInitialData: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-};
+// Routes.propTypes = {
+//   loadInitialData: PropTypes.func.isRequired,
+//   isLoggedIn: PropTypes.bool.isRequired,
+// };

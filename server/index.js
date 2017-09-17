@@ -47,12 +47,12 @@ const createApp = () => {
   app.use(passport.initialize());
   app.use(passport.session());
 
+  // static file-serving middleware
+  app.use(express.static(path.join(__dirname, '..', 'public')));
+
   // auth and api routes
   app.use('/auth', auth);
   app.use('/api', api);
-
-  // static file-serving middleware
-  app.use(express.static(path.join(__dirname, '..', 'public')));
 
   // sends index.html
   app.use('*', (req, res) => {

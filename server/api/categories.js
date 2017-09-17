@@ -3,6 +3,16 @@ const { Category } = require('../db/models');
 
 module.exports = router;
 
+function adminGatekeeper(req, res, next) {
+  if (!req.user) {
+    res.status(401).send('You are not logged in');
+  }
+  if (!req.user.isAdmin) {
+    res.status(403).send('You are not authorized to perform this action');
+  }
+  next();
+}
+
 // GET for all Categories
 router.get('/', (req, res, next) => {
   Category.findAll()
@@ -11,7 +21,7 @@ router.get('/', (req, res, next) => {
 });
 
 // POST to create new Category
-router.post('/', (req, res, next) => {
+router.post('/', adminGatekeeper, (req, res, next) => {
   Category.create(req.body)
     .then(newCategory => res.status(201).json(newCategory))
     .catch(next);
@@ -34,14 +44,14 @@ router.get('/:categoryId', (req, res) => {
 });
 
 // PUT to edit Category
-router.put('/:categoryId', (req, res, next) => {
+router.put('/:categoryId', adminGatekeeper, (req, res, next) => {
   req.category.update(req.body)
     .then(updatedCategory => res.status(200).json(updatedCategory))
     .catch(next);
 });
 
 // DELETE to delete a Category
-router.delete('/:categoryId', (req, res, next) => {
+router.delete('/:categoryId', adminGatekeeper, (req, res, next) => {
   req.category.destroy()
     .then(() => res.sendStatus(200))
     .catch(next);

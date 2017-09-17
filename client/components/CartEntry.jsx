@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateCartEntry } from '../store/reducers/cart';
-import { deleteCartEntry } from '../store/reducers/cart';
 import { NavLink } from 'react-router-dom';
+import { updateCartEntry, deleteCartEntry } from '../store/reducers/cart';
 
 function CartEntry({ product, quantity, updateCartEntry, deleteCartEntry }) {
   function handleQuantityChange(e) {
@@ -15,7 +14,6 @@ function CartEntry({ product, quantity, updateCartEntry, deleteCartEntry }) {
     deleteCartEntry(product.id);
   }
 
-  console.log('product is', product, 'and quantity is', quantity);
   const quantityArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
   return (
     <div>

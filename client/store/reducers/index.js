@@ -13,6 +13,8 @@ import review from './review';
 import user from './user';
 import users from './users';
 import photos from './photos';
+import checkout from './checkout';
+import userForm from './user-form';
 
 
 export default combineReducers({
@@ -30,4 +32,6 @@ export default combineReducers({
   user,
   users,
   photos,
+  checkout,
+  userForm,
 });

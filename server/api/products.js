@@ -3,6 +3,16 @@ const { Product, Category, Review } = require('../db/models');
 
 module.exports = router;
 
+function adminGatekeeper(req, res, next) {
+  if (!req.user) {
+    res.status(401).send('You are not logged in');
+  }
+  if (!req.user.isAdmin) {
+    res.status(403).send('You are not authorized to perform this action');
+  }
+  next();
+}
+
 // GET for all Products
 router.get('/', (req, res, next) => {
   Product.findAll()
@@ -11,7 +21,7 @@ router.get('/', (req, res, next) => {
 });
 
 // POST to create new Product
-router.post('/', (req, res, next) => {
+router.post('/', adminGatekeeper, (req, res, next) => {
   Product.create(req.body)
     .then(newProduct => res.status(201).json(newProduct))
     .catch(next);
@@ -34,7 +44,7 @@ router.get('/:productId', (req, res) => {
 });
 
 // PUT to edit Product
-router.put('/:productId', (req, res, next) => {
+router.put('/:productId', adminGatekeeper, (req, res, next) => {
   req.product.update(req.body)
     .then(updatedProduct => res.status(200).json(updatedProduct))
     .catch(next);
@@ -61,7 +71,7 @@ router.post('/:productId/reviews', (req, res, next) => {
 });
 
 // POST to add Category to Product
-router.post('/:productId/categories', (req, res, next) => {
+router.post('/:productId/categories', adminGatekeeper, (req, res, next) => {
   Category.findById(req.body.id)
     .then(category => req.product.addCategory(category))
     .then(() => res.sendStatus(200))
@@ -69,7 +79,7 @@ router.post('/:productId/categories', (req, res, next) => {
 });
 
 // PUT to remove Category from Product
-router.put('/:productId/categories', (req, res, next) => {
+router.put('/:productId/categories', adminGatekeeper, (req, res, next) => {
   Category.findById(req.body.id)
     .then(category => req.product.removeCategory(category))
     .then(() => res.sendStatus(200))

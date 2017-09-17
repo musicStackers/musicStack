@@ -67,7 +67,7 @@ class AllProducts extends Component {
 
   // Styled Components
   render() {
-    if (!this.props.productCategories.length || !this.props.categories) return <div />;
+    if (!this.props.photos.length) return <div />;
 
     const styles = {
       block: {

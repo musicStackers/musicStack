@@ -1,19 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Stars from './Stars.jsx';
+import { Box } from './reusableStyles.js';
 
-function Review(props) {
+function Review({ review, user }) {
+  const style = {
+    review: {
+      padding: '10px',
+    },
+    email: {
+      paddingRight: '20px',
+    },
+  };
+
   return (
-    <div>
-      <div>
-        <div>{props.user && props.user.email}</div>
-        <div>{props.review.description}</div>
-      </div>
+    <div style={style.review}>
+      <Box>
+        <div style={style.email}>{user && user.email}</div>
+        <Stars starRating={review.star} />
+      </Box>
+      <div>{review.description}</div>
     </div>
   );
 }
 
-const mapState = (state, ownProps) => ({});
+const mapState = null;
 
-const mapDispatch = dispatch => ({});
+const mapDispatch = null;
 
 export default connect(mapState, mapDispatch)(Review);

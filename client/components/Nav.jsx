@@ -52,10 +52,12 @@ class Nav extends React.Component {
 
   renderLogout() {
     return (
-      <FlatButton
-        label="Log Out"
-        onClick={this.props.logout}
-      />
+      <div>
+        <FlatButton
+          label="Log Out"
+          onClick={this.props.logout}
+        />
+      </div>
     );
   }
 

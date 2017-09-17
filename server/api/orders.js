@@ -3,15 +3,35 @@ const { Order, Product, OrderProduct } = require('../db/models');
 
 module.exports = router;
 
+function adminGatekeeper(req, res, next) {
+  if (!req.user) {
+    res.status(401).send('You are not logged in');
+  }
+  if (!req.user.isAdmin) {
+    res.status(403).send('You are not authorized to perform this action');
+  }
+  next();
+}
+
+function userGatekeeper(req, res, next) {
+  if (!req.user) {
+    res.status(401).send('You are not logged in');
+  }
+  next();
+}
+
 // GET for all Orders
-router.get('/', (req, res, next) => {
+router.get('/', adminGatekeeper, (req, res, next) => {
   Order.findAll()
     .then(orders => res.json(orders))
     .catch(next);
 });
 
 // GET for all Orders specific to a User
-router.get('/:userId', (req, res, next) => {
+router.get('/:userId', userGatekeeper, (req, res, next) => {
+  if (+req.params.userId !== req.user.id) {
+    res.status(403).send('You are not authorized to perform this action');
+  }
   Order.findAll({
     where: {
       userId: req.params.userId,
@@ -22,7 +42,7 @@ router.get('/:userId', (req, res, next) => {
 });
 
 // PUT to edit a status of order
-router.put('/:orderId', (req, res, next) => {
+router.put('/:orderId', adminGatekeeper, (req, res, next) => {
   Order.findById(req.params.orderId)
     .then(order => order.update(req.body))
     .catch(next);

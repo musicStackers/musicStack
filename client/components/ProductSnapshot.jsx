@@ -38,7 +38,7 @@ export default function ProductSnapshot(props) {
     padding: 5px;
     text-align: left;
   `;
-  const truncatedDesc = desc => `${desc.slice(0, 50)}...`;
+  const truncatedDesc = desc => `${desc.slice(0, 75)}...`;
 
   // Styled Components
   return (
@@ -46,7 +46,7 @@ export default function ProductSnapshot(props) {
       <ProductWrapper>
         <ProductPhoto />
         <ProductInfo>
-          <Link to={`/products/${id}`}>
+          <Link to={`/product/${id}`}>
             <PaddingH2>{title}</PaddingH2>
           </Link>
           <H3>{`$ ${price}.00`}</H3>

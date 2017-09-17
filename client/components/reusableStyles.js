@@ -24,6 +24,7 @@ const PhotoH1 = H1.extend`
 
 const H3 = styled.h3`
   padding: 5px;
+  margin: 10px 0;
   font-size: 1em;
   text-align: left;
 `;
@@ -53,7 +54,12 @@ flexWrap: wrap;
 justify-content: space-around;
 margin: 40px 10px;
 `;
-
+const Box = styled.div`
+  display: flex;
+`;
+const InnerBox = styled.div`
+  margin: 10px 50px;
+`;
 
 module.exports = {
   H1,
@@ -64,4 +70,6 @@ module.exports = {
   PhotoDivider,
   SideBar,
   ImagesWrapper,
+  Box,
+  InnerBox,
 };

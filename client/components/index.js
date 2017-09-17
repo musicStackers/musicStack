@@ -16,5 +16,6 @@ export { default as Product } from './Product.jsx';
 export { default as UserHome } from './user-home.jsx';
 export { default as ReviewList } from './ReviewList.jsx';
 export { default as Review } from './Review.jsx';
+export { default as ReviewForm } from './ReviewForm.jsx';
 export { Login, Signup } from './Auth-form.jsx';
 

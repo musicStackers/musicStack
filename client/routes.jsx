@@ -8,7 +8,6 @@ import { Nav, Landing, AllProducts, Dashboard, Product, Cart, Login, Signup, Che
 import { me } from './store/reducers/user/';
 import { fetchCategories } from './store/reducers/categories';
 import { fetchCategoryProduct } from './store/reducers/category_product';
-import { fetchOrders } from './store/reducers/orders';
 import { fetchOrderProduct } from './store/reducers/order_product';
 import { fetchReviews } from './store/reducers/reviews';
 import { fetchProducts } from './store/reducers/products';
@@ -75,7 +74,6 @@ const mapDispatch = (dispatch) => {
       dispatch(me());
       dispatch(fetchCategories());
       dispatch(fetchProducts());
-      dispatch(fetchOrders());
       dispatch(fetchReviews());
       dispatch(fetchCategoryProduct());
       dispatch(fetchOrderProduct());

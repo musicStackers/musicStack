@@ -35,30 +35,40 @@ router.delete('/:userId', adminGatekeeper, (req, res, next) => {
     .catch(next);
 });
 
-router.put(':/userId', userGatekeeper, (req, res, next) => {
+router.put('/:userId', userGatekeeper, (req, res, next) => {
   if (+req.user.id !== +req.params.userId) {
     res.status(403).send('You are not authorized to perform this action');
   }
   User.findById(req.params.userId)
     .then(user => user.update({
       email: req.body.email,
-      password: req.body.password,
       address: req.body.address,
     }))
-    .catch(next);
+    .then((user) => {
+      if(req.body.password) {
+        return user.update({
+          password: req.body.password
+        })
+      }
+      else return user
+    })
+    .then(user => res.json(user))
+    .catch(console.error);
 });
 
 // PUT to change any user's info (admin only)
-router.put(':/userId/byAdmin', adminGatekeeper, (req, res, next) => {
+router.put('/:userId/byAdmin', adminGatekeeper, (req, res, next) => {
   User.findById(req.params.userId)
     .then(user => user.update(req.body))
+    .then(user => res.json(user))
     .catch(next);
 });
 
 // PUT promote a user to admin status
-router.put(':/userId/toAdmin', adminGatekeeper, (req, res, next) => {
+router.put('/:userId/toAdmin', adminGatekeeper, (req, res, next) => {
   User.findById(req.params.userId)
     .then(user => user.update({ isAdmin: true }))
+    .then(user => res.json(user))
     .catch(next);
 });
 
@@ -95,3 +105,4 @@ router.put('/:userId/reset', adminGatekeeper, (req, res, next) => {
     .then(user => user.update({ mustResetPassword: true }))
     .catch(next);
 });
+

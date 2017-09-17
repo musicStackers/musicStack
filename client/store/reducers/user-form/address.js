@@ -1,5 +1,5 @@
 // ACTION TYPES
-const UPDATE_ADDRESS = 'EDIT_ADDRESS';
+const UPDATE_ADDRESS = 'UPDATE_ADDRESS';
 
 // ACTION CREATORS
 export const updateAddress = address => ({

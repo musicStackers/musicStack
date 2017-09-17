@@ -6,7 +6,11 @@ import EditIcon from 'material-ui/svg-icons/content/create';
 import { blue500 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { H1, H2, H3, ImagesWrapper } from './reusableStyles';
-
+import { updateAddress } from '../store/reducers/user-form/address';
+import { updateEmail } from '../store/reducers/user-form/email';
+import { updatePassword } from '../store/reducers/user-form/password';
+import { editUser } from '../store/reducers/user-form';
+import { fetchOrdersByUserId } from '../store/reducers/orders';
 
 /**
  * COMPONENT
@@ -20,17 +24,21 @@ class UserHome extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+
+  componentDidMount() {
+    const { updateAddress, updateEmail, user, fetchOrdersByUserId } = this.props;
+    updateAddress(user.address);
+    updateEmail(user.email);
+    fetchOrdersByUserId(user.id);
+  }
+
   handleSubmit(e) {
     e.preventDefault();
-    const credentials = {
-      email: e.target.email.value,
-      password: e.target.password.value
-    };
-    alert('Changes have been saved!', credentials.email, credentials.password);
+    this.props.editThisUser(e.target.address.value, e.target.email.value, this.props.user.id, e.target.password.value);
   }
 
   render() {
-    const { user, email, address, orders } = this.props;
+    const { user, email, address, orders, password, updateAddress, updateEmail, updatePassword } = this.props;
     const userOrders = orders.filter(order => +order.userId === user.id);
     return (
       <MuiThemeProvider>
@@ -49,9 +57,11 @@ class UserHome extends Component {
               <div>
                 <form onSubmit={this.handleSubmit} >
                   <label htmlFor="email">Email: </label>
-                  <input name="email" type="text" value={email} onChange={e => setEmail(e.target.value)} />
+                  <input name="email" type="text" value={email} onChange={e => updateEmail(e.target.value)} />
                   <label htmlFor="address">Address:</label>
-                  <input name="address" type="text" value={address} onChange={e => setAddress(e.target.value)} />
+                  <input name="address" type="text" value={address} onChange={e => updateAddress(e.target.value)} />
+                  <label htmlFor="password">Password:</label>
+                  <input name="password" type="text" value={password} onChange={e => updatePassword(e.target.value)} />
                   <input type="submit" value="Confirm Edit" />
                 </form>
               </div>
@@ -82,14 +92,21 @@ class UserHome extends Component {
  */
 const mapState = (state) => {
   return {
-    email: state.user.email,
-    address: state.user.address,
+    email: state.userForm.email,
+    address: state.userForm.address,
+    password: state.userForm.password,
     orders: state.orders,
     user: state.user,
   };
 };
 
-const mapDispatch = {};
+const mapDispatch = dispatch => ({
+  updateAddress: address => dispatch(updateAddress(address)),
+  updateEmail: email => dispatch(updateEmail(email)),
+  updatePassword: password => dispatch(updatePassword(password)),
+  editThisUser: (address, email, userId, password) => dispatch(editUser(address, email, userId, password)),
+  fetchOrdersByUserId: (userId) => dispatch(fetchOrdersByUserId(userId)),
+});
 
 export default connect(mapState, mapDispatch)(UserHome);
 

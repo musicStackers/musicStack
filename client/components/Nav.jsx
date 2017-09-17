@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { TextField, IconButton, FlatButton } from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import SearchIcon from 'material-ui/svg-icons/action/search';
@@ -25,6 +25,13 @@ const styles = {
   input: {
     width: 500,
   },
+  flatButton: {
+    float: 'left',
+  },
+  buttonWrapper: {
+    overflow: 'hidden',
+    marginTop: '17px',
+  },
 };
 
 const NavWrapper = styled.div`
@@ -46,42 +53,63 @@ const NavDivWrapper = styled.div`
 class Nav extends React.Component {
   constructor(props) {
     super(props);
-    this.renderLogout = this.renderLogout.bind(this);
+    this.renderDashLogout = this.renderDashLogout.bind(this);
   }
 
 
-  renderLogout() {
+  renderDashLogout() {
+    const { user } = this.props;
     return (
-      <div>
+      <div style={styles.buttonWrapper}>
+        {
+          user.isAdmin ?
+            <FlatButton
+              containerElement={<Link to="/admin" />}
+              label="Admin"
+              style={styles.flatButton}
+            /> :
+            <FlatButton
+              containerElement={<Link to="/home" />}
+              label="User"
+              style={styles.flatButton}
+            />
+        }
         <FlatButton
           label="Log Out"
           onClick={this.props.logout}
+          style={styles.flatButton}
         />
       </div>
     );
   }
 
   render() {
+    const renderSignupLogin = () => (
+      <div style={styles.buttonWrapper}>
+        <FlatButton
+          containerElement={<Link to="/signup" />}
+          label="Sign Up"
+          style={styles.flatButton}
+        />
+        <FlatButton
+          containerElement={<Link to="/login" />}
+          label="Log In"
+          style={styles.flatButton}
+        />
+      </div>
+    );
+
     const { user } = this.props;
     const authButton = user.id ?
-      this.renderLogout() :
-      (<div>
-        <FlatButton
-          href="/signup"
-          label="Sign Up"
-        />
-        <FlatButton
-          href="/login"
-          label="Log In"
-        />
-      </div>);
+      this.renderDashLogout() :
+      renderSignupLogin();
 
     return (
       <MuiThemeProvider>
         <NavWrapper>
-          <a href="/">
-            <h1>FORTE</h1>
-          </a>
+          <Link to="/" >
+            <H1>FORTE</H1>
+          </Link>
           <NavDivWrapper>
             <TextField
               hintText="Search"

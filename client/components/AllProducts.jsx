@@ -13,11 +13,17 @@ class AllProducts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedCategories: [],
+      selectedCategories: this.props.categories.map(category => category.id) || [],
       selectedMinPrice: 0,
       selectedMaxPrice: 0,
       selectedStarMin: 0,
     };
+  }
+
+  componentWillReceiveProps () {
+    this.setState(state => ({
+      selectedCategories: this.props.categories.map(category => category.id),
+    }));
   }
 
   handleCheck(categoryId) {
@@ -31,7 +37,7 @@ class AllProducts extends Component {
   filterProductsByCategory() {
     const products = [];
     this.props.productCategories.forEach((el) => {
-      if (this.state.categories.includes(el.categoryId)) {
+      if (this.state.selectedCategories.includes(el.categoryId)) {
         products.push(el.productId);
       }
     });
@@ -95,8 +101,7 @@ class AllProducts extends Component {
       float: left;
       border-left: 2px solid #69b6ff;
     `;
-    // const renderProducts = this.filterProductsByCategory();
-    // console.log('render products', renderProducts);
+    const renderProducts = this.filterProductsByCategory();
 
     return (
       <MuiThemeProvider>
@@ -141,7 +146,7 @@ class AllProducts extends Component {
           </SideBar>
           <ProductsWrapper>
             {
-              this.props.products.map((product) => {
+              renderProducts.map((product) => {
                 return (
                   <ProductSnapshot
                     key={product.id}
@@ -163,7 +168,7 @@ class AllProducts extends Component {
 }
 
 // Container
-const mapState = (state, ownProps) => ({
+const mapState = (state) => ({
   categories: state.categories,
   products: state.products,
   reviews: state.reviews,
@@ -171,11 +176,6 @@ const mapState = (state, ownProps) => ({
   productCategories: state.categoryProduct,
 });
 
-// const mapDispatch = (dispatch) => {
-//   return {
-//   };
-// };
-// const mapState = null;
 const mapDispatch = null;
 
 export default connect(mapState, mapDispatch)(AllProducts);

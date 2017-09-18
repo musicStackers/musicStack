@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { SelectField, MenuItem, FlatButton } from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import styled from 'styled-components';
-import { ReviewList } from './';
+import { ReviewList, ReviewForm } from './';
 import { H2, H3, Box, InnerBox } from './reusableStyles';
 import { addProductToCart } from '../store/reducers/cart';
 import Stars from './Stars.jsx';
@@ -36,7 +36,7 @@ class Product extends Component {
   }
 
   render() {
-    const { product, reviews, photo } = this.props;
+    const { product, reviews, photo, match } = this.props;
     const quantityArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
     const styles = {
@@ -128,7 +128,7 @@ class Product extends Component {
               <p>{product && product.description}</p>
             </InnerBox>
           </Box>
-          <ReviewList reviews={reviews} />
+          <ReviewList reviews={reviews} productId={match.params.productId} />
         </ProductDiv>
       </MuiThemeProvider>
     );

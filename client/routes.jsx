@@ -8,7 +8,6 @@ import { Nav, Landing, AllProducts, AdminDashboard, Product, Cart, Login, Signup
 import { me } from './store/reducers/user/';
 import { fetchCategories } from './store/reducers/categories';
 import { fetchCategoryProduct } from './store/reducers/category_product';
-import { fetchOrderProduct } from './store/reducers/order_product';
 import { fetchReviews } from './store/reducers/reviews';
 import { fetchProducts } from './store/reducers/products';
 import { fetchPhotos } from './store/reducers/photos';
@@ -40,9 +39,8 @@ class Routes extends Component {
             }
             <Route path="/products/:category/" component={AllProducts} />
             <Route exact path="/products" component={AllProducts} />
-            <Route exact path="/product/:productId" component={Product} />
+            <Route path="/product/:productId" component={Product} />
             <Route path="/admin" component={AdminDashboard} />
-            <Route exact path="/product/:productId/review-form" component={ReviewForm} />
             <Route exact path="/signup/" component={Signup} />
             <Route exact path="/login/" component={Login} />
             <Route exact path="/cart" component={Cart} />
@@ -75,7 +73,6 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchProducts());
       dispatch(fetchReviews());
       dispatch(fetchCategoryProduct());
-      dispatch(fetchOrderProduct());
       dispatch(fetchPhotos());
       dispatch(fetchCart());
     },

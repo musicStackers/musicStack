@@ -12,64 +12,71 @@ import { H1, PhotoDivider, ImagesWrapper } from './reusableStyles';
 function Landing({ categories, picksProducts, picksPhotos }) {
   const styles = {
     gridList: {
-      display: 'flex',
-      flexWrap: 'nowrap',
+      flexWrap: 'no-wrap',
       overflowX: 'auto',
-    },
-    gridTile: {
-      backgroundColor: '#cfd8dc',
-      height: '200px',
-      verticalAlign: 'middle',
-    },
-    titleStyle: {
-      color: 'rgb(0, 188, 212)',
+      overflowY: 'auto',
     },
   };
 
-  const TempPhoto = styled.div`
+  const CatPhotoWrapper = styled.div`
     background-color: #cfd8dc;
-    height: 200px;
     vertical-align: middle;
+    overflow: hidden;
   `;
 
-  const OurPicksDivider = PhotoDivider.extend`
-    background-image: url("https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg");
+  const CategoryPhotos = () =>
+    (<ImagesWrapper>
+      <GridList
+        style={styles.gridList}
+        cols={5}
+        padding={1}
+        cellHeight={400}
+      >
+        <GridTile
+          key={0}
+          title="All Products"
+          cols={2}
+        >
+          <CatPhotoWrapper>
+            <Link to="/products">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
+                alt="All Products"
+              />
+            </Link>
+          </CatPhotoWrapper>
+        </GridTile>
+        {
+          categories.map(category => (
+            <GridTile
+              key={category.id}
+              title={category.title}
+              cols={1}
+            >
+              <CatPhotoWrapper>
+                <Link to={`/categories/${category.id}`}>
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg"
+                    alt="All Products"
+                  />
+                </Link>
+              </CatPhotoWrapper>
+            </GridTile>
+          ))
+        }
+      </GridList>
+    </ImagesWrapper>);
 
+  const OurPicksDivider = PhotoDivider.extend`
+    height: 200px;
+    background-image: url('/assets/allproductsheader.jpg');
   `;
 
   // Styled Components
   return (
     <MuiThemeProvider>
       <div>
-        <ImagesWrapper>
-          <GridList style={styles.gridList} cols={5}>
-            <GridTile
-              title="All Products"
-            >
-              <TempPhoto>
-                <Link to="/products">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" alt="All Products" height="200" width="300" />
-                </Link>
-              </TempPhoto>
-            </GridTile>
-            {
-              categories.map((category) => {
-                return (
-                  <GridTile
-                    key={category.id}
-                    title={category.title}
-                  >
-                    <TempPhoto>
-                      <Link to={`/categories/${category.id}`}>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" alt={category.title} height="200" width="300" />
-                      </Link>
-                    </TempPhoto>
-                  </GridTile>
-                );
-              })
-            }
-          </GridList>
-        </ImagesWrapper>
+        {CategoryPhotos()}
         <OurPicksDivider>
           <H1>Our Picks</H1>
         </OurPicksDivider>

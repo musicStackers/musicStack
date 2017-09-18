@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import EditIcon from 'material-ui/svg-icons/content/create';
 import { blue500 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { H1, H2, H3, ImagesWrapper } from './reusableStyles';
-import { updateAddress } from '../store/reducers/user-form/address';
-import { updateEmail } from '../store/reducers/user-form/email';
-import { updatePassword } from '../store/reducers/user-form/password';
-import { editUser } from '../store/reducers/user-form';
-import { fetchOrdersByUserId } from '../store/reducers/orders';
+import { H1, H2, H3, ImagesWrapper } from '../reusableStyles';
+import { updateAddress } from '../../store/reducers/user-form/address';
+import { updateEmail } from '../../store/reducers/user-form/email';
+import { updatePassword } from '../../store/reducers/user-form/password';
+import { editUser } from '../../store/reducers/user-form';
+import { fetchOrdersByUserId } from '../../store/reducers/orders';
 
 /**
  * COMPONENT

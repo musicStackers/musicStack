@@ -5,91 +5,142 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { GridList, GridTile } from 'material-ui/GridList';
-import { H1, PhotoDivider, ImagesWrapper } from './reusableStyles';
+import { H1, PhotoDivider, ImagesWrapper, PhotoH1 } from './reusableStyles';
 
 
 // Component
 function Landing({ categories, picksProducts, picksPhotos }) {
   const styles = {
     gridList: {
-      display: 'flex',
-      flexWrap: 'nowrap',
+      flexWrap: 'no-wrap',
       overflowX: 'auto',
     },
-    gridTile: {
-      backgroundColor: '#cfd8dc',
-      height: '200px',
-      verticalAlign: 'middle',
+    tileTitle: {
+      fontSize: 30,
     },
-    titleStyle: {
-      color: 'rgb(0, 188, 212)',
+    pickGridList: {
+      flexWrap: 'wrap',
+      overflowX: 'auto',
+      overflowY: 'auto',
+    },
+    pickPhotoStyle: {
+      display: 'block',
+      margin: '0 auto',
     },
   };
 
-  const TempPhoto = styled.div`
+  const CatPhotoWrapper = styled.div`
     background-color: #cfd8dc;
-    height: 200px;
     vertical-align: middle;
+    overflow: hidden;
   `;
+
+  const PickPhotoWrapper = styled.div`
+    vertical-align: middle;
+    overflow: hidden;
+    margin: 0 auto;
+    height: auto;
+  `;
+
+  const CategoryPhotoGrid = () => (
+    <ImagesWrapper>
+      <GridList
+        style={styles.gridList}
+        padding={2}
+        cellHeight={400}
+        cols={5}
+      >
+        <GridTile
+          key={0}
+          title="All Products"
+          titleStyle={styles.tileTitle}
+          cols={2}
+        >
+          <CatPhotoWrapper>
+            <Link to="/products">
+              <img
+                src="/assets/home-allproducts.jpg"
+                alt="All Products"
+                height="400px"
+              />
+            </Link>
+          </CatPhotoWrapper>
+        </GridTile>
+        {
+          categories.map(category => (
+            <GridTile
+              style={styles.gridList}
+              key={category.id}
+              title={category.title}
+              titleStyle={styles.tileTitle}
+              cols={1}
+            >
+              <CatPhotoWrapper>
+                <Link to={`/categories/${category.id}`}>
+                  <img
+                    src={`/assets/home-${category.title.toLowerCase()}.jpg`}
+                    alt={category.title}
+                    height="400px"
+                  />
+                </Link>
+              </CatPhotoWrapper>
+            </GridTile>
+          ))
+        }
+      </GridList>
+    </ImagesWrapper>
+  );
 
   const OurPicksDivider = PhotoDivider.extend`
-    background-image: url("https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg");
-
+    height: 200px;
+    background-image: url('/assets/allproductsheader.jpg');
   `;
+
+  const PickedProuctGrid = (() => (
+    <div className="our-picks">
+      <ImagesWrapper>
+        <GridList
+          style={styles.pickGridList}
+          cellHeight={300}
+          cols={3}
+        >
+          {
+            picksProducts.map((product) => {
+              const photo = picksPhotos.find(p => +p.productId === +product.id);
+              return (
+                <GridTile
+                  key={product.id}
+                  title={product.title}
+                  cols={1}
+                >
+                  <PickPhotoWrapper>
+                    <Link to={`/product/${product.id}`} key={product.id}>
+                      <img
+                        src={photo && photo.photoURL}
+                        alt={photo && photo.title}
+                        height="300px"
+                        style={styles.pickPhotoStyle}
+                      />
+                    </Link>
+                  </PickPhotoWrapper>
+                </GridTile>
+              );
+            })
+          }
+        </GridList>
+      </ImagesWrapper>
+    </div>
+  ));
 
   // Styled Components
   return (
     <MuiThemeProvider>
       <div>
-        <ImagesWrapper>
-          <GridList style={styles.gridList} cols={5}>
-            <GridTile
-              title="All Products"
-            >
-              <TempPhoto>
-                <Link to="/products">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" alt="All Products" height="200" width="300" />
-                </Link>
-              </TempPhoto>
-            </GridTile>
-            {
-              categories.map((category) => {
-                return (
-                  <GridTile
-                    key={category.id}
-                    title={category.title}
-                  >
-                    <TempPhoto>
-                      <Link to={`/categories/${category.id}`}>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" alt={category.title} height="200" width="300" />
-                      </Link>
-                    </TempPhoto>
-                  </GridTile>
-                );
-              })
-            }
-          </GridList>
-        </ImagesWrapper>
+        {CategoryPhotoGrid()}
         <OurPicksDivider>
-          <H1>Our Picks</H1>
+          <PhotoH1>Our Picks</PhotoH1>
         </OurPicksDivider>
-        <div className="our-picks">
-          <ImagesWrapper>
-            {
-              picksProducts.map((pick, index) => {
-                if (index < 3) {
-                  const photo = picksPhotos.find(p => +p.productId === +pick.id);
-                  return (
-                    <Link to={`/product/${pick.id}`} key={pick.id}>
-                      <p>{pick.title}</p>
-                      <img src={photo && photo.photoURL} alt={photo && photo.title} height="200" width="300" />
-                    </Link>
-                  );
-                }
-              })
-            }
-          </ImagesWrapper>
-        </div>
+        {PickedProuctGrid()}
       </div>
     </MuiThemeProvider>
   );
@@ -97,7 +148,7 @@ function Landing({ categories, picksProducts, picksPhotos }) {
 
 // Container
 const mapState = (state, ownProps) => {
-  const picksProducts = state.products;
+  const picksProducts = state.products.slice(0, 6);
   const picksPhotos = state.photos;
   return {
     categories: state.categories,

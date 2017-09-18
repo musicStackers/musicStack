@@ -7,7 +7,7 @@ import { Review, ReviewForm } from './';
 import { H2, InnerBox } from './reusableStyles';
 import history from '../history';
 
-function ReviewList({ reviews, users, productId }) {
+function ReviewList({ reviews, user, users, productId }) {
   const style = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -15,19 +15,19 @@ function ReviewList({ reviews, users, productId }) {
     marginBottom: '2rem',
   };
 
-  function handleSubmit(e) {
-    e.preventDefault();
-  }
+  const reviewButton = (
+    <FlatButton
+      label="Write a Review"
+      onClick={() => history.push(`/product/${productId}/review-form`)}
+    />
+  );
 
   return (
     <MuiThemeProvider>
       <div>
         <div style={style}>
           <H2>Reviews</H2>
-          <FlatButton
-            label="Write a Review"
-            onClick={() => history.push(`/product/${productId}/review-form`)}
-          />
+          { user.id ? reviewButton : null }
         </div>
         <div>
           <Router history={history}>
@@ -53,6 +53,7 @@ function ReviewList({ reviews, users, productId }) {
 
 const mapState = (state) => ({
   users: state.users,
+  user: state.user,
 });
 
 const mapDispatch = dispatch => ({});

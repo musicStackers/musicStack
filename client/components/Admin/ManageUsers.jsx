@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { IconButton } from 'material-ui';
+import { fetchUsers, deleteUser, makeUserAdmin } from '../../store/reducers/users';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {
@@ -22,21 +23,13 @@ const styles = {
  * COMPONENT
  */
 class ManageUsers extends Component {
-
-  constructor(props) {
-    super(props);
-    this.handleRemove = this.handleRemove.bind(this);
-    this.handleToggleAdmin = this.handleToggleAdmin.bind(this);
-  }
-
-  handleRemove(evt) {
-  }
-
-  handleToggleAdmin(evt) {
+  componentDidMount() {
+    const { fetchUsers } = this.props;
+    fetchUsers();
   }
 
   render() {
-    const { users } = this.props;
+    const { users, deleteUser, makeUserAdmin } = this.props;
 
     return (
       <MuiThemeProvider>
@@ -55,7 +48,7 @@ class ManageUsers extends Component {
             displayRowCheckbox={false}
           >
             {
-              users.map((user) => {
+              users.length && users.sort((a, b) => a.id - b.id).map((user) => {
                 return (
                   <TableRow key={user.id}>
                     <TableRowColumn>
@@ -63,12 +56,13 @@ class ManageUsers extends Component {
                     </TableRowColumn>
                     <TableRowColumn>
                       <IconButton>
-                        <RemoveIcon />
+                        <RemoveIcon onClick={() => deleteUser(user.id)} />
                       </IconButton>
                     </TableRowColumn>
                     <TableRowColumn>
                       <Toggle
-                        onToggle={this.handleToggleAdmin}
+                        toggled={user.isAdmin}
+                        onToggle={() => makeUserAdmin(user.id, user.isAdmin)}
                       />
                     </TableRowColumn>
                   </TableRow>
@@ -90,12 +84,10 @@ const mapState = (state, ownProps) => ({
   users: state.users,
 });
 
-const mapDispatch = (dispatch, ownProps) => {
-  let { history } = ownProps;
-  return {
-    // addCampus: (campus) => {
-    //   dispatch(addCampusThunk(campus, history));
-  }
-};
+const mapDispatch = (dispatch, ownProps) => ({
+  fetchUsers: () => dispatch(fetchUsers()),
+  deleteUser: userId => dispatch(deleteUser(userId)),
+  makeUserAdmin: (userId, isAdmin) => dispatch(makeUserAdmin(userId, isAdmin)),
+});
 
 export default connect(mapState, mapDispatch)(ManageUsers);

@@ -20,9 +20,9 @@ function userGatekeeper(req, res, next) {
   next();
 }
 
-router.get('/', (req, res, next) => {
+router.get('/', adminGatekeeper, (req, res, next) => {
   User.findAll({
-    attributes: ['id', 'email'],
+    attributes: ['id', 'email', 'isAdmin'],
   })
     .then(users => res.json(users))
     .catch(next);
@@ -32,6 +32,7 @@ router.get('/', (req, res, next) => {
 router.delete('/:userId', adminGatekeeper, (req, res, next) => {
   User.findById(req.params.userId)
     .then(user => user.destroy())
+    .then(() => res.sendStatus(204))
     .catch(next);
 });
 
@@ -68,7 +69,7 @@ router.put('/:userId/byAdmin', adminGatekeeper, (req, res, next) => {
 router.put('/:userId/toAdmin', adminGatekeeper, (req, res, next) => {
   User.findById(req.params.userId)
     .then(user => user.update({ isAdmin: true }))
-    .then(user => res.json(user))
+    .then(user => res.json({ id: user.id, email: user.email, isAdmin: user.isAdmin }))
     .catch(next);
 });
 

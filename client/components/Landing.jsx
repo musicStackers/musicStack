@@ -80,7 +80,7 @@ function Landing({ categories, picksProducts, picksPhotos }) {
                 if (index < 3) {
                   const photo = picksPhotos.find(p => +p.productId === +pick.id);
                   return (
-                    <Link to={`/categories/${pick.id}`} key={pick.id}>
+                    <Link to={`/product/${pick.id}`} key={pick.id}>
                       <p>{pick.title}</p>
                       <img src={photo && photo.photoURL} alt={photo && photo.title} height="200" width="300" />
                     </Link>

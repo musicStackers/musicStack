@@ -33,11 +33,10 @@ class Routes extends Component {
           <Nav />
           <Switch>
             {
-              // isLoggedIn &&
-              //   <Switch>
-              //     { Routes placed here are only available after logging in }
-              //     <Route path="/home" component={UserHome} />
-              //   </Switch>
+              isLoggedIn &&
+                <Switch>
+                  <Route path="/home" component={UserHome} />
+                </Switch>
             }
             <Route path="/products/:category/" component={AllProducts} />
             <Route exact path="/products" component={AllProducts} />

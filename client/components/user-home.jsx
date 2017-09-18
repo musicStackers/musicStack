@@ -24,7 +24,6 @@ class UserHome extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
   componentDidMount() {
     const { updateAddress, updateEmail, user, fetchOrdersByUserId } = this.props;
     updateAddress(user.address);

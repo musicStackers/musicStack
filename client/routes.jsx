@@ -12,7 +12,6 @@ import { fetchOrderProduct } from './store/reducers/order_product';
 import { fetchReviews } from './store/reducers/reviews';
 import { fetchProducts } from './store/reducers/products';
 import { fetchPhotos } from './store/reducers/photos';
-import { fetchUsers } from './store/reducers/users';
 import { fetchCart } from './store/reducers/cart';
 
 
@@ -78,7 +77,6 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchCategoryProduct());
       dispatch(fetchOrderProduct());
       dispatch(fetchPhotos());
-      dispatch(fetchUsers());
       dispatch(fetchCart());
     },
   };

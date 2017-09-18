@@ -24,7 +24,6 @@ class UserHome extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
   componentDidMount() {
     const { updateAddress, updateEmail, user, fetchOrdersByUserId } = this.props;
     updateAddress(user.address);
@@ -39,7 +38,7 @@ class UserHome extends Component {
 
   render() {
     const { user, email, address, orders, password, updateAddress, updateEmail, updatePassword } = this.props;
-    const userOrders = orders.filter(order => +order.userId === user.id);
+    const userOrders = orders.filter(order => +order.userId === +user.id);
     return (
       <MuiThemeProvider>
         <div>

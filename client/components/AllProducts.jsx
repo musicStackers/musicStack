@@ -20,7 +20,7 @@ class AllProducts extends Component {
     };
   }
 
-  componentWillReceiveProps () {
+  componentWillReceiveProps() {
     this.setState(state => ({
       selectedCategories: this.props.categories.map(category => category.id),
     }));

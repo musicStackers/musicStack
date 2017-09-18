@@ -11,6 +11,21 @@ const { User, Product, Photo, Category,
 const numUsers = 10;
 const userEmails = chance.unique(chance.email, numUsers);
 
+const adminUser = () => {
+  const street = chance.address();
+  const city = chance.city();
+  const state = chance.state();
+  const zip = chance.zip();
+
+  return User.create({
+    email: 'admin@admin.admin',
+    password: '123',
+    address: `${street}, ${city}, ${state} ${zip}`,
+    isAdmin: true,
+  })
+    .catch(err => console.error(err));
+}
+
 const randomUser = () => {
   const street = chance.address();
   const city = chance.city();
@@ -26,7 +41,7 @@ const randomUser = () => {
 };
 
 const createUsers = () => {
-  const promiseArr = [];
+  const promiseArr = [adminUser()];
   for (let i = 0; i < numUsers; i += 1) {
     promiseArr.push(randomUser());
   }

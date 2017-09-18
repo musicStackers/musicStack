@@ -14,10 +14,18 @@ function Landing({ categories, picksProducts, picksPhotos }) {
     gridList: {
       flexWrap: 'no-wrap',
       overflowX: 'auto',
-      overflowY: 'auto',
     },
     tileTitle: {
       fontSize: 30,
+    },
+    pickGridList: {
+      flexWrap: 'wrap',
+      overflowX: 'auto',
+      overflowY: 'auto',
+    },
+    pickPhotoStyle: {
+      display: 'block',
+      margin: '0 auto',
     },
   };
 
@@ -32,7 +40,6 @@ function Landing({ categories, picksProducts, picksPhotos }) {
     overflow: hidden;
     margin: 0 auto;
     height: auto;
-    border-radius: 50%;
   `;
 
   const CategoryPhotoGrid = () => (
@@ -41,12 +48,13 @@ function Landing({ categories, picksProducts, picksPhotos }) {
         style={styles.gridList}
         padding={2}
         cellHeight={400}
+        cols={5}
       >
         <GridTile
           key={0}
           title="All Products"
-          cols={2}
           titleStyle={styles.tileTitle}
+          cols={2}
         >
           <CatPhotoWrapper>
             <Link to="/products">
@@ -65,6 +73,7 @@ function Landing({ categories, picksProducts, picksPhotos }) {
               key={category.id}
               title={category.title}
               titleStyle={styles.tileTitle}
+              cols={1}
             >
               <CatPhotoWrapper>
                 <Link to={`/categories/${category.id}`}>
@@ -91,13 +100,12 @@ function Landing({ categories, picksProducts, picksPhotos }) {
     <div className="our-picks">
       <ImagesWrapper>
         <GridList
-          style={styles.gridList}
-          cols={3}
-          padding={2}
+          style={styles.pickGridList}
           cellHeight={300}
+          cols={3}
         >
           {
-            picksProducts.map((product, index) => {
+            picksProducts.map((product) => {
               const photo = picksPhotos.find(p => +p.productId === +product.id);
               return (
                 <GridTile
@@ -111,7 +119,7 @@ function Landing({ categories, picksProducts, picksPhotos }) {
                         src={photo && photo.photoURL}
                         alt={photo && photo.title}
                         height="300px"
-                        width="300px"
+                        style={styles.pickPhotoStyle}
                       />
                     </Link>
                   </PickPhotoWrapper>
@@ -140,7 +148,7 @@ function Landing({ categories, picksProducts, picksPhotos }) {
 
 // Container
 const mapState = (state, ownProps) => {
-  const picksProducts = state.products.slice(0, 4);
+  const picksProducts = state.products.slice(0, 6);
   const picksPhotos = state.photos;
   return {
     categories: state.categories,

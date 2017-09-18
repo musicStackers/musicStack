@@ -39,7 +39,7 @@ class UserHome extends Component {
 
   render() {
     const { user, email, address, orders, password, updateAddress, updateEmail, updatePassword } = this.props;
-    const userOrders = orders.filter(order => +order.userId === user.id);
+    const userOrders = orders.filter(order => +order.userId === +user.id);
     return (
       <MuiThemeProvider>
         <div>

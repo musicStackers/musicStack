@@ -7,7 +7,7 @@ import SearchIcon from 'material-ui/svg-icons/action/search';
 import CartIcon from 'material-ui/svg-icons/action/shopping-cart';
 import { blue500 } from 'material-ui/styles/colors';
 import styled from 'styled-components';
-import { H1 } from './reusableStyles';
+import { TitleH1 } from './reusableStyles';
 import { logout } from '../store/reducers/user';
 
 // Styles
@@ -16,37 +16,60 @@ const styles = {
     width: 32,
     height: 32,
   },
-  button: {
+  searchButton: {
+    width: '10%',
+    height: 60,
+    padding: 1,
+    top: 11,
+  },
+  searchInput: {
+    width: '80%',
+    top: 1,
+  },
+  cartButton: {
     width: 60,
     height: 60,
     padding: 5,
-    top: 20,
-  },
-  input: {
-    width: 500,
-  },
-  flatButton: {
-    float: 'left',
+    top: -5,
   },
   buttonWrapper: {
     overflow: 'hidden',
-    marginTop: '17px',
+    marginTop: 20,
+    display: 'inline-block',
+  },
+  title: {
+    marginTop: 15,
+    width: 250,
+    minWidth: 250,
+  },
+  flatButton: {
+    marginTop: 5,
   },
 };
 
 const NavWrapper = styled.div`
   width: 100%;
-  height: 60px;
+  height: 110px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   align-content: center;
 `;
 
-const NavDivWrapper = styled.div`
-  margin: 10px;
+const NavSearchDivWrapper = styled.div`
   padding: 10px;
   vertical-align: middle;
+  width: 600px;
+  margin-left: 2%;
+`;
+
+const NavCartDivWrapper = styled.div`
+  margin-top: 3px;
+  padding: 10px;
+  vertical-align: middle;
+  width: 260px;
+  min-width: 260px;
+  top: 20px;
 `;
 
 // Component
@@ -107,30 +130,30 @@ class Nav extends React.Component {
     return (
       <MuiThemeProvider>
         <NavWrapper>
-          <Link to="/" >
-            <H1>FORTE</H1>
+          <Link to="/" style={styles.title} >
+            <TitleH1>FORTE</TitleH1>
           </Link>
-          <NavDivWrapper>
+          <NavSearchDivWrapper>
             <TextField
               hintText="Search"
-              style={styles.input}
+              style={styles.searchInput}
             />
             <IconButton
               iconStyle={styles.icon}
-              style={styles.button}
+              style={styles.searchButton}
             >
               <SearchIcon hoverColor={blue500} />
             </IconButton>
-          </NavDivWrapper>
-          <NavDivWrapper>
+          </NavSearchDivWrapper>
+          <NavCartDivWrapper>
             <IconButton
               iconStyle={styles.icon}
-              style={styles.button}
+              style={styles.cartButton}
             >
               <CartIcon hoverColor={blue500} />
             </IconButton>
             {authButton}
-          </NavDivWrapper>
+          </NavCartDivWrapper>
         </NavWrapper>
       </MuiThemeProvider>
     );

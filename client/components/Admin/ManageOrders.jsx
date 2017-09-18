@@ -47,7 +47,7 @@ class ManageOrders extends Component {
         <Table>
           <TableHeader
             displaySelectAll={false}
-            adjustForCheckboe={false}
+            adjustForCheckbox={false}
           >
             <TableRow>
               <TableHeaderColumn>Order ID</TableHeaderColumn>

@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
-import { Review } from './';
+import { Router, Route, NavLink } from 'react-router-dom';
+import { Review, ReviewForm } from './';
 import { H2, InnerBox } from './reusableStyles';
+import history from '../history';
 
-function ReviewList({ reviews, users }) {
+function ReviewList({ reviews, users, productId }) {
   const style = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -24,8 +26,13 @@ function ReviewList({ reviews, users }) {
           <H2>Reviews</H2>
           <FlatButton
             label="Write a Review"
-            onClick={handleSubmit}
+            onClick={() => history.push(`/product/${productId}/review-form`)}
           />
+        </div>
+        <div>
+          <Router history={history}>
+            <Route exact path="/product/:productId/review-form" component={ReviewForm} />
+          </Router>
         </div>
         {
           reviews.map((review) => {

@@ -45,6 +45,7 @@ router.get('/:userId', userGatekeeper, (req, res, next) => {
 router.put('/:orderId', adminGatekeeper, (req, res, next) => {
   Order.findById(req.params.orderId)
     .then(order => order.update(req.body))
+    .then(order => res.json(order))
     .catch(next);
 });
 

@@ -16,10 +16,6 @@ import {
 import OrderDetail from './OrderDetail.jsx';
 import history from '../../history';
 
-// Styles
-const styles = {
-};
-
 /**
  * COMPONENT
  */
@@ -27,19 +23,18 @@ class UserOrders extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      filter: 'all',
-    };
   }
 
   componentDidMount() {
     const { fetchOrdersByUserId, user } = this.props;
-    fetchOrdersByUserId(user.id);
+    if (user) {
+      console.log('user is', user);
+      fetchOrdersByUserId(user.id);
+    }
   }
 
   render() {
     const { orders, user } = this.props;
-    const userOrders = orders.filter(order => +order.userId === +user.id);
     return (
       <MuiThemeProvider>
         <Table>
@@ -57,7 +52,7 @@ class UserOrders extends Component {
             displayRowCheckbox={false}
           >
             {
-              userOrders.length && userOrders
+              orders.length && orders
                 .sort((a, b) => a.id - b.id)
                 .map((order) => {
                   return (
@@ -98,11 +93,11 @@ class UserOrders extends Component {
  */
 const mapState = (state, ownProps) => ({
   orders: state.orders,
-  user: state.user.id,
+  user: state.user,
 });
 
 const mapDispatch = (dispatch, ownProps) => ({
-  fetchOrders: (userId) => dispatch(fetchOrdersByUserId(userId)),
+  fetchOrdersByUserId: (userId) => dispatch(fetchOrdersByUserId(userId)),
 });
 
 export default connect(mapState, mapDispatch)(UserOrders);

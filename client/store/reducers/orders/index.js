@@ -44,6 +44,8 @@ export const fetchOrders = () => (dispatch) => {
 };
 
 export const fetchOrdersByUserId = userId => (dispatch) => {
+  console.log('fetching orders by userId');
+  console.log('userId is', userId);
   axios.get(`/api/orders/${userId}`)
     .then(res => res.data)
     .then(orders => dispatch(setOrders(orders)))

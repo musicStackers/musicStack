@@ -95,13 +95,3 @@ const mapDispatch = dispatch => ({
 });
 
 export default connect(mapState, mapDispatch)(UserHome);
-
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
-  orders: PropTypes.string.isRequired,
-};
-

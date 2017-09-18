@@ -26,12 +26,18 @@ class Checkout extends React.Component {
       email: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
   }
 
   handleSubmit(e) {
     e.preventDefault();
     const { cart, createOrder } = this.props;
     createOrder(this.state.email, this.state.address, cart);
+  }
+
+  handleEmailChange(e, value) {
+    // e.preventDefault();
+    this.setState({ email: value });
   }
 
   render() {
@@ -59,7 +65,10 @@ class Checkout extends React.Component {
               <TableBody displayRowCheckbox={false}>
                 <TableRow>
                   <TableRowColumn>
-                    <TextField value={this.state.email} id="email-input" hint="email" onChange={(e, value) => this.setState({ email: value })} />
+                    <TextField
+                      id="email-input"
+                      hint="email"
+                      onChange={this.handleEmailChange} />
                   </TableRowColumn>
                   <TableRowColumn />
                   <TableRowColumn />
@@ -73,9 +82,9 @@ class Checkout extends React.Component {
           <Box>
             <form onSubmit={this.handleSubmit} >
               <label htmlFor="email">Email:</label>
-              <input name="email" type="text" onChange={e => setEmail(e.target.value)} />
+              <input name="email" type="text" value={this.state.email} />
               <label htmlFor="address">Address:</label>
-              <input name="address" type="text" value={address} onChange={e => setAddress(e.target.value)} />
+              <input name="address" type="text" value={this.state.address} />
               <input type="submit" value="Confirm Purchase" />
             </form>
           </Box>

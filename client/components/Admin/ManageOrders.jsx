@@ -77,9 +77,9 @@ class ManageOrders extends Component {
                 .sort((a, b) => a.id - b.id)
                 .map((order) => {
                   return (
-                    <Table>
+                    <Table key={order.id}>
                       <TableBody displayRowCheckbox={false}>
-                        <TableRow key={order.id} displayBorder={false} selectable={false}>
+                        <TableRow displayBorder={false} selectable={false}>
                           <TableRowColumn>
                             <NavLink to={`/admin/orders/${order.id}`}>{order.id}</NavLink>
                           </TableRowColumn>

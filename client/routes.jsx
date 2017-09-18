@@ -32,12 +32,12 @@ class Routes extends Component {
         <div>
           <Nav />
           <Switch>
-            {
+            {/* {
               isLoggedIn &&
                 <Switch>
                   <Route path="/home" component={UserHome} />
                 </Switch>
-            }
+            } */}
             <Route path="/products/:category/" component={AllProducts} />
             <Route exact path="/products" component={AllProducts} />
             <Route exact path="/product/:productId" component={Product} />

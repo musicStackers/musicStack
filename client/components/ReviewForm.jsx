@@ -38,7 +38,7 @@ class ReviewForm extends Component{
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.createThisReview(this.state.description, this.state.star, this.props.productId);
+    this.props.createThisReview(this.state.description, this.state.star, +this.props.productId);
   }
 
   displayStars(star) {

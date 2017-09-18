@@ -5,10 +5,10 @@ module.exports = router;
 
 function adminGatekeeper(req, res, next) {
   if (!req.user) {
-    res.status(401).send('You are not logged in');
+    return res.status(401).send('You are not logged in');
   }
-  if (!req.user.isAdmin) {
-    res.status(403).send('You are not authorized to perform this action');
+  else if (!req.user.isAdmin) {
+    return res.status(403).send('You are not authorized to perform this action');
   }
   next();
 }

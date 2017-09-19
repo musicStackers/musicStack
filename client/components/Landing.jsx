@@ -50,24 +50,24 @@ function Landing({ categories, picksProducts, picksPhotos }) {
         cols={5}
       >
         <GridTile
+          containerElement={<Link to="/products" />}
           key={0}
           title="All Products"
           titleStyle={styles.tileTitle}
           cols={2}
         >
           <CatPhotoWrapper>
-            <Link to="/products">
-              <img
-                src="/assets/home-allproducts.jpg"
-                alt="All Products"
-                height="400px"
-              />
-            </Link>
+            <img
+              src="/assets/home-allproducts.jpg"
+              alt="All Products"
+              height="400px"
+            />
           </CatPhotoWrapper>
         </GridTile>
         {
           categories.map(category => (
             <GridTile
+              containerElement={<Link to={`/products/category/${category.id}`} />}
               style={styles.gridList}
               key={category.id}
               title={category.title}
@@ -75,13 +75,11 @@ function Landing({ categories, picksProducts, picksPhotos }) {
               cols={1}
             >
               <CatPhotoWrapper>
-                <Link to={`/products/category/${category.id}`}>
-                  <img
-                    src={`/assets/home-${category.title.toLowerCase()}.jpg`}
-                    alt={category.title}
-                    height="400px"
-                  />
-                </Link>
+                <img
+                  src={`/assets/home-${category.title.toLowerCase()}.jpg`}
+                  alt={category.title}
+                  height="400px"
+                />
               </CatPhotoWrapper>
             </GridTile>
           ))

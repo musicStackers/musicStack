@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { DropDownMenu, MenuItem } from 'material-ui';
+import { DropDownMenu, MenuItem, SelectField } from 'material-ui';
 import { fetchOrders, updateOrderStatus } from '../../store/reducers/orders';
 import { fetchOrderProduct } from '../../store/reducers/order_product';
 import { Router, Route, NavLink } from 'react-router-dom';
@@ -19,6 +19,9 @@ import history from '../../history';
 
 // Styles
 const styles = {
+  select: {
+    width: '200px',
+  },
 };
 
 /**
@@ -54,14 +57,18 @@ class ManageOrders extends Component {
               <TableHeaderColumn>Order Email</TableHeaderColumn>
               <TableHeaderColumn>Order Address</TableHeaderColumn>
               <TableHeaderColumn>
-                Order Status:
-                <select value={this.state.filter} onChange={e => this.setState({ filter: e.target.value })}>
-                  <option value="all">All</option>
-                  <option value="created">Created</option>
-                  <option value="processing">Processing</option>
-                  <option value="cancelled">Cancelled</option>
-                  <option value="completed">Completed</option>
-                </select>
+                <SelectField
+                  onChange={(e, i, value) => this.setState({ filter: value })}
+                  value={this.state.filter}
+                  style={styles.select}
+                  floatingLabelText="Order Status:"
+                >
+                  <MenuItem value="all" primaryText="All" />
+                  <MenuItem value="created" primaryText="Created" />
+                  <MenuItem value="processing" primaryText="Processing" />
+                  <MenuItem value="cancelled" primaryText="Cancelled" />
+                  <MenuItem value="completed" primaryText="Completed" />
+                </SelectField>
               </TableHeaderColumn>
             </TableRow>
           </TableHeader>
@@ -134,3 +141,11 @@ const mapDispatch = (dispatch, ownProps) => ({
 });
 
 export default connect(mapState, mapDispatch)(ManageOrders);
+
+                // <select value={this.state.filter} onChange={e => this.setState({ filter: e.target.value })}>
+                //   <option value="all">All</option>
+                //   <option value="created">Created</option>
+                //   <option value="processing">Processing</option>
+                //   <option value="cancelled">Cancelled</option>
+                //   <option value="completed">Completed</option>
+                // </select>

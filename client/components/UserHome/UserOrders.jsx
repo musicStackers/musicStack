@@ -28,7 +28,6 @@ class UserOrders extends Component {
   componentDidMount() {
     const { fetchOrdersByUserId, user } = this.props;
     if (user) {
-      console.log('user is', user);
       fetchOrdersByUserId(user.id);
     }
   }

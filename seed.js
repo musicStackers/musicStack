@@ -69,47 +69,47 @@ const createCategories = (() => (
 // TODO: add more images if you have free time!
 const guitarPhotos = [
   [
-    { photoURL: 'https://www.taylorguitars.com/sites/default/files/styles/multi_column_guitar_three/public/responsive-guitar-detail/Taylor-524ce-fr-2016.png?itok=ENjzoiOl' },
-    { photoURL: 'http://jamestownarts.com/wp-content/uploads/2017/03/maxresdefault.jpg' },
-    { photoURL: 'https://i.pinimg.com/736x/24/ea/ff/24eaff9ac0e141a80437de1e3be78b6e--bass-guitars-acoustic-guitars.jpg' },
+    { photoURL: 'https://images.reverb.com/image/upload/s--SPkOTfWn--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1476392876/iubpftbnjpfyhko2gkoi.png' },
+    { photoURL: 'https://images.reverb.com/image/upload/s--sQXo5U2W--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1476392872/gdih1cl4ncyorjccc9ec.png' },
+    { photoURL: 'https://images.reverb.com/image/upload/s--R1e_P_wL--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1476392883/kdseiogfj88beyoxhejb.png' },
   ],
   [
     { photoURL:
-      'https://s3-us-west-2.amazonaws.com/static.music-man.com/website/images/instruments/instrument-20.png?1467907743' },
+      'https://images.reverb.com/image/upload/s--cpm9SLGh--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_1600,q_80,w_1600/v1481127499/t2krag8o2perhk1gs97l.png' },
     { photoURL:
-      'http://www.guitarworld.com/sites/default/files/public/2016/06/BBPOP621.jpg' },
+      'https://images.reverb.com/image/upload/s--C5m455l4--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1481127502/eyehs3vdreoyvnydrila.png' },
     { photoURL:
-      'http://www.guitarworld.com/sites/default/files/public/2016/08/SteveVaiGuitars_4796.jpg' },
+      'https://images.reverb.com/image/upload/s--8cEZGL5H--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1481127510/cbkcvcpmnvwzorf6wywa.png' },
   ],
   [
     { photoURL:
-      'https://www.taylorguitars.com/sites/default/files/styles/multi_column_guitar_three/public/responsive-guitar-detail/Taylor-814ce-fr-2015.png?itok=B3YG3tBf' },
+      'https://images.reverb.com/image/upload/s--lq5CQIyn--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1475077223/yt5v3wetnbqyq8mhdtkr.jpg' },
     { photoURL:
-      'http://media.guitarcenter.com/is/image/MMGS7/FA-135CE-Cutaway-Concert-Acoustic-Electric-Guitar-Natural/H70301000001000-00-500x500.jpg' },
+      'https://images.reverb.com/image/upload/s--ndL3RXJI--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1505845941/bkw4juxascyhwgw8pjea.jpg' },
   ],
 ];
 
 const keyboardPhotos = [
   [
     { photoURL: 'http://www.fairdealmusic.co.uk/media/catalog/product/cache/1/image/1ad2536b4e0b64b5213084f52c752e7f/c/t/ctk-7200-keyboard_4.jpg' },
-    { photoURL: 'http://musicappblog.com/wp-content/uploads/2013/07/alesis-Q25-keyboard-promo-shot.jpg' },
-    { photoURL: 'https://images-na.ssl-images-amazon.com/images/G/01/img16/musical-instruments/vertical-store/keyboards/mi_vertical_keyboards_short_2._CB278962455_.jpg' },
+    { photoURL: 'https://images.reverb.com/image/upload/s---Yk-qzep--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1505844111/wowzacfhlyzuirw6owck.jpg' },
+    { photoURL: 'https://images.reverb.com/image/upload/s--MhBlXf76--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1504551432/bd9d5kp5os1uzwza6yyb.jpg' },
   ],
 ];
 
 const drumPhotos = [
   [
-    { photoURL: 'http://thehub.musiciansfriend.com/images/drumsbuying/yamaha-stage-custom-drum-kit.jpg' },
-    { photoURL: 'https://media.sweetwater.com/api/i/ha-e7809fd91e0cc213__q-85__hmac-52a964bbf2ca74645de6a1f9a246b0c2b656b2a7/images/items/1800/LJR5PCWR-xlarge.jpg' },
-    { photoURL: 'https://i.ytimg.com/vi/CYNnqKA1AKo/maxresdefault.jpg' },
+    { photoURL: 'https://images.reverb.com/image/upload/s--G7uBhUYR--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1481913167/yni6uincxbdpr94qipu9.jpg' },
+    { photoURL: 'https://images.reverb.com/image/upload/s--Bs8eedMH--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1500657446/ajg8lgdhyrs5ze0havuz.jpg' },
+    { photoURL: 'https://images.reverb.com/image/upload/s--qUTgyfX9--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1505829569/ved35ydgidwfwi8b8ytc.jpg' },
   ],
 ];
 
 const bassPhotos = [
   [
-    { photoURL: 'http://www.deanguitars.com/images/productimages/e5fmtbks/e5fmtbks.png' },
-    { photoURL: 'http://www.deanguitars.com/images/productimages/e2vn/e2vn.png' },
-    { photoURL: 'https://i.ytimg.com/vi/9N1MPe383Bk/maxresdefault.jpg' },
+    { photoURL: 'https://images.reverb.com/image/upload/s--mqJ8FMNf--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1505794815/kzljmtynwlhvly8avox8.jpg' },
+    { photoURL: 'https://images.reverb.com/image/upload/s--UxpUfHGt--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1481134081/jjhktyjvlrtuscwiq8ar.png' },
+    { photoURL: 'https://images.reverb.com/image/upload/s--YSsXNQJv--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1479511675/csgyuijgyvxe7qcs2aob.jpg' },
   ],
 ];
 

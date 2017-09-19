@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { TextField, IconButton, FlatButton } from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AutoComplete from 'material-ui/AutoComplete';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 import CartIcon from 'material-ui/svg-icons/action/shopping-cart';
 import { blue500 } from 'material-ui/styles/colors';
 import styled from 'styled-components';
 import { TitleH1 } from './reusableStyles';
 import { logout } from '../store/reducers/user';
+import history from '../history';
 
 // Styles
 const styles = {
@@ -77,8 +79,16 @@ class Nav extends React.Component {
   constructor(props) {
     super(props);
     this.renderDashLogout = this.renderDashLogout.bind(this);
+    this.handleSearchRequest = this.handleSearchRequest.bind(this);
   }
 
+  handleSearchRequest(string) {
+    const { products } = this.props;
+    const product = products.find(eachProduct => eachProduct.title === string);
+    if (product) {
+      history.push(`/product/${product.id}`);
+    }
+  }
 
   renderDashLogout() {
     const { user } = this.props;
@@ -122,10 +132,11 @@ class Nav extends React.Component {
       </div>
     );
 
-    const { user } = this.props;
+    const { user, products } = this.props;
     const authButton = user.id ?
       this.renderDashLogout() :
       renderSignupLogin();
+    const productNames = products.map(product => product.title);
 
     return (
       <MuiThemeProvider>
@@ -133,6 +144,12 @@ class Nav extends React.Component {
           <Link to="/" style={styles.title} >
             <TitleH1>FORTE</TitleH1>
           </Link>
+          <AutoComplete
+            hintText=""
+            dataSource={productNames}
+            filter={AutoComplete.caseInsensitiveFilter}
+            onNewRequest={this.handleSearchRequest}
+          />
           <NavSearchDivWrapper>
             <TextField
               hintText="Search"
@@ -163,6 +180,7 @@ class Nav extends React.Component {
 // Container
 const mapState = (state => ({
   user: state.user,
+  products: state.products,
 }));
 
 const mapDispatch = (dispatch => ({

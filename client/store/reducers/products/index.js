@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { addCategoryProduct } from '../category_product';
 
 // ACTION TYPES
 const SET_PRODUCTS = 'SET_PRODUCTS';
@@ -34,3 +35,19 @@ export const fetchProducts = () => (dispatch) => {
     .then(products => dispatch(setProducts(products)))
     .catch(console.error);
 };
+
+export const addProductThunk = ((product, history) => (
+  ((dispatch) => {
+    axios.post('/api/products', product)
+      .then(res => res.data)
+      .then((createdProduct) => {
+        dispatch(addProduct(createdProduct));
+        dispatch(addCategoryProduct({
+          productId: createdProduct.id,
+          categoryId: product.category,
+        }));
+        history.push(`/product/${createdProduct.id}`);
+      })
+      .catch(console.error);
+  })
+));

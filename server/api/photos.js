@@ -9,3 +9,4 @@ router.get('/', (req, res, next) => {
     .then(photos => res.json(photos))
     .catch(next);
 });
+

@@ -1,5 +1,6 @@
+const Promise = require('bluebird');
 const router = require('express').Router();
-const { Product, Category, Review } = require('../db/models');
+const { Product, Category, Review, Photo } = require('../db/models');
 
 module.exports = router;
 
@@ -22,8 +23,24 @@ router.get('/', (req, res, next) => {
 
 // POST to create new Product
 router.post('/', adminGatekeeper, (req, res, next) => {
-  Product.create(req.body)
-    .then(newProduct => res.status(201).json(newProduct))
+  const { title, price, description, photoURL, category } = req.body;
+  Product.create({ title, price, description })
+    .then((newProduct) => {
+      const photoPromise = Photo.create({ photoURL });
+      return Promise.all([newProduct, photoPromise]);
+    })
+    .spread((newProduct, newPhoto) => {
+      return newProduct.addPhoto(newPhoto);
+    })
+    .then((newProduct) => {
+      return Promise.all([newProduct, Category.findById(category)]);
+    })
+    .spread((newProduct, cat) => {
+      return Promise.all([newProduct, cat.addProduct(newProduct)]);
+    })
+    .spread((newProduct) => {
+      res.status(201).json(newProduct);
+    })
     .catch(next);
 });
 

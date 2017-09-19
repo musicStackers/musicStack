@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { TextField, RaisedButton } from 'material-ui';
 
+import { TextField, RaisedButton, SelectField, MenuItem } from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Divider from 'material-ui/Divider';
-import { H2, H3 } from '../reusableStyles';
+import { H2, div } from '../reusableStyles';
+
+import { addProductThunk } from '../../store/reducers/products';
 
 // Styles
 const styles = {
   divider: {
     marginLeft: '40px',
     marginRight: '40px',
+    marginTop: '40px',
   },
   raisedButton: {
     width: 180,
@@ -21,10 +24,20 @@ const styles = {
     margin: '30px 0 30px 0',
   },
   input: {
-    width: 500,
+    width: 400,
+  },
+  addProductDiv: {
+    marginLeft: 50,
+  },
+  leftPane: {
+    margin: 10,
+  },
+  rightPane: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    margin: 10,
   },
 };
-
 
 /**
  * COMPONENT
@@ -33,22 +46,58 @@ class ManageProducts extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      selectedCat: null,
+    };
+    this.handleChangeCat = this.handleChangeCat.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  handleChangeCat(evt, index, value) {
+    this.setState({ selectedCat: value });
+  }
+
   handleSubmit(evt) {
+    const { title, price, photoUrl, description } = evt.target;
     evt.preventDefault();
+    const product = {
+      title: title.value,
+      price: price.value,
+      description: description.value,
+      photoURL: photoUrl.value,
+      category: this.state.selectedCat,
+    };
+    this.props.addProduct(product);
   }
 
   render() {
-    const { products } = this.props;
+    const { products, categories } = this.props;
+
+    const catList = (
+      <SelectField
+        floatingLabelText="Category"
+        style={styles.input}
+        value={this.state.selectedCat}
+        onChange={this.handleChangeCat}
+      >
+        { categories.map(category => (
+          <MenuItem
+            key={category.id}
+            value={category.id}
+            primaryText={category.title}
+          />
+        )) }
+      </SelectField>
+    );
 
     return (
       <MuiThemeProvider>
         <div>
           <H2>Add New Product</H2>
-          <form onSubmit={this.handleSubmit}>
-            <div>
+          <div style={styles.addProductDiv}>
+            <form onSubmit={this.handleSubmit}>
+              {catList}
+              <br />
               <TextField
                 name="title"
                 floatingLabelText="Product title"
@@ -67,24 +116,23 @@ class ManageProducts extends Component {
                 floatingLabelText="Photo URL"
                 hintText="Enter URLs for photos"
                 style={styles.input}
-                multiLine={true}
-                rows={3}
               />
               <br />
-            </div>
-            <div>
               <TextField
+                name="description"
                 floatingLabelText="Product Description"
                 multiLine={true}
                 rows={5}
+                style={styles.input}
               />
               <br />
               <RaisedButton
                 label="Submit"
                 type="submit"
               />
-            </div>
-          </form>
+            </form>
+          </div>
+
           <Divider style={styles.divider} />
           <H2>Existing Products</H2>
           <div>
@@ -108,17 +156,19 @@ class ManageProducts extends Component {
 /**
  * CONTAINER
  */
-const mapState = (state, ownProps) => ({
+const mapState = state => ({
   products: state.products,
+  categories: state.categories,
   photos: state.photos,
 });
 
 const mapDispatch = (dispatch, ownProps) => {
-  let { history } = ownProps;
+  const { history } = ownProps;
   return {
-    // addCampus: (campus) => {
-    //   dispatch(addCampusThunk(campus, history));
-  }
+    addProduct: (product) => {
+      dispatch(addProductThunk(product, history));
+    },
+  };
 };
 
 export default connect(mapState, mapDispatch)(ManageProducts);

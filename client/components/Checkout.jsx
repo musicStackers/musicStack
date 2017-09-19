@@ -8,7 +8,6 @@ import {
   Table,
   TableBody,
   TableHeader,
-  TableHeaderColumn,
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
@@ -16,7 +15,7 @@ import { CartList } from './index';
 import { setEmail } from '../store/reducers/checkout/email';
 import { setAddress } from '../store/reducers/checkout/address';
 import { createOrder } from '../store/reducers/checkout';
-import { H2, H3, Box, InnerBox } from './reusableStyles';
+import { H2, Box } from './reusableStyles';
 
 class Checkout extends React.Component {
   constructor(props) {
@@ -36,7 +35,6 @@ class Checkout extends React.Component {
   }
 
   handleEmailChange(e, value) {
-    // e.preventDefault();
     this.setState({ email: value });
   }
 
@@ -45,7 +43,6 @@ class Checkout extends React.Component {
     margin: 5rem 10rem;
     min-width: 40rem;
   `;
-   console.log('local state is', this.state);
     const { email, address, setEmail, setAddress, cart, createOrder } = this.props;
     return (
       <MuiThemeProvider>
@@ -68,7 +65,8 @@ class Checkout extends React.Component {
                     <TextField
                       id="email-input"
                       hint="email"
-                      onChange={this.handleEmailChange} />
+                      onChange={this.handleEmailChange}
+                    />
                   </TableRowColumn>
                   <TableRowColumn />
                   <TableRowColumn />
@@ -107,15 +105,3 @@ const mapDispatch = dispatch => ({
 });
 
 export default connect(mapState, mapDispatch)(Checkout);
-
-
-// <form onSubmit={handleSubmit} >
-// <label htmlFor="email">Email:</label>
-// <input name="email" type="text" value={email} onChange={e => setEmail(e.target.value)} />
-// <label htmlFor="address">Address:</label>
-// <input name="address" type="text" value={address} onChange={e => setAddress(e.target.value)} />
-// <input type="submit" value="Confirm Purchase" />
-// </form>
-
-
-

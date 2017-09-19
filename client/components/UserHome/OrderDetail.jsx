@@ -15,8 +15,10 @@ class OrderDetail extends Component {
     return (
       <div>
         { products.map((product) => {
-          const orderPrice = orderProducts.find(orderProduct => +orderProduct.productId === +product.id).price;
-          return <div key={`thisProduct-${product.id}`}>{product.title} - ${orderPrice}</div>;
+          const orderProduct = orderProducts.find(orderProduct => +orderProduct.productId === +product.id);
+          const orderPrice = orderProduct.price;
+          const orderQuantity = orderProduct.quantity;
+          return <div key={`thisProduct-${product.id}`} style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}><div><b>Product:</b> {product.title}</div><div><b>Price:</b> ${orderPrice}</div><div><b>Quantity:</b> {orderQuantity}</div></div>;
         })}
       </div>
     );

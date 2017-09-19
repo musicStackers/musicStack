@@ -128,22 +128,7 @@ class AllProducts extends Component {
                 })
               }
             </div>
-            <div>
-              <H3>Price</H3>
-              <TextField
-                name="minprice"
-                floatingLabelText="Min"
-                style={styles.input}
-              />
-              <TextField
-                name="maxprice"
-                floatingLabelText="Max"
-                style={styles.input}
-              />
-            </div>
-            <div>
-              <H3>Stars</H3>
-            </div>
+
           </SideBar>
           <ProductsWrapper>
             {

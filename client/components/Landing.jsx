@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { GridList, GridTile } from 'material-ui/GridList';
-import { PhotoDivider, ImagesWrapper, PhotoH1 } from './reusableStyles';
+import { PhotoDivider, ImagesWrapper, PhotoH1, H2 } from './reusableStyles';
 
 
 // Component
@@ -32,13 +32,6 @@ function Landing({ categories, picksProducts, picksPhotos }) {
     background-color: #cfd8dc;
     vertical-align: middle;
     overflow: hidden;
-  `;
-
-  const PickPhotoWrapper = styled.div`
-    vertical-align: middle;
-    overflow: hidden;
-    margin: 0 auto;
-    height: auto;
   `;
 
   const CategoryPhotoGrid = () => (
@@ -91,40 +84,44 @@ function Landing({ categories, picksProducts, picksPhotos }) {
   const OurPicksDivider = PhotoDivider.extend`
     height: 200px;
     background-image: url('/assets/allproductsheader.jpg');
+    margin: 60px 0;
   `;
 
-  const PickedProuctGrid = (() => (
+  const PickPhotoWrapper = styled.div`
+    vertical-align: middle;
+    overflow: hidden;
+    margin: 10px auto;
+    height: 250px;
+    width: 250px;
+    border-radius: 100%;
+    border: 2px solid #1e88e5;
+    text-align: center;
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+  `;
+
+  const PhotoH2 = H2.extend`
+
+  `;
+
+  const PickedProductGrid = (() => (
     <div className="our-picks">
       <ImagesWrapper>
-        <GridList
-          style={styles.pickGridList}
-          cellHeight={300}
-          cols={3}
-        >
-          {
-            picksProducts.map((product) => {
-              const photo = picksPhotos.find(p => +p.productId === +product.id);
-              return (
-                <GridTile
-                  key={product.id}
-                  title={product.title}
-                  cols={1}
-                >
-                  <PickPhotoWrapper>
-                    <Link to={`/product/${product.id}`} key={product.id}>
-                      <img
-                        src={photo && photo.photoURL}
-                        alt={photo && photo.title}
-                        height="300px"
-                        style={styles.pickPhotoStyle}
-                      />
-                    </Link>
-                  </PickPhotoWrapper>
-                </GridTile>
-              );
-            })
-          }
-        </GridList>
+        {
+          picksProducts.map((product) => {
+            const photo = picksPhotos.find(p => +p.productId === +product.id);
+            return (
+              <PickPhotoWrapper
+                containerElement={<Link to={`/product/${product.id}`} />}
+                key={product.id}
+                style={{ backgroundImage: `url(${photo && photo.photoURL})` }}
+              >
+                <PhotoH2>{product.title}</PhotoH2>
+              </PickPhotoWrapper>
+            );
+          })
+        }
       </ImagesWrapper>
     </div>
   ));
@@ -137,15 +134,15 @@ function Landing({ categories, picksProducts, picksPhotos }) {
         <OurPicksDivider>
           <PhotoH1>Our Picks</PhotoH1>
         </OurPicksDivider>
-        {PickedProuctGrid()}
+        {PickedProductGrid()}
       </div>
     </MuiThemeProvider>
   );
 }
 
 // Container
-const mapState = (state, ownProps) => {
-  const picksProducts = state.products.slice(0, 6);
+const mapState = (state) => {
+  const picksProducts = state.products.slice(6, 9);
   const picksPhotos = state.photos;
   return {
     categories: state.categories,
@@ -161,4 +158,5 @@ export default connect(mapState, mapDispatch)(Landing);
 /**
  * PROP TYPES
  */
+
 

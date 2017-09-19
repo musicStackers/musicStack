@@ -13,7 +13,9 @@ class AllProducts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedCategories: this.props.categories.map(category => category.id) || [],
+      selectedCategories: this.props.routedCategory
+        ? [+this.props.routedCategory]
+        : this.props.categories.map(category => category.id) || [],
       selectedMinPrice: 0,
       selectedMaxPrice: 0,
       selectedStarMin: 0,
@@ -74,7 +76,6 @@ class AllProducts extends Component {
   // Styled Components
   render() {
     if (!this.props.photos.length) return <div />;
-
     const styles = {
       block: {
         maxWidth: 250,
@@ -168,12 +169,13 @@ class AllProducts extends Component {
 }
 
 // Container
-const mapState = (state) => ({
+const mapState = (state, ownProps) => ({
   categories: state.categories,
   products: state.products,
   reviews: state.reviews,
   photos: state.photos,
   productCategories: state.categoryProduct,
+  routedCategory: ownProps.match.params.categoryId,
 });
 
 const mapDispatch = null;

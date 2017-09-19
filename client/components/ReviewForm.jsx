@@ -53,7 +53,7 @@ class ReviewForm extends Component{
     return starArr;
   }
 
-  render () {
+  render() {
     const styles = {
       block: {
         maxWidth: 250,

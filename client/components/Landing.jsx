@@ -2,10 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { GridList, GridTile } from 'material-ui/GridList';
-import { H1, PhotoDivider, ImagesWrapper, PhotoH1 } from './reusableStyles';
+import { PhotoDivider, ImagesWrapper, PhotoH1 } from './reusableStyles';
 
 
 // Component
@@ -76,7 +75,7 @@ function Landing({ categories, picksProducts, picksPhotos }) {
               cols={1}
             >
               <CatPhotoWrapper>
-                <Link to={`/categories/${category.id}`}>
+                <Link to={`/products/category/${category.id}`}>
                   <img
                     src={`/assets/home-${category.title.toLowerCase()}.jpg`}
                     alt={category.title}
@@ -164,9 +163,4 @@ export default connect(mapState, mapDispatch)(Landing);
 /**
  * PROP TYPES
  */
-Landing.propTypes = {
-  categories: PropTypes.string.isRequired,
-  picksProducts: PropTypes.string.isRequired,
-  picksPhotos: PropTypes.string.isRequired,
-  error: PropTypes.object,
-};
+

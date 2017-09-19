@@ -165,6 +165,7 @@ class Nav extends React.Component {
           </NavSearchDivWrapper>
           <NavButtonDivWrapper>
             <IconButton
+              containerElement={<Link to="/cart" />}
               iconStyle={styles.icon}
               style={styles.cartButton}
             >

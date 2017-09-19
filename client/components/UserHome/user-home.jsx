@@ -24,9 +24,13 @@ import UserOrders from './UserOrders.jsx';
 const styles = {
   flatButton: {
     marginLeft: 10,
+    fontSize: 5,
   },
   personalDetail: {
     marginLeft: 50,
+  },
+  verticalDivider: {
+    marginBottom: 40,
   }
 };
 
@@ -114,7 +118,7 @@ class UserHome extends Component {
       <MuiThemeProvider>
         <div style={styles.personalDetail}>
           <H1>Welcome!</H1>
-          <div>
+          <div style={styles.verticalDivider}>
             <H2>Personal Detail</H2>
             <FlatButton
               label="Edit your profile"
@@ -126,9 +130,7 @@ class UserHome extends Component {
             {PersonalDetailDiv}
           </div>
           <div>
-            <ImagesWrapper>
-              <H2>Your Orders</H2>
-            </ImagesWrapper>
+            <H2>Your Orders</H2>
             <UserOrders />
           </div>
         </div>

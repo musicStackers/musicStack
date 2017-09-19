@@ -15,17 +15,17 @@ class AllProducts extends Component {
     this.state = {
       selectedCategories: this.props.routedCategory
         ? [+this.props.routedCategory]
-        : this.props.categories.map(category => category.id) || [],
-      selectedMinPrice: 0,
-      selectedMaxPrice: 0,
+        : this.props.categories.map(category => category.id),
+      selectedMinPrice: null,
+      selectedMaxPrice: null,
       selectedStarMin: 0,
     };
   }
 
-  componentWillReceiveProps() {
-    this.setState(state => ({
-      selectedCategories: this.props.categories.map(category => category.id),
-    }));
+  componentWillReceiveProps(newProps) {
+    if (newProps.categories && newProps.categories.length !== this.props.categories.length && !this.props.routedCategory) {
+      this.setState({ selectedCategories: newProps.categories.map(category => category.id) });
+    }
   }
 
   handleCheck(categoryId) {

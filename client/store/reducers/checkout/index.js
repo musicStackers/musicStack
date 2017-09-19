@@ -5,6 +5,7 @@ import address from './address';
 import { addOrder } from '../orders';
 import { addOrderProducts } from '../order_product';
 import { clearCart } from '../cart';
+import history from '../../../history';
 
 export default combineReducers({ email, address });
 
@@ -20,5 +21,7 @@ export const createOrder = (orderEmail, orderAddress, cart) => (dispatch) => {
       dispatch(addOrderProducts(purchaseInfo.orderproducts));
       dispatch(clearCart());
     })
-    .catch(console.error);
+    .then(() => alert('Your order was placed successfully!'))
+    .then(() => history.push(''))
+    .catch(err => alert('Your order was not placed. Please make sure you have entered a valid email and address.'));
 };

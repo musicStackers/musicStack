@@ -15,7 +15,6 @@ import {
 function CartList({ entries }) {
 
   const totalPrice = entries.reduce((acc, entry) => {
-    console.log('entry is', entry);
     return acc + (entry.product.price * entry.quantity);
   }, 0);
 

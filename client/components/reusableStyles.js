@@ -26,6 +26,14 @@ const H2 = styled.h2`
   text-align: left;
 `;
 
+const AuthH2 = styled.h2`
+  padding: 10px;
+  color: #1e88e5;
+  font-size: 1.5em;
+  text-align: center;
+  line-height: 3em;
+`;
+
 const PhotoH1 = H1.extend`
   color: #ffffff;
   padding: 0;
@@ -74,6 +82,7 @@ module.exports = {
   TitleH1,
   H1,
   H2,
+  AuthH2,
   H3,
   P,
   PhotoH1,

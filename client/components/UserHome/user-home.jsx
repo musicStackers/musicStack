@@ -1,8 +1,5 @@
-// npms
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-// Style
 import { FlatButton, TextField, RaisedButton } from 'material-ui';
 import EditIcon from 'material-ui/svg-icons/content/create';
 import { blue500 } from 'material-ui/styles/colors';
@@ -11,16 +8,12 @@ import { List, ListItem } from 'material-ui/List';
 import CommunicationEmail from 'material-ui/svg-icons/communication/contact-mail';
 import CommunicationLocation from 'material-ui/svg-icons/communication/location-on';
 import { H1, H2, ImagesWrapper } from '../reusableStyles';
-
-// Redux
 import { updateAddress } from '../../store/reducers/user-form/address';
 import { updateEmail } from '../../store/reducers/user-form/email';
 import { updatePassword } from '../../store/reducers/user-form/password';
 import { editUser } from '../../store/reducers/user-form';
 import UserOrders from './UserOrders.jsx';
 
-
-// Styles
 const styles = {
   flatButton: {
     marginLeft: 10,
@@ -30,9 +23,6 @@ const styles = {
   }
 };
 
-/**
- * COMPONENT
- */
 class UserHome extends Component {
   constructor(props) {
     super(props);
@@ -57,7 +47,6 @@ class UserHome extends Component {
 
   render() {
     const { user, updateAddress, updateEmail, updatePassword } = this.props;
-
     const PersonalDetailDiv = (
       <div>
         {
@@ -137,9 +126,6 @@ class UserHome extends Component {
   }
 }
 
-/**
- * CONTAINER
- */
 const mapState = (state) => {
   return {
     email: state.userForm.email,

@@ -17,7 +17,6 @@ import history from '../../history';
 
 
 class UserOrders extends Component {
-
   componentDidMount() {
     const { fetchOrdersByUserId, user } = this.props;
     if (Object.keys(user).length) {
@@ -39,7 +38,7 @@ class UserOrders extends Component {
         <Table>
           <TableHeader
             displaySelectAll={false}
-            adjustForCheckboe={false}
+            adjustForCheckbox={false}
           >
             <TableRow>
               <TableHeaderColumn>Order ID</TableHeaderColumn>
@@ -53,32 +52,30 @@ class UserOrders extends Component {
             {
               orders.length && orders
                 .sort((a, b) => a.id - b.id)
-                .map((order) => {
-                  return (
-                    <Table key={order.id}>
-                      <TableBody displayRowCheckbox={false}>
-                        <TableRow displayBorder={false} selectable={false}>
-                          <TableRowColumn>
-                            <NavLink to={`/home/orders/${order.id}`}>{order.id}</NavLink>
-                          </TableRowColumn>
-                          <TableRowColumn>
-                            {order.email}
-                          </TableRowColumn>
-                          <TableRowColumn>
-                            {order.address}
-                          </TableRowColumn>
-                        </TableRow>
-                        <TableRow>
-                          <TableRowColumn>
-                            <Router history={history}>
-                              <Route exact path={`/home/orders/${order.id}`} render={props => <OrderDetail order={order} />} />
-                            </Router>
-                          </TableRowColumn>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  );
-                })
+                .map(order => (
+                  <Table key={order.id}>
+                    <TableBody displayRowCheckbox={false}>
+                      <TableRow displayBorder={false} selectable={false}>
+                        <TableRowColumn>
+                          <NavLink to={`/home/orders/${order.id}`}>{order.id}</NavLink>
+                        </TableRowColumn>
+                        <TableRowColumn>
+                          {order.email}
+                        </TableRowColumn>
+                        <TableRowColumn>
+                          {order.address}
+                        </TableRowColumn>
+                      </TableRow>
+                      <TableRow>
+                        <TableRowColumn>
+                          <Router history={history}>
+                            <Route exact path={`/home/orders/${order.id}`} render={props => <OrderDetail order={order} />} />
+                          </Router>
+                        </TableRowColumn>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                ))
             }
           </TableBody>
         </Table>
@@ -93,7 +90,7 @@ const mapState = (state, ownProps) => ({
 });
 
 const mapDispatch = (dispatch, ownProps) => ({
-  fetchOrdersByUserId: (userId) => dispatch(fetchOrdersByUserId(userId)),
+  fetchOrdersByUserId: userId => dispatch(fetchOrdersByUserId(userId)),
 });
 
 export default connect(mapState, mapDispatch)(UserOrders);

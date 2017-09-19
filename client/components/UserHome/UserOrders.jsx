@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DropDownMenu, MenuItem } from 'material-ui';
-import { fetchOrders, updateOrderStatus } from '../../store/reducers/orders';
-import { fetchOrderProduct } from '../../store/reducers/order_product';
+import { fetchOrdersByUserId } from '../../store/reducers/orders';
 import { Router, Route, NavLink } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -17,52 +16,35 @@ import {
 import OrderDetail from './OrderDetail.jsx';
 import history from '../../history';
 
-// Styles
-const styles = {
-};
-
 /**
  * COMPONENT
  */
-class ManageOrders extends Component {
+class UserOrders extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      filter: 'all',
-    };
   }
 
   componentDidMount() {
-    const { fetchOrders, fetchOrderProduct } = this.props;
-    fetchOrders();
-    fetchOrderProduct();
+    const { fetchOrdersByUserId, user } = this.props;
+    if (user) {
+      fetchOrdersByUserId(user.id);
+    }
   }
 
   render() {
-    const { orders, updateOrderStatus } = this.props;
-
+    const { orders, user } = this.props;
     return (
       <MuiThemeProvider>
         <Table>
           <TableHeader
             displaySelectAll={false}
-            adjustForCheckbox={false}
+            adjustForCheckboe={false}
           >
             <TableRow>
               <TableHeaderColumn>Order ID</TableHeaderColumn>
               <TableHeaderColumn>Order Email</TableHeaderColumn>
               <TableHeaderColumn>Order Address</TableHeaderColumn>
-              <TableHeaderColumn>
-                Order Status:
-                <select value={this.state.filter} onChange={e => this.setState({ filter: e.target.value })}>
-                  <option value="all">All</option>
-                  <option value="created">Created</option>
-                  <option value="processing">Processing</option>
-                  <option value="cancelled">Cancelled</option>
-                  <option value="completed">Completed</option>
-                </select>
-              </TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody
@@ -70,10 +52,6 @@ class ManageOrders extends Component {
           >
             {
               orders.length && orders
-                .filter((order) => {
-                  if (this.state.filter === 'all') return true;
-                  return order.status === this.state.filter;
-                })
                 .sort((a, b) => a.id - b.id)
                 .map((order) => {
                   return (
@@ -81,7 +59,7 @@ class ManageOrders extends Component {
                       <TableBody displayRowCheckbox={false}>
                         <TableRow displayBorder={false} selectable={false}>
                           <TableRowColumn>
-                            <NavLink to={`/admin/orders/${order.id}`}>{order.id}</NavLink>
+                            <NavLink to={`/home/orders/${order.id}`}>{order.id}</NavLink>
                           </TableRowColumn>
                           <TableRowColumn>
                             {order.email}
@@ -89,22 +67,11 @@ class ManageOrders extends Component {
                           <TableRowColumn>
                             {order.address}
                           </TableRowColumn>
-                          <TableRowColumn>
-                            <DropDownMenu
-                              onChange={(event, index, value) => updateOrderStatus(order.id, value)}
-                              value={order.status}
-                            >
-                              <MenuItem value="created" primaryText="Created" />
-                              <MenuItem value="processing" primaryText="Processing" />
-                              <MenuItem value="cancelled" primaryText="Cancelled" />
-                              <MenuItem value="completed" primaryText="Completed" />
-                            </DropDownMenu>
-                          </TableRowColumn>
                         </TableRow>
                         <TableRow>
                           <TableRowColumn>
                             <Router history={history}>
-                              <Route exact path={`/admin/orders/${order.id}`} render={props => <OrderDetail order={order} />} />
+                              <Route exact path={`/home/orders/${order.id}`} render={props => <OrderDetail order={order} />} />
                             </Router>
                           </TableRowColumn>
                         </TableRow>
@@ -125,12 +92,11 @@ class ManageOrders extends Component {
  */
 const mapState = (state, ownProps) => ({
   orders: state.orders,
+  user: state.user,
 });
 
 const mapDispatch = (dispatch, ownProps) => ({
-  fetchOrders: () => dispatch(fetchOrders()),
-  fetchOrderProduct: () => dispatch(fetchOrderProduct()),
-  updateOrderStatus: (orderId, status) => dispatch(updateOrderStatus(orderId, status)),
+  fetchOrdersByUserId: (userId) => dispatch(fetchOrdersByUserId(userId)),
 });
 
-export default connect(mapState, mapDispatch)(ManageOrders);
+export default connect(mapState, mapDispatch)(UserOrders);

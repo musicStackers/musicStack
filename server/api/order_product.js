@@ -18,3 +18,10 @@ router.get('/', adminGatekeeper, (req, res, next) => {
     .then(orderProduct => res.json(orderProduct))
     .catch(next);
 });
+
+router.get('/:orderId', (req, res, next) => {
+  OrderProduct.findAll({
+    where: { orderId: req.params.orderId } })
+    .then(orderProductsByOrderId => res.json(orderProductsByOrderId))
+    .catch(next);
+});

@@ -13,7 +13,7 @@ export { default as Checkout } from './Checkout.jsx';
 export { default as AdminDashboard } from './Admin/Dashboard.jsx';
 export { default as AllProducts } from './AllProducts.jsx';
 export { default as Product } from './Product.jsx';
-export { default as UserHome } from './user-home.jsx';
+export { default as UserHome } from './UserHome/user-home.jsx';
 export { default as ReviewList } from './ReviewList.jsx';
 export { default as Review } from './Review.jsx';
 export { default as ReviewForm } from './ReviewForm.jsx';

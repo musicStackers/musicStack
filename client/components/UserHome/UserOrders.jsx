@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DropDownMenu, MenuItem } from 'material-ui';
-import { fetchOrdersByUserId } from '../../store/reducers/orders';
 import { Router, Route, NavLink } from 'react-router-dom';
-
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {
   Table,
@@ -13,22 +11,24 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import { fetchOrdersByUserId } from '../../store/reducers/orders';
 import OrderDetail from './OrderDetail.jsx';
 import history from '../../history';
 
-/**
- * COMPONENT
- */
-class UserOrders extends Component {
 
-  constructor(props) {
-    super(props);
-  }
+class UserOrders extends Component {
 
   componentDidMount() {
     const { fetchOrdersByUserId, user } = this.props;
-    if (user) {
+    if (Object.keys(user).length) {
       fetchOrdersByUserId(user.id);
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    const { fetchOrdersByUserId } = this.props;
+    if (props.user && props.user.id !== this.props.user.id) {
+      fetchOrdersByUserId(props.user.id);
     }
   }
 
@@ -87,9 +87,6 @@ class UserOrders extends Component {
   }
 }
 
-/**
- * CONTAINER
- */
 const mapState = (state, ownProps) => ({
   orders: state.orders,
   user: state.user,

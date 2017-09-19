@@ -69,7 +69,7 @@ const ImagesWrapper = styled.div`
 display: flex;
 flexWrap: wrap;
 justify-content: space-around;
-margin: 40px 10px;
+margin: 0px 10px;
 `;
 const Box = styled.div`
   display: flex;

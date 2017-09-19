@@ -34,3 +34,10 @@ export const fetchOrderProduct = () => (dispatch) => {
     .then(orderProduct => dispatch(setOrderProduct(orderProduct)))
     .catch(console.error);
 };
+
+export const fetchOrderProductByOrderId = orderId => (dispatch) => {
+  axios.get(`/api/order_product/${orderId}`)
+    .then(res => res.data)
+    .then(orderProduct => dispatch(setOrderProduct(orderProduct)))
+    .catch(console.error);
+};

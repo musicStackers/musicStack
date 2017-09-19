@@ -21,8 +21,8 @@ class Checkout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: '',
-      email: '',
+      address: this.props.user.address || '',
+      email: this.props.user.email || '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -30,6 +30,7 @@ class Checkout extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    e.stopPropagation();
     const { cart, createOrder } = this.props;
     createOrder(this.state.email, this.state.address, cart);
   }
@@ -45,49 +46,39 @@ class Checkout extends React.Component {
   `;
     const { email, address, setEmail, setAddress, cart, createOrder } = this.props;
     return (
-      <MuiThemeProvider>
-        <CartDiv>
-          <Box>
-            <H2>Checkout</H2>
-          </Box>
-          <Box>
-            <CartList />
-          </Box>
-          <Box>
-            <Table>
-              <TableHeader
-                displaySelectAll={false}
-                adjustForCheckbox={false}
-              />
-              <TableBody displayRowCheckbox={false}>
-                <TableRow>
-                  <TableRowColumn>
-                    <TextField
-                      id="email-input"
-                      hint="email"
-                      onChange={this.handleEmailChange}
-                    />
-                  </TableRowColumn>
-                  <TableRowColumn />
-                  <TableRowColumn />
-                  <TableRowColumn>
-                    <RaisedButton label="Check Out" onClick={this.handleSubmit} />
-                  </TableRowColumn>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Box>
-          <Box>
-            <form onSubmit={this.handleSubmit} >
+      <div>
+        <MuiThemeProvider>
+          <CartDiv>
+            <Box>
+              <H2>Checkout</H2>
+            </Box>
+            <Box>
+              <CartList />
+            </Box>
+            <Box>
+              <Table selectable={false}>
+                <TableHeader
+                  displaySelectAll={false}
+                  adjustForCheckbox={false}
+                />
+              </Table>
+            </Box>
+          </CartDiv>
+        </MuiThemeProvider>
+        <div style={{ marginLeft: '30rem', marginRight: '10rem' }}>
+          <form className="mui-form" onSubmit={this.handleSubmit} >
+            <div className="mui-textfield">
               <label htmlFor="email">Email:</label>
-              <input name="email" type="text" value={this.state.email} />
+              <input name="email" type="email" required value={this.state.email} onChange={e => this.setState({ email: e.target.value })} />
+            </div>
+            <div className="mui-textfield">
               <label htmlFor="address">Address:</label>
               <input name="address" type="text" value={this.state.address} />
-              <input type="submit" value="Confirm Purchase" />
-            </form>
-          </Box>
-        </CartDiv>
-      </MuiThemeProvider>
+            </div>
+            <button onClick={this.handleSubmit} className="mui-btn mui-btn--raised mui--pull-right">Confirm Purchase</button>
+          </form>
+        </div>
+      </div>
     );
   }
 }
@@ -96,6 +87,7 @@ const mapState = (state, ownProps) => ({
   email: state.checkout.email,
   address: state.checkout.address,
   cart: state.cart,
+  user: state.user,
 });
 
 const mapDispatch = dispatch => ({

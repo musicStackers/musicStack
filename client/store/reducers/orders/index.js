@@ -44,8 +44,6 @@ export const fetchOrders = () => (dispatch) => {
 };
 
 export const fetchOrdersByUserId = userId => (dispatch) => {
-  console.log('fetching orders by userId');
-  console.log('userId is', userId);
   axios.get(`/api/orders/${userId}`)
     .then(res => res.data)
     .then(orders => dispatch(setOrders(orders)))
@@ -53,7 +51,6 @@ export const fetchOrdersByUserId = userId => (dispatch) => {
 };
 
 export const updateOrderStatus = (orderId, status) => (dispatch) => {
-  console.log('status is', status);
   axios.put(`/api/orders/${orderId}`, { status })
     .then(res => res.data)
     .then(order => dispatch(replaceOrder(order)))

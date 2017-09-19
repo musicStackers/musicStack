@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import { fetchOrderProductByOrderId } from '../../store/reducers/order_product';
 
 class OrderDetail extends Component {
-  constructor(props){
-    super(props)
-  }
-
   componentDidMount() {
     const { order, fetchOrderProductByOrderId, orderProducts } = this.props;
     if (order) {
@@ -23,12 +19,11 @@ class OrderDetail extends Component {
           return <div key={`thisProduct-${product.id}`}>{product.title} - ${orderPrice}</div>;
         })}
       </div>
-    )
+    );
   }
 }
 
 const mapState = (state, ownProps) => {
-  console.log("STATE", state);
   const orderProducts = state.orderProduct.filter(orderProduct => +orderProduct.orderId === +ownProps.order.id);
   const products = orderProducts.map(orderProduct => state.products.find(product => +product.id === +orderProduct.productId));
   return {
@@ -38,7 +33,7 @@ const mapState = (state, ownProps) => {
 };
 
 const mapDispatch = dispatch => ({
-  fetchOrderProductByOrderId: (orderId) => dispatch(fetchOrderProductByOrderId(orderId)),
+  fetchOrderProductByOrderId: orderId => dispatch(fetchOrderProductByOrderId(orderId)),
 });
 
 export default connect(mapState, mapDispatch)(OrderDetail);

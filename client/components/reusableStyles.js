@@ -67,11 +67,12 @@ const SideBar = styled.div`
 `;
 
 const ImagesWrapper = styled.div`
-display: flex;
-flexWrap: wrap;
-justify-content: space-around;
-margin: 0px 10px;
+  display: flex;
+  flexWrap: wrap;
+  justify-content: space-around;
+  margin: 0px 10px;
 `;
+
 const Box = styled.div`
   display: flex;
 `;

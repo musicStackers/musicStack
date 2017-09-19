@@ -21,7 +21,7 @@ function ReviewList({ reviews, user, users, productId }) {
       onClick={() => history.push(`/product/${productId}/review-form`)}
     />
   );
-
+  console.log('user', user, 'users', users)
   return (
     <MuiThemeProvider>
       <div>
@@ -36,12 +36,12 @@ function ReviewList({ reviews, user, users, productId }) {
         </div>
         {
           reviews.map((review) => {
-            const user = users.find(user => +user.id === +review.userId);
+            const reviewUser = users.find(foundUser => +foundUser.id === +review.userId);
             return (
               <Review
                 key={review.id}
                 review={review}
-                user={user}
+                user={reviewUser}
               />
             );
           })

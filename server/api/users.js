@@ -20,7 +20,7 @@ function userGatekeeper(req, res, next) {
   next();
 }
 
-router.get('/', adminGatekeeper, (req, res, next) => {
+router.get('/', (req, res, next) => {
   User.findAll({
     attributes: ['id', 'email', 'isAdmin'],
   })

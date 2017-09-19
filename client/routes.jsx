@@ -12,6 +12,7 @@ import { fetchReviews } from './store/reducers/reviews';
 import { fetchProducts } from './store/reducers/products';
 import { fetchPhotos } from './store/reducers/photos';
 import { fetchCart } from './store/reducers/cart';
+import { fetchUsers } from './store/reducers/users';
 
 
 /**
@@ -69,6 +70,7 @@ const mapDispatch = (dispatch) => {
     loadInitialData() {
       dispatch(me());
       dispatch(fetchCategories());
+      dispatch(fetchUsers());
       dispatch(fetchProducts());
       dispatch(fetchReviews());
       dispatch(fetchCategoryProduct());

@@ -12,7 +12,6 @@ function Review({ review, user }) {
       paddingRight: '20px',
     },
   };
-
   return (
     <div style={style.review}>
       <Box>

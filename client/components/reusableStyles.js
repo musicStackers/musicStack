@@ -1,5 +1,14 @@
 import styled from 'styled-components';
 
+const TitleH1 = styled.h1`
+  font-family: 'Pacifico', cursive;
+  height: 100%;
+  padding: 10px;
+  color: #1e88e5;
+  font-size: 3em;
+  text-align: center;
+`;
+
 const H1 = styled.h1`
   font-family: 'Pacifico', cursive;
   height: 100%;
@@ -62,6 +71,7 @@ const InnerBox = styled.div`
 `;
 
 module.exports = {
+  TitleH1,
   H1,
   H2,
   H3,

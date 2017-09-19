@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { addCategoryProduct } from '../category_product';
+import { addPhoto } from '../photos';
 
 // ACTION TYPES
 const SET_PRODUCTS = 'SET_PRODUCTS';
@@ -40,13 +41,15 @@ export const addProductThunk = ((product, history) => (
   ((dispatch) => {
     axios.post('/api/products', product)
       .then(res => res.data)
-      .then((createdProduct) => {
-        dispatch(addProduct(createdProduct));
+      .then(({ newProduct, newPhoto }) => {
+        newPhoto.productId = newProduct.id;
+        dispatch(addProduct(newProduct));
+        dispatch(addPhoto(newPhoto));
         dispatch(addCategoryProduct({
-          productId: createdProduct.id,
+          productId: newProduct.id,
           categoryId: product.category,
         }));
-        history.push(`/product/${createdProduct.id}`);
+        history.push(`/product/${newProduct.id}`);
       })
       .catch(console.error);
   })

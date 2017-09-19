@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { TextField, RaisedButton, SelectField, MenuItem } from 'material-ui';
+import { TextField, RaisedButton, SelectField, MenuItem, DropDownMenu } from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Divider from 'material-ui/Divider';
 import { H2, div } from '../reusableStyles';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 
 import { addProductThunk } from '../../store/reducers/products';
 
@@ -51,6 +59,7 @@ class ManageProducts extends Component {
     };
     this.handleChangeCat = this.handleChangeCat.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleProductEdit = this.handleProductEdit.bind(this);
   }
 
   handleChangeCat(evt, index, value) {
@@ -68,6 +77,10 @@ class ManageProducts extends Component {
       category: this.state.selectedCat,
     };
     this.props.addProduct(product);
+  }
+
+  handleProductEdit(evt) {
+
   }
 
   render() {
@@ -134,17 +147,66 @@ class ManageProducts extends Component {
           </div>
 
           <Divider style={styles.divider} />
+
           <H2>Existing Products</H2>
           <div>
-            {
-              products.map((product) => {
-                return (
-                  <div key={product.id}>
-                    {product.title}
-                  </div>
-                );
-              })
-            }
+            <Table>
+              <TableHeader
+                displaySelectAll={false}
+                adjustForCheckbox={false}
+              >
+                <TableRow>
+                  <TableHeaderColumn>ID</TableHeaderColumn>
+                  <TableHeaderColumn>Category</TableHeaderColumn>
+                  <TableHeaderColumn>Title</TableHeaderColumn>
+                  <TableHeaderColumn>Price</TableHeaderColumn>
+                  <TableHeaderColumn>Description</TableHeaderColumn>
+                  <TableHeaderColumn>Update</TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody
+                displayRowCheckbox={false}
+              >
+                {
+                  products.map((product) => {
+                    return (
+                      <TableRow key={product.id}>
+                        <TableRowColumn>
+                          {product.id}
+                        </TableRowColumn>
+                        <TableRowColumn>
+                          <DropDownMenu>
+                            {
+                              categories.map(category => (
+                                <MenuItem
+                                  key={category.id}
+                                  primaryText={category.title}
+                                />
+                              ))
+                            }
+                          </DropDownMenu>
+                        </TableRowColumn>
+                        <TableRowColumn>
+                          {product.title}
+                        </TableRowColumn>
+                        <TableRowColumn>
+                          {product.price}
+                        </TableRowColumn>
+                        <TableRowColumn>
+                          {product.description}
+                        </TableRowColumn>
+                        <TableRowColumn>
+                          <RaisedButton
+                            label="Update"
+                            onClick={this.handleProductEdit}
+                          />
+                        </TableRowColumn>
+                      </TableRow>
+                    );
+                  })
+                }
+              </TableBody>
+            </Table>
           </div>
         </div>
       </MuiThemeProvider>

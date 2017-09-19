@@ -30,16 +30,16 @@ router.post('/', adminGatekeeper, (req, res, next) => {
       return Promise.all([newProduct, photoPromise]);
     })
     .spread((newProduct, newPhoto) => {
-      return newProduct.addPhoto(newPhoto);
+      return Promise.all([newProduct.addPhoto(newPhoto), newPhoto]);
     })
-    .then((newProduct) => {
-      return Promise.all([newProduct, Category.findById(category)]);
+    .spread((newProduct, newPhoto) => {
+      return Promise.all([newProduct, newPhoto, Category.findById(category)]);
     })
-    .spread((newProduct, cat) => {
-      return Promise.all([newProduct, cat.addProduct(newProduct)]);
+    .spread((newProduct, newPhoto, cat) => {
+      return Promise.all([newProduct, newPhoto, cat.addProduct(newProduct)]);
     })
-    .spread((newProduct) => {
-      res.status(201).json(newProduct);
+    .spread((newProduct, newPhoto) => {
+      res.status(201).json({ newProduct, newPhoto });
     })
     .catch(next);
 });

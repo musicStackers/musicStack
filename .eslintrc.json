@@ -1,6 +1,7 @@
 {
     "extends": "airbnb",
     "rules": {
-        "no-confusing-arrow":"off"
+        "no-confusing-arrow":"off",
+        "react/prop-types":[0, {}]
     }
 }

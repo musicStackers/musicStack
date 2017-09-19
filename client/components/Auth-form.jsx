@@ -7,6 +7,7 @@ import ActionGoogle from 'material-ui/svg-icons/action/android';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { auth } from '../store/reducers/user';
+import { AuthH2 } from './reusableStyles';
 
 // Styles
 const styles = {
@@ -32,6 +33,7 @@ const styles = {
   },
   input: {
     width: 300,
+    margin: 0,
   },
 };
 
@@ -45,7 +47,7 @@ const AuthForm = (props) => {
   return (
     <MuiThemeProvider>
       <Paper style={styles.paper} zDepth={2}>
-        <h2>{displayName}</h2>
+        <AuthH2>{displayName}</AuthH2>
         <form onSubmit={handleSubmit} name={name}>
           <div>
             <TextField

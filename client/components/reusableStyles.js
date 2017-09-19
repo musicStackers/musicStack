@@ -7,6 +7,7 @@ const TitleH1 = styled.h1`
   color: #1e88e5;
   font-size: 3em;
   text-align: center;
+  text-decoration: none;
 `;
 
 const H1 = styled.h1`

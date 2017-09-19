@@ -29,7 +29,6 @@ export const AdminDashboard = (props) => {
     <MuiThemeProvider>
       <div>
         <H1>Hi Admin!</H1>
-        <H3>{`logged in as: ${email}`}</H3>
         <div>
           <RaisedButton
             label="Manage Products"

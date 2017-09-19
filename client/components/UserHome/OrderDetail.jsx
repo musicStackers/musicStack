@@ -8,12 +8,14 @@ class OrderDetail extends Component {
   }
 
   componentDidMount() {
-    const { order, fetchOrderProductByOrderId } = this.props;
-    fetchOrderProductByOrderId(order.id);
+    const { order, fetchOrderProductByOrderId, orderProducts } = this.props;
+    if (order) {
+      fetchOrderProductByOrderId(order.id);
+    }
   }
 
   render() {
-    const { products } = this.props;
+    const { products, orderProducts } = this.props;
     return (
       <div>
         { products.map((product) => {
@@ -26,6 +28,7 @@ class OrderDetail extends Component {
 }
 
 const mapState = (state, ownProps) => {
+  console.log("STATE", state);
   const orderProducts = state.orderProduct.filter(orderProduct => +orderProduct.orderId === +ownProps.order.id);
   const products = orderProducts.map(orderProduct => state.products.find(product => +product.id === +orderProduct.productId));
   return {
@@ -35,7 +38,7 @@ const mapState = (state, ownProps) => {
 };
 
 const mapDispatch = dispatch => ({
-  fetchOrderProduct: (orderId) => dispatch(fetchOrderProductByOrderId(orderId)),
+  fetchOrderProductByOrderId: (orderId) => dispatch(fetchOrderProductByOrderId(orderId)),
 });
 
 export default connect(mapState, mapDispatch)(OrderDetail);

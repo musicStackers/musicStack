@@ -59,7 +59,7 @@ class UserOrders extends Component {
                       <TableBody displayRowCheckbox={false}>
                         <TableRow displayBorder={false} selectable={false}>
                           <TableRowColumn>
-                            <NavLink to={`/user/orders/${order.id}`}>{order.id}</NavLink>
+                            <NavLink to={`/home/orders/${order.id}`}>{order.id}</NavLink>
                           </TableRowColumn>
                           <TableRowColumn>
                             {order.email}
@@ -71,7 +71,7 @@ class UserOrders extends Component {
                         <TableRow>
                           <TableRowColumn>
                             <Router history={history}>
-                              <Route exact path={`/user/orders/${order.id}`} render={props => <OrderDetail order={order} />} />
+                              <Route exact path={`/home/orders/${order.id}`} render={props => <OrderDetail order={order} />} />
                             </Router>
                           </TableRowColumn>
                         </TableRow>

@@ -24,7 +24,6 @@ import UserOrders from './UserOrders.jsx';
 const styles = {
   flatButton: {
     marginLeft: 10,
-    fontSize: 5,
   },
   personalDetail: {
     marginLeft: 50,

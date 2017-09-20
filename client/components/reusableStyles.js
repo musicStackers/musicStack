@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const TitleH1 = styled.h1`
   font-family: 'Pacifico', cursive;
   height: 100%;
-  padding: 17px;
+  padding: 20px;
   color: #1e88e5;
   font-size: 3em;
   text-align: center;

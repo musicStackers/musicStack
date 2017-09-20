@@ -19,7 +19,6 @@ const styles = {
   searchButton: {
     width: '10%',
     height: 60,
-    padding: 1,
     top: 11,
   },
   searchInput: {
@@ -33,7 +32,6 @@ const styles = {
   cartButton: {
     width: 60,
     height: 60,
-    padding: 5,
     top: -5,
   },
   title: {
@@ -51,8 +49,8 @@ const NavWrapper = styled.div`
   height: 100px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  align-content: center;
+  align-items: flex-end;
+  align-content: flex-start;
 `;
 
 const NavSearchDivWrapper = styled.div`
@@ -63,8 +61,7 @@ const NavSearchDivWrapper = styled.div`
 
 const NavButtonDivWrapper = styled.div`
   margin-top: 3px;
-  padding: 10px;
-  vertical-align: middle;
+  padding: 10px, 0px;
   flex-basis: 20%;
   min-width: 260px;
   top: 20px;

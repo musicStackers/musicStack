@@ -99,12 +99,9 @@ function Landing({ categories, picksProducts, picksPhotos }) {
     background-size: 80%;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: black;
   `;
 
   const PhotoH2 = H2.extend`
-    fontColor: white;
-
   `;
 
   const PickedProductGrid = (() => (

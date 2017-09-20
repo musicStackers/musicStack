@@ -4,7 +4,7 @@ import { SelectField, MenuItem, FlatButton } from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import styled from 'styled-components';
 import { ReviewList, ReviewForm } from './';
-import { H2, H3, Box, InnerBox } from './reusableStyles';
+import { P, H2, H3, Box, InnerBox } from './reusableStyles';
 import { addProductToCart } from '../store/reducers/cart';
 import Stars from './Stars.jsx';
 
@@ -125,7 +125,7 @@ class Product extends Component {
                     />)
                 }
               </div>
-              <p>{product && product.description}</p>
+              <H3>{product && product.description}</H3>
             </InnerBox>
           </Box>
           <ReviewList reviews={reviews} productId={match.params.productId} />

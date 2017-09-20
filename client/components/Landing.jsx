@@ -102,7 +102,6 @@ function Landing({ categories, picksProducts, picksPhotos }) {
   `;
 
   const PhotoH2 = H2.extend`
-
   `;
 
   const PickedProductGrid = (() => (

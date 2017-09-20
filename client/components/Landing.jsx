@@ -83,26 +83,39 @@ function Landing({ categories, picksProducts, picksPhotos }) {
 
   const OurPicksDivider = PhotoDivider.extend`
     height: 200px;
-    background-image: url('/assets/allproductsheader.jpg');
-    margin: 60px 0;
+    background-color: #ffffff;
+    margin: 0;
   `;
 
   const PickPhotoWrapper = styled.div`
     vertical-align: middle;
     overflow: hidden;
-    margin: 10px auto;
+    margin: 10px auto 40px auto;
     height: 250px;
     width: 250px;
     border-radius: 100%;
-    border: 2px solid #1e88e5;
+    border: 2px solid #373737;
     text-align: center;
     background-size: 80%;
     background-repeat: no-repeat;
     background-position: center;
+    position: relative;
+  `;
+
+  const PicksPhotoH1 = PhotoH1.extend`
+    color: #1e88e5;
   `;
 
   const PhotoH2 = H2.extend`
-
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(255, 255, 255, .7);
+    padding: 0;
+    color: #373737;
+    width: 70%;
   `;
 
   const PickedProductGrid = (() => (
@@ -112,13 +125,14 @@ function Landing({ categories, picksProducts, picksPhotos }) {
           picksProducts.map((product) => {
             const photo = picksPhotos.find(p => +p.productId === +product.id);
             return (
-              <PickPhotoWrapper
-                containerElement={<Link to={`/product/${product.id}`} />}
-                key={product.id}
-                style={{ backgroundImage: `url(${photo && photo.photoURL})` }}
-              >
-                <PhotoH2>{product.title}</PhotoH2>
-              </PickPhotoWrapper>
+              <Link to={`/product/${product.id}`}>
+                <PickPhotoWrapper
+                  key={product.id}
+                  style={{ backgroundImage: `url(${photo && photo.photoURL})` }}
+                >
+                  <PhotoH2>{product.title}</PhotoH2>
+                </PickPhotoWrapper>
+              </Link>
             );
           })
         }
@@ -132,7 +146,7 @@ function Landing({ categories, picksProducts, picksPhotos }) {
       <div>
         {CategoryPhotoGrid()}
         <OurPicksDivider>
-          <PhotoH1>Our Picks</PhotoH1>
+          <PicksPhotoH1>Our Picks</PicksPhotoH1>
         </OurPicksDivider>
         {PickedProductGrid()}
       </div>
@@ -159,4 +173,4 @@ export default connect(mapState, mapDispatch)(Landing);
  * PROP TYPES
  */
 
-
+    // background-image: url('/assets/allproductsheader.jpg');
